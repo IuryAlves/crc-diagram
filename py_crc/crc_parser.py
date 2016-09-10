@@ -24,6 +24,13 @@ class CRCParser(ast.NodeVisitor):
             'colaborators': []
         }
 
-    def visit_Import(self, node):
+    def _add_colaborator(self, node):
         self.output['colaborators'].extend(
-            [alias.name for alias in node.names])
+            [alias.name for alias in node.names]
+        )
+
+    def visit_Import(self, node):
+        self._add_colaborator(node)
+
+    def visit_ImportFrom(self, node):
+        self._add_colaborator(node)

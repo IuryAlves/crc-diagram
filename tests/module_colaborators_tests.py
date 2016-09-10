@@ -50,3 +50,13 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         )
 
         self.assertEqual(output, {'colaborators': ['io']})
+
+    def test_import_from(self):
+        python_file = 'import_from.py'
+        output = py_to_crc(join([
+            self.current_path,
+            'test_files',
+            python_file
+        ]))
+
+        self.assertEqual(output, {'colaborators': ['namedtuple', 'deque']})
