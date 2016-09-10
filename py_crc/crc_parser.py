@@ -18,11 +18,12 @@ def py_to_crc(python_file):
 
 class CRCParser(ast.NodeVisitor):
 
-	def __init__(self, *args, **kwargs):
-		super(CRCParser, self).__init__()
-		self.output = {
-			'colaborators': []
-		}
+    def __init__(self, *args, **kwargs):
+        super(CRCParser, self).__init__()
+        self.output = {
+            'colaborators': []
+        }
 
-	def visit_Import(self, node):
-		self.output['colaborators'].extend([alias.name for alias in node.names])
+    def visit_Import(self, node):
+        self.output['colaborators'].extend(
+            [alias.name for alias in node.names])

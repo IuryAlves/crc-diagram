@@ -10,7 +10,7 @@ from .utils import ast_from_file
 
 
 __all__ = [
-	'CRCParser',
+    'CRCParser',
     'ast_from_file',
     'py_to_crc',
-	]
+]
