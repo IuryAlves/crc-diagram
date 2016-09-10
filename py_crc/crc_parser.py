@@ -6,6 +6,14 @@ from __future__ import (
 )
 
 import ast
+from .utils import ast_from_file
+
+
+def py_to_crc(python_file):
+    tree = ast_from_file(python_file)
+    crc_parser = CRCParser()
+    crc_parser.visit(tree)
+    return crc_parser.output
 
 
 class CRCParser(ast.NodeVisitor):

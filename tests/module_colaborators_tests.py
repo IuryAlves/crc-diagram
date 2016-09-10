@@ -9,8 +9,10 @@ import unittest
 import os
 import ast
 
-from py_crc import CRCParser
-
+from py_crc import (
+	CRCParser,
+	py_to_crc
+)
 join = os.path.sep.join
 
 
@@ -22,10 +24,32 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
 
 	def test_import_colaborator(self):
 		python_file = 'import_module.py'
-		with open(join([self.current_path, 'test_files', 'import_module.py'])) as file:
-			tree = ast.parse(file.read())
+		output = py_to_crc(join([
+			self.current_path,
+			'test_files',
+			python_file
+			])
+		)
+		self.assertEqual(output, {'colaborators': ['json']})
 
-		crc_parser = CRCParser()
-		crc_parser.visit(tree)
+	def test_import_modules(self):
+		python_file = 'import_modules.py'
+		output = py_to_crc(join([
+			self.current_path,
+			'test_files',
+			python_file
+			])
+		)
 
-		self.assertEqual(crc_parser.output, {'colaborators': ['json']})
+		self.assertEqual(output, {'colaborators': ['ast', 're']})
+
+	def test_import_module_as(self):
+		python_file = 'import_module_as.py'
+		output = py_to_crc(join([
+			self.current_path,
+			'test_files',
+			python_file
+			])
+		)
+
+		self.assertEqual(output, {'colaborators': ['io']})		
