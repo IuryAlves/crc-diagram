@@ -21,7 +21,8 @@ class CRCParser(ast.NodeVisitor):
     def __init__(self, *args, **kwargs):
         super(CRCParser, self).__init__()
         self.output = {
-            'colaborators': []
+            'colaborators': [],
+            'responsability': ''
         }
 
     def _add_colaborator(self, node):
@@ -34,3 +35,6 @@ class CRCParser(ast.NodeVisitor):
 
     def visit_ImportFrom(self, node):
         self._add_colaborator(node)
+
+    def visit_Str(self, node):
+        self.output['responsability'] += node.s

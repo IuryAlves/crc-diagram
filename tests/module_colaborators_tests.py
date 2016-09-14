@@ -11,13 +11,14 @@ import os
 from pycrc import py_to_crc
 
 join = os.path.sep.join
+dirname = os.path.dirname
 
 
 class ModuleColaboratorsTestCase(unittest.TestCase):
 
     def setUp(self):
         super(ModuleColaboratorsTestCase, self).setUp()
-        self.current_path = os.path.dirname(os.path.realpath(__file__))
+        self.current_path = dirname(os.path.realpath(__file__))
 
     def test_import_colaborator(self):
         python_file = 'import_module.py'
@@ -27,7 +28,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
             python_file
         ])
         )
-        self.assertEqual(output, {'colaborators': ['json']})
+        self.assertEqual(output['colaborators'], ['json'])
 
     def test_import_modules(self):
         python_file = 'import_modules.py'
@@ -38,7 +39,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         ])
         )
 
-        self.assertEqual(output, {'colaborators': ['ast', 're']})
+        self.assertEqual(output['colaborators'], ['ast', 're'])
 
     def test_import_module_as(self):
         python_file = 'import_module_as.py'
@@ -49,7 +50,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         ])
         )
 
-        self.assertEqual(output, {'colaborators': ['io']})
+        self.assertEqual(output['colaborators'], ['io'])
 
     def test_import_from(self):
         python_file = 'import_from.py'
@@ -59,4 +60,4 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
             python_file
         ]))
 
-        self.assertEqual(output, {'colaborators': ['namedtuple', 'deque']})
+        self.assertEqual(output['colaborators'], ['namedtuple', 'deque'])
