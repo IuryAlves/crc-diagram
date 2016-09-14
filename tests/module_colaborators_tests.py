@@ -8,7 +8,7 @@ from __future__ import (
 import unittest
 import os
 
-from py_crc import py_to_crc
+from pycrc import py_to_crc
 
 join = os.path.sep.join
 
