@@ -28,4 +28,4 @@ class ModuleResponsabilityTestCase(unittest.TestCase):
             python_file
         ])
         )
-        self.assertEqual(output['responsability'], '\nModule Responsability\n')
+        self.assertEqual(output['responsability'], 'Module Responsability')
