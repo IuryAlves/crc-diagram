@@ -20,7 +20,7 @@ class ModuleResponsabilityTestCase(unittest.TestCase):
         super(ModuleResponsabilityTestCase, self).setUp()
         self.current_path = dirname(os.path.realpath(__file__))
 
-    def test_import_colaborator(self):
+    def test_module_responsability(self):
         python_file = 'module_responsability.py'
         output = py_to_crc(join([
             self.current_path,
@@ -29,3 +29,13 @@ class ModuleResponsabilityTestCase(unittest.TestCase):
         ])
         )
         self.assertEqual(output['responsability'], 'Module Responsability')
+
+    def test_only_first_string_should_be_the_docstring(self):
+        python_file = 'module_responsability_multiple_strings.py'
+        output = py_to_crc(join([
+            self.current_path,
+            'test_files',
+            python_file
+        ])
+        )
+        self.assertEqual(output['responsability'], 'First string')

@@ -1,0 +1,7 @@
+'''
+First string
+'''
+
+'''
+Second string
+'''
