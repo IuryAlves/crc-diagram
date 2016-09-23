@@ -20,44 +20,55 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         super(ModuleColaboratorsTestCase, self).setUp()
         self.current_path = dirname(os.path.realpath(__file__))
 
-    def test_import_colaborator(self):
+    def test_module_name(self):
         python_file = 'import_module'
-        output = py_to_crc(join([
+        result = py_to_crc(join([
             self.current_path,
             'test_files',
             python_file
         ])
         )
-        self.assertEqual(output['colaborators'], ['json'])
+
+        self.assertEqual(result['module']['name'], 'import_module')
+
+    def test_import_colaborator(self):
+        python_file = 'import_module'
+        result = py_to_crc(join([
+            self.current_path,
+            'test_files',
+            python_file
+        ])
+        )
+        self.assertEqual(result['module']['colaborators'], ['json'])
 
     def test_import_modules(self):
         python_file = 'import_modules'
-        output = py_to_crc(join([
+        result = py_to_crc(join([
             self.current_path,
             'test_files',
             python_file
         ])
         )
 
-        self.assertEqual(output['colaborators'], ['ast', 're'])
+        self.assertEqual(result['module']['colaborators'], ['ast', 're'])
 
     def test_import_module_as(self):
         python_file = 'import_module_as'
-        output = py_to_crc(join([
+        result = py_to_crc(join([
             self.current_path,
             'test_files',
             python_file
         ])
         )
 
-        self.assertEqual(output['colaborators'], ['io'])
+        self.assertEqual(result['module']['colaborators'], ['io'])
 
     def test_import_from(self):
         python_file = 'import_from'
-        output = py_to_crc(join([
+        result = py_to_crc(join([
             self.current_path,
             'test_files',
             python_file
         ]))
 
-        self.assertEqual(output['colaborators'], ['namedtuple', 'deque'])
+        self.assertEqual(result['module']['colaborators'], ['namedtuple', 'deque'])

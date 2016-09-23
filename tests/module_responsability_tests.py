@@ -22,20 +22,20 @@ class ModuleResponsabilityTestCase(unittest.TestCase):
 
     def test_module_responsability(self):
         python_file = 'module_responsability'
-        output = py_to_crc(join([
+        result = py_to_crc(join([
             self.current_path,
             'test_files',
             python_file
         ])
         )
-        self.assertEqual(output['responsability'], 'Module Responsability')
+        self.assertEqual(result['module']['responsability'], 'Module Responsability')
 
     def test_only_first_string_should_be_the_docstring(self):
         python_file = 'module_responsability_multiple_strings'
-        output = py_to_crc(join([
+        result = py_to_crc(join([
             self.current_path,
             'test_files',
             python_file
         ])
         )
-        self.assertEqual(output['responsability'], 'First string')
+        self.assertEqual(result['module']['responsability'], 'First string')
