@@ -21,7 +21,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         self.current_path = dirname(os.path.realpath(__file__))
 
     def test_import_colaborator(self):
-        python_file = 'import_module.py'
+        python_file = 'import_module'
         output = py_to_crc(join([
             self.current_path,
             'test_files',
@@ -31,7 +31,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         self.assertEqual(output['colaborators'], ['json'])
 
     def test_import_modules(self):
-        python_file = 'import_modules.py'
+        python_file = 'import_modules'
         output = py_to_crc(join([
             self.current_path,
             'test_files',
@@ -42,7 +42,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         self.assertEqual(output['colaborators'], ['ast', 're'])
 
     def test_import_module_as(self):
-        python_file = 'import_module_as.py'
+        python_file = 'import_module_as'
         output = py_to_crc(join([
             self.current_path,
             'test_files',
@@ -53,7 +53,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
         self.assertEqual(output['colaborators'], ['io'])
 
     def test_import_from(self):
-        python_file = 'import_from.py'
+        python_file = 'import_from'
         output = py_to_crc(join([
             self.current_path,
             'test_files',
