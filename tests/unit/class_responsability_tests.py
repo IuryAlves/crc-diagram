@@ -5,26 +5,20 @@ from __future__ import (
     unicode_literals
 )
 
-import unittest
 import os
 
 from pycrc import py_to_crc
+from tests import test
 
 join = os.path.sep.join
-dirname = os.path.dirname
 
 
-class ClassResponsabilityTestCase(unittest.TestCase):
-
-    def setUp(self):
-        super(ClassResponsabilityTestCase, self).setUp()
-        self.current_path = dirname(os.path.realpath(__file__))
+class ClassResponsabilityTestCase(test.CrcTestCase):
 
     def test_class_colaborator(self):
         python_file = 'class_responsability'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ]))
 

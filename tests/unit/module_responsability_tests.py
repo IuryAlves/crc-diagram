@@ -5,26 +5,20 @@ from __future__ import (
     unicode_literals
 )
 
-import unittest
 import os
 
 from pycrc import py_to_crc
+from tests import test
 
 join = os.path.sep.join
-dirname = os.path.dirname
 
 
-class ModuleResponsabilityTestCase(unittest.TestCase):
-
-    def setUp(self):
-        super(ModuleResponsabilityTestCase, self).setUp()
-        self.current_path = dirname(os.path.realpath(__file__))
+class ModuleResponsabilityTestCase(test.CrcTestCase):
 
     def test_module_responsability(self):
         python_file = 'module_responsability'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ])
         )
@@ -33,8 +27,7 @@ class ModuleResponsabilityTestCase(unittest.TestCase):
     def test_only_first_string_should_be_the_docstring(self):
         python_file = 'module_responsability_multiple_strings'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ])
         )

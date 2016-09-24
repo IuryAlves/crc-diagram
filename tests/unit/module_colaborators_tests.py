@@ -5,26 +5,20 @@ from __future__ import (
     unicode_literals
 )
 
-import unittest
 import os
 
 from pycrc import py_to_crc
+from tests import test
 
 join = os.path.sep.join
-dirname = os.path.dirname
 
 
-class ModuleColaboratorsTestCase(unittest.TestCase):
-
-    def setUp(self):
-        super(ModuleColaboratorsTestCase, self).setUp()
-        self.current_path = dirname(os.path.realpath(__file__))
+class ModuleColaboratorsTestCase(test.CrcTestCase):
 
     def test_module_name(self):
         python_file = 'import_module'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ])
         )
@@ -34,8 +28,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
     def test_import_colaborator(self):
         python_file = 'import_module'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ])
         )
@@ -44,8 +37,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
     def test_import_modules(self):
         python_file = 'import_modules'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ])
         )
@@ -55,8 +47,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
     def test_import_module_as(self):
         python_file = 'import_module_as'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ])
         )
@@ -66,8 +57,7 @@ class ModuleColaboratorsTestCase(unittest.TestCase):
     def test_import_from(self):
         python_file = 'import_from'
         result = py_to_crc(join([
-            self.current_path,
-            'test_files',
+            self.test_files,
             python_file
         ]))
 
