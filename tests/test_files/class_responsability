@@ -1,0 +1,4 @@
+class GameScene(object):
+    """
+    A class that represents a game scene
+    """

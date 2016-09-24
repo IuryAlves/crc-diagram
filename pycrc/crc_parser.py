@@ -8,6 +8,7 @@ from __future__ import (
 import ast
 
 from ._compat import get_function_argument_names
+from .utils import filter_function_defs
 
 
 class CRCParser(ast.NodeVisitor):
@@ -38,13 +39,16 @@ class CRCParser(ast.NodeVisitor):
     def _add_module_responsability(self):
         self.module.responsability = ast.get_docstring(self.tree)
 
-    def _add_class_colaborator(self, node):
-        functions = list(filter(lambda function: function.name == '__init__', node.body))
+    def _add_class_colaborator(self, function_defs):
+        functions = list(filter(lambda function: function.name == '__init__', function_defs))
         if functions:
             init_function = functions[0]
             function_args = init_function.args.args
             function_args_names = get_function_argument_names(function_args, ('self', ))
             self.current_crc_class.colaborators.extend(function_args_names)
+
+    def _add_class_responsability(self, node):
+        self.current_crc_class.responsability = ast.get_docstring(node)
 
     def visit_Import(self, node):
         self._add_module_colaborator(node)
@@ -54,5 +58,7 @@ class CRCParser(ast.NodeVisitor):
 
     def visit_ClassDef(self, node):
         self.current_crc_class = self.crc_class()
-        self._add_class_colaborator(node)
+        function_defs = filter_function_defs(node.body)
+        self._add_class_colaborator(function_defs)
+        self._add_class_responsability(node)
         self.classes.append(self.current_crc_class)
