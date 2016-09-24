@@ -6,12 +6,12 @@ from __future__ import (
 )
 
 
-class CRCModule(object):
+class CRC(object):
     """
-    class that represents a python module
+    class that represents a CRC Card
     """
 
-    def __init__(self, name, colaborators=None, responsability=''):
+    def __init__(self, name='', colaborators=None, responsability=''):
         self.name = name
         self.colaborators = colaborators or []
         self.responsability = responsability

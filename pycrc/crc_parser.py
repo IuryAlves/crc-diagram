@@ -8,23 +8,26 @@ from __future__ import (
 import os
 import ast
 from .utils import ast_from_file
-from .crc_module import CRCModule
+from .crc import CRC
+from ._compat import get_function_argument_names
 
 
 def py_to_crc(module):
     tree = ast_from_file(module)
     module_name = os.path.split(module)[-1]
-    crc_parser = CRCParser(module_name, CRCModule, tree)
+    crc_parser = CRCParser(module_name, CRC, tree)
     crc_parser.run()
     return crc_parser.to_dict()
 
 
 class CRCParser(ast.NodeVisitor):
 
-    def __init__(self, module, crc_module, tree, *args, **kwargs):
-        super(CRCParser, self).__init__()
+    def __init__(self, module, crc, tree, *args, **kwargs):
+        super(CRCParser, self).__init__(*args, **kwargs)
         self.tree = tree
-        self.module = crc_module(name=module)
+        self.crc_class = crc
+        self.module = self.crc_class(name=module)
+        self.current_crc_class = None
         self.classes = []
 
     def run(self):
@@ -33,7 +36,8 @@ class CRCParser(ast.NodeVisitor):
 
     def to_dict(self):
         return {
-            'module': self.module.to_dict()
+            'module': self.module.to_dict(),
+            'classes': [cls.to_dict() for cls in self.classes]
         }
 
     def _add_module_colaborator(self, node):
@@ -44,8 +48,21 @@ class CRCParser(ast.NodeVisitor):
     def _add_module_responsability(self):
         self.module.responsability = ast.get_docstring(self.tree)
 
+    def _add_class_colaborator(self, node):
+        functions = list(filter(lambda function: function.name == '__init__', node.body))
+        if functions:
+            init_function = functions[0]
+            function_args = init_function.args.args
+            function_args_names = get_function_argument_names(function_args, ('self', ))
+            self.current_crc_class.colaborators.extend(function_args_names)
+
     def visit_Import(self, node):
         self._add_module_colaborator(node)
 
     def visit_ImportFrom(self, node):
         self._add_module_colaborator(node)
+
+    def visit_ClassDef(self, node):
+        self.current_crc_class = self.crc_class()
+        self._add_class_colaborator(node)
+        self.classes.append(self.current_crc_class)

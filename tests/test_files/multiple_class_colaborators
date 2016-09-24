@@ -1,0 +1,4 @@
+class MultiParser(object):
+
+    def __init__(self, html_parser, json_parser):
+        pass
