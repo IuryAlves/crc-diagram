@@ -14,7 +14,7 @@ class CRCModule(object):
     def __init__(self, name, colaborators=None, responsability=''):
         self.name = name
         self.colaborators = colaborators or []
-        self.responsability  = responsability
+        self.responsability = responsability
 
     def to_dict(self):
         return {
