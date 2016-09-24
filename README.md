@@ -6,7 +6,34 @@ Generate Class Responsibility Collaborator Diagrams from python code
 [![Build Status](https://travis-ci.org/IuryAlves/pycrc.svg?branch=master)](https://travis-ci.org/IuryAlves/pycrc)
 
 
-## Running tests
+### Generate Class Responsability Colaboration (CRC) from python code.
+
+# Table of contents
+1. [What is CRC](#what_is_crc)
+2. [Usage](#usage)
+3. [Running Tests](#running_tests)
+4. [Notes and Documentation](#notes_and_documentation)
+5. [Contributing](#contributing)
+
+## What is CRC ? <a name='what_is_crc'></a>
+
+[http://agilemodeling.com/artifacts/crcModel.htm](http://agilemodeling.com/artifacts/crcModel.htm)
+
+
+## Usage <a name='usage'></a>
+
+    TODO
+
+## Running tests <a name='running_tests'></a>
 
     pip install -r requirements.txt
     tox
+
+## Notes and Documentation <a name='notes_and_documentation'></a>
+
+    TODO
+
+## Contributing <a name='contributing'></a>
+
+    TODO
+
