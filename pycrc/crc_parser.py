@@ -57,7 +57,7 @@ class CRCParser(ast.NodeVisitor):
         self._add_module_colaborator(node)
 
     def visit_ClassDef(self, node):
-        self.current_crc_class = self.crc_class()
+        self.current_crc_class = self.crc_class(name=node.name)
         function_defs = filter_function_defs(node.body)
         self._add_class_colaborator(function_defs)
         self._add_class_responsability(node)
