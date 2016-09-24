@@ -1,12 +1,10 @@
 # PyCRC
 
-Generate Class Responsibility Collaborator Diagrams from python code
+Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 
 [![Coverage Status](https://coveralls.io/repos/github/IuryAlves/pycrc/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/pycrc?branch=master)
 [![Build Status](https://travis-ci.org/IuryAlves/pycrc.svg?branch=master)](https://travis-ci.org/IuryAlves/pycrc)
 
-
-### Generate Class Responsability Colaboration (CRC) from python code.
 
 # Table of contents
 1. [What is CRC](#what_is_crc)
