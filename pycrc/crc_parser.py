@@ -5,19 +5,9 @@ from __future__ import (
     unicode_literals
 )
 
-import os
 import ast
-from .utils import ast_from_file
-from .crc import CRC
+
 from ._compat import get_function_argument_names
-
-
-def py_to_crc(module):
-    tree = ast_from_file(module)
-    module_name = os.path.split(module)[-1]
-    crc_parser = CRCParser(module_name, CRC, tree)
-    crc_parser.run()
-    return crc_parser.to_dict()
 
 
 class CRCParser(ast.NodeVisitor):
