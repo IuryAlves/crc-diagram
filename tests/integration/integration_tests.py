@@ -7,7 +7,7 @@ from __future__ import (
 
 import os
 
-from pycrc import py_to_crc, project_to_crc
+from pycrc import py_to_crc, project_to_crc, NotAPythonFile
 from tests import test
 
 
@@ -15,6 +15,17 @@ join = os.path.sep.join
 
 
 class IntegrationTestCase(test.CrcTestCase):
+
+    def test_raise_exception_if_is_not_python_file(self):
+        file = 'not_a_python_file'
+
+        with self.assertRaises(NotAPythonFile) as context:
+            py_to_crc(join([
+                self.test_files,
+                file
+            ]))
+
+        self.assertIn('not_a_python_file is not a python file', str(context.exception))
 
     def test_project_to_crc_modules(self):
         project_folder = 'project'

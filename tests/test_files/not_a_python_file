@@ -1,0 +1,3 @@
+var foo = function(bar) {
+    console.log('Foooo ' + bar);
+}

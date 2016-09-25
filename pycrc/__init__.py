@@ -8,17 +8,22 @@ import os
 
 from .crc_parser import CRCParser
 from .crc import CRC
+from .exceptions import NotAPythonFile
 from .utils import ast_from_file
 
 
 def py_to_crc(module, folder=None):
     if folder is not None:
         module = os.path.sep.join([folder, module])
-    tree = ast_from_file(module)
-    module_name = os.path.split(module)[-1]
-    crc_parser = CRCParser(module_name, CRC, tree)
-    crc_parser.run()
-    return crc_parser.to_dict()
+    try:
+        tree = ast_from_file(module)
+    except (SyntaxError, ):
+        raise NotAPythonFile('File {file} is not a python file'.format(file=module))
+    else:
+        module_name = os.path.split(module)[-1]
+        crc_parser = CRCParser(module_name, CRC, tree)
+        crc_parser.run()
+        return crc_parser.to_dict()
 
 
 def project_to_crc(folder):
@@ -32,5 +37,7 @@ __all__ = [
     'ast_from_file',
     'CRC',
     'CRCParser',
+    'NotAPythonFile',
     'py_to_crc',
+    'project_to_crc'
 ]
