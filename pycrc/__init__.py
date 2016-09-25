@@ -11,12 +11,21 @@ from .crc import CRC
 from .utils import ast_from_file
 
 
-def py_to_crc(module):
+def py_to_crc(module, folder=None):
+    if folder is not None:
+        module = os.path.sep.join([folder, module])
     tree = ast_from_file(module)
     module_name = os.path.split(module)[-1]
     crc_parser = CRCParser(module_name, CRC, tree)
     crc_parser.run()
     return crc_parser.to_dict()
+
+
+def project_to_crc(folder):
+    for item in os.walk(folder):
+        files = item[2]
+        for file in files:
+            yield py_to_crc(file, folder=folder)
 
 
 __all__ = [

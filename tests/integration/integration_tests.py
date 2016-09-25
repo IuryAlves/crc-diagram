@@ -7,7 +7,7 @@ from __future__ import (
 
 import os
 
-from pycrc import py_to_crc
+from pycrc import py_to_crc, project_to_crc
 from tests import test
 
 
@@ -15,6 +15,23 @@ join = os.path.sep.join
 
 
 class IntegrationTestCase(test.CrcTestCase):
+
+    def test_project_to_crc_modules(self):
+        project_folder = 'project'
+        result = project_to_crc(join([
+            self.test_files,
+            project_folder
+        ]))
+
+        crc_0, crc_1 = list(result)
+
+        self.assertEqual(crc_0['module']['name'], 'lib')
+        self.assertEqual(crc_0['module']['responsability'], 'A awesome lib')
+        self.assertEqual(crc_0['module']['colaborators'], ['boto'])
+
+        self.assertEqual(crc_1['module']['name'], 'main')
+        self.assertEqual(crc_1['module']['responsability'], 'The Main')
+        self.assertEqual(crc_1['module']['colaborators'], ['lib'])
 
     def test_module_and_classes(self):
         python_file = 'flask_ctx'

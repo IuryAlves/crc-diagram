@@ -1,0 +1,5 @@
+"""
+A awesome lib
+"""
+
+import boto
