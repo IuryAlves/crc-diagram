@@ -20,7 +20,7 @@ def py_to_crc(module, folder=None):
     except (SyntaxError, ):
         raise NotAPythonFile('File {file} is not a python file'.format(file=module))
     else:
-        module_name = os.path.split(module)[-1]
+        module_name = os.path.split(module)[-1].strip('.py')
         crc_parser = CRCParser(module_name, CRC, tree)
         crc_parser.run()
         return crc_parser.to_dict()

@@ -16,6 +16,15 @@ join = os.path.join
 
 class IntegrationTestCase(test.CrcTestCase):
 
+    def test_file_extension_should_not_be_in_module_name(self):
+        file = 'flask_ctx.py'
+        result = py_to_crc(join(
+            self.test_files,
+            file))
+        module = result['module']
+
+        self.assertEqual(module['name'], 'flask_ctx')
+
     def test_raise_exception_if_is_not_python_file(self):
         file = 'not_a_python_file'
 
@@ -43,7 +52,7 @@ class IntegrationTestCase(test.CrcTestCase):
         self.assertEqual(crc_1['module']['colaborators'], ['lib'])
 
     def test_module_and_classes(self):
-        python_file = 'flask_ctx'
+        python_file = 'flask_ctx.py'
         result = py_to_crc(join(
             self.test_files,
             python_file))
