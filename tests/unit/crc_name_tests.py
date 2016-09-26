@@ -10,27 +10,25 @@ import os
 from pycrc import py_to_crc
 from tests import test
 
-join = os.path.sep.join
+join = os.path.join
 
 
 class CrcNameTestCase(test.CrcTestCase):
 
     def test_class_name(self):
         python_file = 'class_colaborator'
-        result = py_to_crc(join([
+        result = py_to_crc(join(
             self.test_files,
-            python_file
-        ]))
+            python_file))
 
         cls = result['classes'][0]
         self.assertEqual(cls['name'], 'HtmlParser')
 
     def test_module_name(self):
         python_file = 'import_module'
-        result = py_to_crc(join([
+        result = py_to_crc(join(
             self.test_files,
-            python_file
-        ]))
+            python_file))
 
         module = result['module']
 

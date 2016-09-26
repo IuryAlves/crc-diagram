@@ -14,7 +14,7 @@ from .utils import ast_from_file
 
 def py_to_crc(module, folder=None):
     if folder is not None:
-        module = os.path.sep.join([folder, module])
+        module = os.path.join(folder, module)
     try:
         tree = ast_from_file(module)
     except (SyntaxError, ):

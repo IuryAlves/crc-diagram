@@ -11,7 +11,7 @@ from pycrc import py_to_crc, project_to_crc, NotAPythonFile
 from tests import test
 
 
-join = os.path.sep.join
+join = os.path.join
 
 
 class IntegrationTestCase(test.CrcTestCase):
@@ -20,19 +20,17 @@ class IntegrationTestCase(test.CrcTestCase):
         file = 'not_a_python_file'
 
         with self.assertRaises(NotAPythonFile) as context:
-            py_to_crc(join([
+            py_to_crc(join(
                 self.test_files,
-                file
-            ]))
+                file))
 
         self.assertIn('not_a_python_file is not a python file', str(context.exception))
 
     def test_project_to_crc_modules(self):
         project_folder = 'project'
-        result = project_to_crc(join([
+        result = project_to_crc(join(
             self.test_files,
-            project_folder
-        ]))
+            project_folder))
 
         crc_0, crc_1 = list(result)
 
@@ -46,10 +44,9 @@ class IntegrationTestCase(test.CrcTestCase):
 
     def test_module_and_classes(self):
         python_file = 'flask_ctx'
-        result = py_to_crc(join([
+        result = py_to_crc(join(
             self.test_files,
-            python_file
-        ]))
+            python_file))
 
         module, classes = result['module'], result['classes']
         cls_1, cls_2 = classes[1:]
