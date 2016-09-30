@@ -20,7 +20,9 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 
 ## Usage <a name='usage'></a>
 
-    TODO
+   #### In Command Line
+
+    python -m pycrc --raw=true file
 
 ## Running tests <a name='running_tests'></a>
 
