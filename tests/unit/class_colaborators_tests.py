@@ -6,7 +6,6 @@ from __future__ import (
 )
 
 import os
-
 from pycrc import py_to_crc
 from tests import test
 
@@ -32,5 +31,4 @@ class ClassColaboratorsTestCase(test.CrcTestCase):
             python_file))
 
         cls = result['classes'][0]
-
         self.assertEqual(cls['colaborators'], ['html_parser', 'json_parser'])
