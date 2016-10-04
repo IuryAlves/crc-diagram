@@ -6,8 +6,8 @@ from __future__ import (
 )
 import os
 
-from .crc_parser import CRCParser
-from .crc import CRC
+from pycrc.core.crc_parser import CRCParser
+from pycrc.core.crc import CRC
 from .exceptions import NotAPythonFile
 from .utils import ast_from_file
 

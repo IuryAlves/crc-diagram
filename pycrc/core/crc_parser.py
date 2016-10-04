@@ -6,8 +6,7 @@ from __future__ import (
 )
 
 import ast
-
-from ._compat import get_function_argument_names
+from pycrc._compat import get_function_argument_names
 
 
 class CRCParser(ast.NodeVisitor):
