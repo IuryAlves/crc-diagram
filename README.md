@@ -20,7 +20,7 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 
 ## Usage <a name='usage'></a>
 
-   #### In Command Line
+#### In Command Line
 
     python -m pycrc --raw=true file
 
