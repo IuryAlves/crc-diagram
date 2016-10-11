@@ -18,6 +18,44 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 [http://agilemodeling.com/artifacts/crcModel.htm](http://agilemodeling.com/artifacts/crcModel.htm)
 
 
+## Project Goal
+
+Imagine that your project have the class HtmlToMarkdown.
+
+```python
+
+class HtmlToMarkdown(object):
+    """
+    Converts html files to markdown.
+    """
+
+    def __init__(self, image_uploader):
+        self.image_uploader = image_uploader
+
+    # code
+```
+
+The responsability of the class is to convert html files to markdown.
+If the html has images, the class uses a colaborator called `image_uploader``
+to upload the images to somewhere.
+
+The CRC of this class could be represent as follows:
+
+
+```
+----------------------------------------|
+|           HtmlToMarkdown              |
+|---------------------------------------|
+| Converts html files  | image_uploader |
+|  to markdown         |                |
+|                      |                |
+-----------------------------------------
+```
+
+Where "Converts html files to markdown" is the responsability of the class
+and "image_uploader" is a colaborator
+
+
 ## Usage <a name='usage'></a>
 
 #### In Command Line
