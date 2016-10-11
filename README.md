@@ -15,7 +15,15 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 
 ## What is CRC ? <a name='what_is_crc'></a>
 
-[http://agilemodeling.com/artifacts/crcModel.htm](http://agilemodeling.com/artifacts/crcModel.htm)
+A Class Responsibility Collaborator (CRC) is a collection of standard index cards that have been divided into three sections.
+
+![crc_card](docs/crc_card.jpg)
+
+A class represents a collection of similar objects, a responsibility is something that a class knows or does,
+ and a collaborator is another class that a class interacts with to fulfill its responsibilities.
+
+
+**More information:**[here](http://agilemodeling.com/artifacts/crcModel.htm)
 
 
 ## Project Goal
@@ -58,9 +66,7 @@ and "image_uploader" is a colaborator
 
 ## Usage <a name='usage'></a>
 
-#### In Command Line
-
-    python -m pycrc --raw=true file
+    TODO
 
 ## Running tests <a name='running_tests'></a>
 
