@@ -8,10 +8,11 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 
 # Table of contents
 1. [What is CRC](#what_is_crc)
-2. [Usage](#usage)
-3. [Running Tests](#running_tests)
-4. [Notes and Documentation](#notes_and_documentation)
-5. [Contributing](#contributing)
+2. [Project Goal](#project_goal)
+3. [Usage](#usage)
+4. [Running Tests](#running_tests)
+5. [Notes and Documentation](#notes_and_documentation)
+6. [Contributing](#contributing)
 
 ## What is CRC ? <a name='what_is_crc'></a>
 
@@ -26,7 +27,7 @@ A class represents a collection of similar objects, a responsibility is somethin
 **More information:**[here](http://agilemodeling.com/artifacts/crcModel.htm)
 
 
-## Project Goal
+## Project Goal <a name='project_goal'></a>
 
 Imagine that your project have the class HtmlToMarkdown.
 
