@@ -71,7 +71,7 @@ and "image_uploader" is a colaborator
 
 ## Running tests <a name='running_tests'></a>
 
-    pip install -r requirements.txt
+    pip install -r requirements/develop.txt
     tox
 
 ## Notes and Documentation <a name='notes_and_documentation'></a>
