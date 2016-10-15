@@ -80,5 +80,5 @@ and "image_uploader" is a colaborator
 
 ## Contributing <a name='contributing'></a>
 
-[contributing](CONTRIBUTING.MD)
+[contributing](CONTRIBUTING.md)
 
