@@ -9,10 +9,11 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 # Table of contents
 1. [What is CRC](#what_is_crc)
 2. [Project Goal](#project_goal)
-3. [Usage](#usage)
-4. [Running Tests](#running_tests)
-5. [Notes and Documentation](#notes_and_documentation)
-6. [Contributing](#contributing)
+3. [Installing](#installing)
+4. [Usage](#usage)
+5. [Running Tests](#running_tests)
+6. [Notes and Documentation](#notes_and_documentation)
+7. [Contributing](#contributing)
 
 ## What is CRC ? <a name='what_is_crc'></a>
 
@@ -65,6 +66,11 @@ Where "Converts html files to markdown" is the responsability of the class
 and "image_uploader" is a colaborator
 
 
+## Installing <a name='installing'></a>
+
+    pip install -r requirements/base.txt
+
+
 ## Usage <a name='usage'></a>
 
     TODO
@@ -80,5 +86,5 @@ and "image_uploader" is a colaborator
 
 ## Contributing <a name='contributing'></a>
 
-[contributing](CONTRIBUTING.md)
+See [contributing](CONTRIBUTING.md) guide.
 
