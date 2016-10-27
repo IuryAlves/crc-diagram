@@ -8,25 +8,70 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 
 # Table of contents
 1. [What is CRC](#what_is_crc)
-2. [Usage](#usage)
-3. [Running Tests](#running_tests)
-4. [Notes and Documentation](#notes_and_documentation)
-5. [Contributing](#contributing)
+2. [Project Goal](#project_goal)
+3. [Usage](#usage)
+4. [Running Tests](#running_tests)
+5. [Notes and Documentation](#notes_and_documentation)
+6. [Contributing](#contributing)
 
 ## What is CRC ? <a name='what_is_crc'></a>
 
-[http://agilemodeling.com/artifacts/crcModel.htm](http://agilemodeling.com/artifacts/crcModel.htm)
+A Class Responsibility Collaborator (CRC) is a collection of standard index cards that have been divided into three sections.
+
+![crc_card](docs/crc_card.jpg)
+
+A class represents a collection of similar objects, a responsibility is something that a class knows or does,
+ and a collaborator is another class that a class interacts with to fulfill its responsibilities.
+
+
+**More information:**[here](http://agilemodeling.com/artifacts/crcModel.htm)
+
+
+## Project Goal <a name='project_goal'></a>
+
+Imagine that your project have the class HtmlToMarkdown.
+
+```python
+
+class HtmlToMarkdown(object):
+    """
+    Converts html files to markdown.
+    """
+
+    def __init__(self, image_uploader):
+        self.image_uploader = image_uploader
+
+    # code
+```
+
+The responsability of the class is to convert html files to markdown.
+If the html has images, the class uses a colaborator called `image_uploader`
+to upload the images to somewhere.
+
+The CRC of this class could be represented as follows:
+
+
+```
+----------------------------------------|
+|           HtmlToMarkdown              |
+|---------------------------------------|
+| Converts html files  | image_uploader |
+|  to markdown         |                |
+|                      |                |
+-----------------------------------------
+```
+
+Where "Converts html files to markdown" is the responsability of the class
+and "image_uploader" is a colaborator
 
 
 ## Usage <a name='usage'></a>
 
-#### In Command Line
-
-    python -m pycrc --raw=true file
+    TODO
 
 ## Running tests <a name='running_tests'></a>
 
-    pip install -r requirements.txt
+    pip install -r requirements/develop.txt
     tox
 
 ## Notes and Documentation <a name='notes_and_documentation'></a>
@@ -35,5 +80,5 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 
 ## Contributing <a name='contributing'></a>
 
-    TODO
+[contributing](CONTRIBUTING.md)
 
