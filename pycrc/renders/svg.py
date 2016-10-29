@@ -1,48 +1,38 @@
 # coding: utf-8
 
-from svgwrite import Drawing, shapes
+from svgwrite import Drawing, shapes, text
 
 
-class SvgRender(object):
+def svg_render(x, y, height, width, crc, filename,
+               fill="white", stroke="black",
+               stroke_width=1, crc_name_height=30):
 
-    def __init__(self, x, y,
-                 height,
-                 width,
-                 fill="white",
-                 stroke="black",
-                 stroke_width=1,
-                 crc_name_height=30):
+        rect = shapes.Rect(insert=(x, y),
+                           size=(width, height),
+                           fill=fill,
+                           stroke_width=stroke_width,
+                           stroke=stroke)
 
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.crc_name_height = crc_name_height
+        horizontal_line = shapes.Line((x, crc_name_height),
+                                      (width, crc_name_height),
+                                      stroke_width=1,
+                                      stroke="black")
 
-        self.rect = shapes.Rect(insert=(self.x, self.y),
-                                size=(self.width, self.height),
-                                fill=fill,
-                                stroke_width=stroke_width,
-                                stroke=stroke)
-        self.horizontal_line = shapes.Line(
-            (self.x, self.crc_name_height),
-            (self.width, self.crc_name_height),
-            stroke_width=1,
-            stroke="black"
-            )
+        vertical_line = shapes.Line((width / 2, height),
+                                    (width / 2, crc_name_height),
+                                    stroke_width=1,
+                                    stroke="black")
+        crc_name = text.Text(crc.name, insert=(20, 20))
+        crc_responsibility = text.Text(crc.responsability,
+                                       insert=(20, 50))
+        crc_colaborators = text.Text(crc.colaborators,
+                                     insert=(160, 50))
 
-        self.vertical_line = shapes.Line(
-            (self.width / 2, self.height),
-            (self.width / 2, self.crc_name_height),
-            stroke_width=1,
-            stroke="black")
-
-    def draw(self, crc, filename):
         dwg = Drawing(filename)
-        dwg.add(self.rect)
-        dwg.add(self.horizontal_line)
-        dwg.add(self.vertical_line)
-        dwg.add(dwg.text(crc.name, insert=(20, 20)))
-        dwg.add(dwg.text(crc.responsability, insert=(20, 50)))
-        dwg.add(dwg.text(crc.colaborators, insert=(160, 50)))
+        dwg.add(rect)
+        dwg.add(horizontal_line)
+        dwg.add(vertical_line)
+        dwg.add(crc_name)
+        dwg.add(crc_responsibility)
+        dwg.add(crc_colaborators)
         dwg.save()
