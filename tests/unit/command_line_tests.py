@@ -15,19 +15,19 @@ class CrcNameTestCase(test.CrcTestCase):
     def test_execute_as_raw(self):
         command = 'python -m pycrc --raw=true {test_files}/{file}'.format(
             test_files=self.test_files,
-            file='class_colaborator'
+            file='class_collaborator'
         )
         out = subprocess.check_output(command.split())
         result = json.loads(out.decode())
         self.assertEqual(result, {
             'classes': [
-                {'colaborators': ['image_uploader'],
+                {'collaborators': ['image_uploader'],
                  'name': 'HtmlParser',
                  'responsibility': None}
             ],
             'module': {
-                'colaborators': [],
-                'name': 'class_colaborator',
+                'collaborators': [],
+                'name': 'class_collaborator',
                 'responsibility': None
             }
         })

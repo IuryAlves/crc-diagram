@@ -33,7 +33,8 @@ class IntegrationTestCase(test.CrcTestCase):
                 self.test_files,
                 file))
 
-        self.assertIn('not_a_python_file is not a python file', str(context.exception))
+        self.assertIn('not_a_python_file is not a python file',
+                      str(context.exception))
 
     def test_project_to_crc_modules(self):
         project_folder = 'project'
@@ -45,11 +46,11 @@ class IntegrationTestCase(test.CrcTestCase):
 
         self.assertEqual(crc_0['module']['name'], 'lib')
         self.assertEqual(crc_0['module']['responsibility'], 'A awesome lib')
-        self.assertEqual(crc_0['module']['colaborators'], ['boto'])
+        self.assertEqual(crc_0['module']['collaborators'], ['boto'])
 
         self.assertEqual(crc_1['module']['name'], 'main')
         self.assertEqual(crc_1['module']['responsibility'], 'The Main')
-        self.assertEqual(crc_1['module']['colaborators'], ['lib'])
+        self.assertEqual(crc_1['module']['collaborators'], ['lib'])
 
     def test_module_and_classes(self):
         python_file = 'flask_ctx.py'
@@ -61,7 +62,7 @@ class IntegrationTestCase(test.CrcTestCase):
         cls_1, cls_2 = classes[1:]
 
         self.assertEqual(cls_1['name'], 'AppContext')
-        self.assertEqual(cls_1['colaborators'], ['app'])
+        self.assertEqual(cls_1['collaborators'], ['app'])
         self.assertEqual('The application context binds an application object implicitly\n'
                          'to the current thread or greenlet, similar to how the\n'
                          ':class:`RequestContext` binds request information.  The application\n'
@@ -70,19 +71,20 @@ class IntegrationTestCase(test.CrcTestCase):
                          cls_1['responsibility'])
 
         self.assertEqual(cls_2['name'], 'RequestContext')
-        self.assertIn('The request context contains all request relevant information.', cls_2['responsibility'])
-        self.assertEqual(cls_2['colaborators'], ['app', 'environ', 'request'])
+        self.assertIn('The request context contains all request relevant information.', cls_2[
+                      'responsibility'])
+        self.assertEqual(cls_2['collaborators'], ['app', 'environ', 'request'])
 
         self.assertEqual(module['name'], 'flask_ctx')
-        self.assertEqual(module['colaborators'], ['sys',
-                                                  'update_wrapper',
-                                                  'HTTPException',
-                                                  '_request_ctx_stack',
-                                                  '_app_ctx_stack',
-                                                  'appcontext_pushed',
-                                                  'appcontext_popped',
-                                                  'BROKEN_PYPY_CTXMGR_EXIT',
-                                                  'reraise'])
+        self.assertEqual(module['collaborators'], ['sys',
+                                                   'update_wrapper',
+                                                   'HTTPException',
+                                                   '_request_ctx_stack',
+                                                   '_app_ctx_stack',
+                                                   'appcontext_pushed',
+                                                   'appcontext_popped',
+                                                   'BROKEN_PYPY_CTXMGR_EXIT',
+                                                   'reraise'])
         self.assertEqual('flask.ctx\n~~~~~~~~~\n\nImplements the objects'
                          ' required to keep the context.'
                          '\n\n:copyright: (c) 2015 by Armin Ronacher.\n'

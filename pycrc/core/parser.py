@@ -30,7 +30,7 @@ class CRCParser(ast.NodeVisitor):
         }
 
     def _add_module_colaborator(self, node):
-        self.module.colaborators.extend(
+        self.module.collaborators.extend(
             [alias.name for alias in node.names]
         )
 
@@ -40,7 +40,7 @@ class CRCParser(ast.NodeVisitor):
     def _add_class_colaborator(self, node):
         function_args = node.args.args
         function_args_names = get_function_argument_names(function_args, ('self', ))
-        self.current_crc_class.colaborators.extend(function_args_names)
+        self.current_crc_class.collaborators.extend(function_args_names)
 
     def _add_class_responsibility(self, node):
         self.current_crc_class.responsibility = ast.get_docstring(node)

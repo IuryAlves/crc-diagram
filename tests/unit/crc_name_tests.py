@@ -16,7 +16,7 @@ join = os.path.join
 class CrcNameTestCase(test.CrcTestCase):
 
     def test_class_name(self):
-        python_file = 'class_colaborator'
+        python_file = 'class_collaborator'
         result = py_to_crc(join(
             self.test_files,
             python_file))

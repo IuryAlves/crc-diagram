@@ -11,14 +11,14 @@ class CRC(object):
     class that represents a CRC Card
     """
 
-    def __init__(self, name='', colaborators=None, responsibility=''):
+    def __init__(self, name='', collaborators=None, responsibility=''):
         self.name = name
-        self.colaborators = colaborators or []
+        self.collaborators = collaborators or []
         self.responsibility = responsibility
 
     def to_dict(self):
         return {
             'name': self.name,
-            'colaborators': self.colaborators,
+            'collaborators': self.collaborators,
             'responsibility': self.responsibility
         }

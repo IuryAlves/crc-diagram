@@ -13,7 +13,7 @@ from tests import test
 join = os.path.join
 
 
-class ModuleColaboratorsTestCase(test.CrcTestCase):
+class ModuleCollaboratorsTestCase(test.CrcTestCase):
 
     def test_module_name(self):
         python_file = 'import_module'
@@ -23,13 +23,13 @@ class ModuleColaboratorsTestCase(test.CrcTestCase):
 
         self.assertEqual(result['module']['name'], 'import_module')
 
-    def test_import_colaborator(self):
+    def test_import_collaborator(self):
         python_file = 'import_module'
         result = py_to_crc(join(
             self.test_files,
             python_file))
 
-        self.assertEqual(result['module']['colaborators'], ['json'])
+        self.assertEqual(result['module']['collaborators'], ['json'])
 
     def test_import_modules(self):
         python_file = 'import_modules'
@@ -37,7 +37,7 @@ class ModuleColaboratorsTestCase(test.CrcTestCase):
             self.test_files,
             python_file))
 
-        self.assertEqual(result['module']['colaborators'], ['ast', 're'])
+        self.assertEqual(result['module']['collaborators'], ['ast', 're'])
 
     def test_import_module_as(self):
         python_file = 'import_module_as'
@@ -45,7 +45,7 @@ class ModuleColaboratorsTestCase(test.CrcTestCase):
             self.test_files,
             python_file))
 
-        self.assertEqual(result['module']['colaborators'], ['io'])
+        self.assertEqual(result['module']['collaborators'], ['io'])
 
     def test_import_from(self):
         python_file = 'import_from'
@@ -53,4 +53,4 @@ class ModuleColaboratorsTestCase(test.CrcTestCase):
             self.test_files,
             python_file))
 
-        self.assertEqual(result['module']['colaborators'], ['namedtuple', 'deque'])
+        self.assertEqual(result['module']['collaborators'], ['namedtuple', 'deque'])
