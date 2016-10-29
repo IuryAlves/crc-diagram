@@ -46,7 +46,7 @@ class HtmlToMarkdown(object):
 ```
 
 The responsibility of the class is to convert html files to markdown.
-If the html has images, the class uses a colaborator called `image_uploader`
+If the html has images, the class uses a collaborator called `image_uploader`
 to upload the images to somewhere.
 
 The CRC of this class could be represented as follows:
@@ -63,7 +63,7 @@ The CRC of this class could be represented as follows:
 ```
 
 Where "Converts html files to markdown" is the responsibility of the class
-and "image_uploader" is a colaborator
+and "image_uploader" is a collaborator
 
 
 ## Installing <a name='installing'></a>
