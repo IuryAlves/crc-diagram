@@ -23,11 +23,11 @@ class CrcNameTestCase(test.CrcTestCase):
             'classes': [
                 {'colaborators': ['image_uploader'],
                  'name': 'HtmlParser',
-                 'responsability': None}
+                 'responsibility': None}
             ],
             'module': {
                 'colaborators': [],
                 'name': 'class_colaborator',
-                'responsability': None
+                'responsibility': None
             }
         })

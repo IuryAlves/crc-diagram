@@ -44,11 +44,11 @@ class IntegrationTestCase(test.CrcTestCase):
         crc_0, crc_1 = list(result)
 
         self.assertEqual(crc_0['module']['name'], 'lib')
-        self.assertEqual(crc_0['module']['responsability'], 'A awesome lib')
+        self.assertEqual(crc_0['module']['responsibility'], 'A awesome lib')
         self.assertEqual(crc_0['module']['colaborators'], ['boto'])
 
         self.assertEqual(crc_1['module']['name'], 'main')
-        self.assertEqual(crc_1['module']['responsability'], 'The Main')
+        self.assertEqual(crc_1['module']['responsibility'], 'The Main')
         self.assertEqual(crc_1['module']['colaborators'], ['lib'])
 
     def test_module_and_classes(self):
@@ -67,10 +67,10 @@ class IntegrationTestCase(test.CrcTestCase):
                          ':class:`RequestContext` binds request information.  The application\n'
                          'context is also implicitly created if a request context is created\n'
                          'but the application is not on top of the individual application\ncontext.',
-                         cls_1['responsability'])
+                         cls_1['responsibility'])
 
         self.assertEqual(cls_2['name'], 'RequestContext')
-        self.assertIn('The request context contains all request relevant information.', cls_2['responsability'])
+        self.assertIn('The request context contains all request relevant information.', cls_2['responsibility'])
         self.assertEqual(cls_2['colaborators'], ['app', 'environ', 'request'])
 
         self.assertEqual(module['name'], 'flask_ctx')
@@ -86,4 +86,4 @@ class IntegrationTestCase(test.CrcTestCase):
         self.assertEqual('flask.ctx\n~~~~~~~~~\n\nImplements the objects'
                          ' required to keep the context.'
                          '\n\n:copyright: (c) 2015 by Armin Ronacher.\n'
-                         ':license: BSD, see LICENSE for more details.', module['responsability'])
+                         ':license: BSD, see LICENSE for more details.', module['responsibility'])

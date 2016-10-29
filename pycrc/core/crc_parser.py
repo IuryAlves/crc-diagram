@@ -21,7 +21,7 @@ class CRCParser(ast.NodeVisitor):
 
     def run(self):
         self.visit(self.tree)
-        self._add_module_responsability()
+        self._add_module_responsibility()
 
     def to_dict(self):
         return {
@@ -34,16 +34,16 @@ class CRCParser(ast.NodeVisitor):
             [alias.name for alias in node.names]
         )
 
-    def _add_module_responsability(self):
-        self.module.responsability = ast.get_docstring(self.tree)
+    def _add_module_responsibility(self):
+        self.module.responsibility = ast.get_docstring(self.tree)
 
     def _add_class_colaborator(self, node):
         function_args = node.args.args
         function_args_names = get_function_argument_names(function_args, ('self', ))
         self.current_crc_class.colaborators.extend(function_args_names)
 
-    def _add_class_responsability(self, node):
-        self.current_crc_class.responsability = ast.get_docstring(node)
+    def _add_class_responsibility(self, node):
+        self.current_crc_class.responsibility = ast.get_docstring(node)
 
     def visit_Import(self, node):
         self._add_module_colaborator(node)
@@ -57,6 +57,6 @@ class CRCParser(ast.NodeVisitor):
 
     def visit_ClassDef(self, node):
         self.current_crc_class = self.crc_class(name=node.name)
-        self._add_class_responsability(node)
+        self._add_class_responsibility(node)
         self.classes.append(self.current_crc_class)
         self.generic_visit(node)

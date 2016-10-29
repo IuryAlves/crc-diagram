@@ -23,7 +23,7 @@ def svg_render(x, y, height, width, crc, filename,
                                     stroke_width=1,
                                     stroke="black")
         crc_name = text.Text(crc.name, insert=(20, 20))
-        crc_responsibility = text.Text(crc.responsability,
+        crc_responsibility = text.Text(crc.responsibility,
                                        insert=(20, 50))
         crc_colaborators = text.Text(crc.colaborators,
                                      insert=(160, 50))

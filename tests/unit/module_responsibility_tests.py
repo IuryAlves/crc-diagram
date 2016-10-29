@@ -13,20 +13,20 @@ from tests import test
 join = os.path.join
 
 
-class ModuleResponsabilityTestCase(test.CrcTestCase):
+class ModuleResponsibilityTestCase(test.CrcTestCase):
 
-    def test_module_responsability(self):
-        python_file = 'module_responsability'
+    def test_module_responsibility(self):
+        python_file = 'module_responsibility'
         result = py_to_crc(join(
             self.test_files,
             python_file))
 
-        self.assertEqual(result['module']['responsability'], 'Module Responsability')
+        self.assertEqual(result['module']['responsibility'], 'Module responsibility')
 
     def test_only_first_string_should_be_the_docstring(self):
-        python_file = 'module_responsability_multiple_strings'
+        python_file = 'module_responsibility_multiple_strings'
         result = py_to_crc(join(
             self.test_files,
             python_file))
 
-        self.assertEqual(result['module']['responsability'], 'First string')
+        self.assertEqual(result['module']['responsibility'], 'First string')
