@@ -7,7 +7,7 @@ from __future__ import (
 
 import subprocess
 import json
-from tests import test
+from pycrc import test
 
 
 class CrcNameTestCase(test.CrcTestCase):

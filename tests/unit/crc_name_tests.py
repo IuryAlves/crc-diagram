@@ -5,12 +5,9 @@ from __future__ import (
     unicode_literals
 )
 
-import os
+from os.path import join
 
-from pycrc import py_to_crc
-from tests import test
-
-join = os.path.join
+from pycrc import py_to_crc, test
 
 
 class CrcNameTestCase(test.CrcTestCase):

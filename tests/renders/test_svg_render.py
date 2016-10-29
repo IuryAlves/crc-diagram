@@ -8,13 +8,12 @@ from __future__ import (
 import tempfile
 from xml.etree import ElementTree
 
-from tests import test
-from pycrc.test import xml
+from pycrc.test import xml, CrcTestCase
 from pycrc.renders import Render, svg
 from pycrc.core.crc import CRC
 
 
-class SvgRenderTestCase(test.CrcTestCase):
+class SvgRenderTestCase(CrcTestCase):
 
     def test_svg_render_rect(self):
         crc = CRC(name='parser', responsibility='parse things', collaborators=['uploader'])
