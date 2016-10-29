@@ -4,4 +4,4 @@ tox==1.9.0
 flake8==2.6.2
 coveralls==1.1
 coverage==4.0.3
-ipdb
+ipdb==0.10.1
