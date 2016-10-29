@@ -8,6 +8,7 @@ import os
 
 from pycrc.core.crc_parser import CRCParser
 from pycrc.core.crc import CRC
+from pycrc.renders.svg import SvgRender
 from .exceptions import NotAPythonFile
 from .utils import ast_from_file
 
@@ -39,5 +40,6 @@ __all__ = [
     'CRCParser',
     'NotAPythonFile',
     'py_to_crc',
-    'project_to_crc'
+    'project_to_crc',
+    'SvgRender'
 ]
