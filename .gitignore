@@ -1,4 +1,6 @@
 *.py[co]
 .tox/
+venv/
 .coverage
 .idea
+
