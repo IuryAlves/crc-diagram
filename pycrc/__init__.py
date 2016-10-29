@@ -6,7 +6,7 @@ from __future__ import (
 )
 import os
 
-from pycrc.core.crc_parser import CRCParser
+from pycrc.core.parser import CRCParser
 from pycrc.core.crc import CRC
 from pycrc.renders import Render
 from pycrc.renders.svg import svg_render
@@ -23,9 +23,9 @@ def py_to_crc(module, folder=None):
         raise NotAPythonFile('File {file} is not a python file'.format(file=module))
     else:
         module_name = os.path.split(module)[-1].strip('.py')
-        crc_parser = CRCParser(module_name, CRC, tree)
-        crc_parser.run()
-        return crc_parser.to_dict()
+        parser = CRCParser(module_name, CRC, tree)
+        parser.run()
+        return parser.to_dict()
 
 
 def project_to_crc(folder):
