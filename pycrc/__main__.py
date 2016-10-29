@@ -12,7 +12,7 @@ import pycrc
 
 
 def _create_parser():
-    parser = argparse.ArgumentParser(description='Generete CRC diagrams from python code.')
+    parser = argparse.ArgumentParser(description='Generate CRC diagrams from python code.')
     parser.add_argument('--raw', type=bool)
     parser.add_argument('source')
     return parser
