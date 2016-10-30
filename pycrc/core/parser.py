@@ -9,54 +9,52 @@ import ast
 from pycrc._compat import get_function_argument_names
 
 
-class CRCParser(ast.NodeVisitor):
+def _build_class():
+    return {
+        "collaborators": [],
+        "docstring": "",
+        "methods": []
+    }
 
-    def __init__(self, module, crc, tree, *args, **kwargs):
-        super(CRCParser, self).__init__(*args, **kwargs)
+
+class Parser(ast.NodeVisitor):
+
+    def __init__(self, tree):
+        super(Parser, self).__init__()
         self.tree = tree
-        self.crc_class = crc
-        self.module = self.crc_class(name=module)
-        self.current_crc_class = None
-        self.classes = []
+        self._classes = {}
+        self.current_class = None
 
     def run(self):
         self.visit(self.tree)
-        self._add_module_responsibility()
+        return self
 
-    def to_dict(self):
+    def get_result(self):
         return {
-            'module': self.module.to_dict(),
-            'classes': [cls.to_dict() for cls in self.classes]
+            "classes": self._classes
         }
 
-    def _add_module_colaborator(self, node):
-        self.module.collaborators.extend(
-            [alias.name for alias in node.names]
-        )
-
-    def _add_module_responsibility(self):
-        self.module.responsibility = ast.get_docstring(self.tree)
-
-    def _add_class_colaborator(self, node):
+    def _get_class_collaborator(self, node):
         function_args = node.args.args
         function_args_names = get_function_argument_names(function_args, ('self', ))
-        self.current_crc_class.collaborators.extend(function_args_names)
+        self.current_class["collaborators"].extend(function_args_names)
+    
+    def _get_class_docstring(self, node):
+        self.current_class["docstring"] = ast.get_docstring(node) or ""
 
-    def _add_class_responsibility(self, node):
-        self.current_crc_class.responsibility = ast.get_docstring(node)
-
-    def visit_Import(self, node):
-        self._add_module_colaborator(node)
-
-    def visit_ImportFrom(self, node):
-        self._add_module_colaborator(node)
+    def _get_class_methods(self, node):
+        self.current_class['methods'].append(node.name)
 
     def visit_FunctionDef(self, node):
         if node.name == '__init__':
-            self._add_class_colaborator(node)
+            self._get_class_collaborator(node)
+        else:
+            self._get_class_methods(node)
 
     def visit_ClassDef(self, node):
-        self.current_crc_class = self.crc_class(name=node.name)
-        self._add_class_responsibility(node)
-        self.classes.append(self.current_crc_class)
+        self.current_class = _build_class()
+        self._get_class_docstring(node)
         self.generic_visit(node)
+        self._classes.update({
+            node.name: self.current_class
+        })

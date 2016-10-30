@@ -1,0 +1,13 @@
+class Character(object):
+
+    def attack(self):
+        pass
+
+    def roll(self):
+        pass
+
+    def walk(self):
+        pass
+
+    def guard(self):
+        pass

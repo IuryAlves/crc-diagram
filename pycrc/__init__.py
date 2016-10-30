@@ -6,7 +6,7 @@ from __future__ import (
 )
 import os
 
-from pycrc.core.parser import CRCParser
+from pycrc.core.parser import Parser
 from pycrc.core.crc import CRC
 from pycrc.renders import Render
 from pycrc.renders.svg import svg_render
@@ -38,7 +38,7 @@ def project_to_crc(folder):
 __all__ = [
     'ast_from_file',
     'CRC',
-    'CRCParser',
+    'Parser',
     'NotAPythonFile',
     'py_to_crc',
     'project_to_crc',
