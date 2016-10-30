@@ -1,5 +1,8 @@
 
 class HtmlParser(object):
 
-    def __init__(self, image_uploader):
-        self.image_uploader = image_uploader
+    """
+    @colaborator: ImageUploader
+    """
+    def __init__(self, ImageUploader):
+        self.image_uploader = ImageUploader()

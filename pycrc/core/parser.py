@@ -34,11 +34,6 @@ class Parser(ast.NodeVisitor):
             "classes": self._classes
         }
 
-    def _get_class_collaborator(self, node):
-        function_args = node.args.args
-        function_args_names = get_function_argument_names(function_args, ('self', ))
-        self.current_class["collaborators"].extend(function_args_names)
-    
     def _get_class_docstring(self, node):
         self.current_class["docstring"] = ast.get_docstring(node) or ""
 
@@ -46,9 +41,8 @@ class Parser(ast.NodeVisitor):
         self.current_class['methods'].append(node.name)
 
     def visit_FunctionDef(self, node):
-        if node.name == '__init__':
-            self._get_class_collaborator(node)
-        else:
+        name = node.name
+        if not name.startswith('__') and not name.endswith('__'):
             self._get_class_methods(node)
 
     def visit_ClassDef(self, node):

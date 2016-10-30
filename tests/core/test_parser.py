@@ -16,8 +16,8 @@ class ParserTestCase(test.CrcTestCase):
         result = Parser(tree).run().get_result()
 
         self.assertEqual(
-            result["classes"]["HtmlParser"]["collaborators"],
-            ["image_uploader"]
+            result["classes"]["HtmlParser"]["docstring"],
+            "@colaborator: ImageUploader"
         )
 
     def test_parser_class_docstring(self):
