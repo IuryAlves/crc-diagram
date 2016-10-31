@@ -26,7 +26,7 @@ A class represents a collection of similar objects, a responsibility is somethin
  and a collaborator is another class that a class interacts with to fulfill its responsibilities.
 
 
-**More information:**[here](http://agilemodeling.com/artifacts/crcModel.htm)
+[More information](http://agilemodeling.com/artifacts/crcModel.htm)
 
 
 ## Project Goal <a name='project_goal'></a>
@@ -46,8 +46,7 @@ class HtmlToMarkdown(object):
     # code
 ```
 
-The responsibility of the class is to convert html files to markdown.
-If the html has images, the class uses a collaborator called `image_uploader`
+The responsibility of the class is to convert html files to markdown, if the html has images, the class uses a collaborator called `image_uploader`
 to upload the images to somewhere.
 
 The CRC of this class could be represented as follows:
@@ -67,7 +66,7 @@ Where "Converts html files to markdown" is the responsibility of the class
 and "image_uploader" is a collaborator
 
 
-So to make pycrc generate the diagrams, you can add `annotations` to the docstring in the class:
+So to make pycrc generate the diagram, you add `annotations` to the docstring in the class:
 
 
 ```python
