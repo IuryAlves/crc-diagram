@@ -6,24 +6,21 @@ from __future__ import (
 )
 
 import ast
-from pycrc._compat import get_function_argument_names
+from .patterns import COLLABORATOR_PATTERN, RESPONSIBILITY_PATTERN
 
 
-def _build_class():
-    return {
-        "collaborators": [],
-        "docstring": "",
-        "methods": []
-    }
+class CRCParser(ast.NodeVisitor):
 
-
-class Parser(ast.NodeVisitor):
-
-    def __init__(self, tree):
-        super(Parser, self).__init__()
+    def __init__(self, tree, CRC,
+                 collaborator_pattern=COLLABORATOR_PATTERN,
+                 responsibility_pattern=RESPONSIBILITY_PATTERN):
+        super(CRCParser, self).__init__()
         self.tree = tree
-        self._classes = {}
-        self.current_class = None
+        self.CRC = CRC
+        self.responsibility_pattern = responsibility_pattern
+        self.collaborator_pattern = collaborator_pattern
+        self._crcs = []
+        self.current_crc = None
 
     def run(self):
         self.visit(self.tree)
@@ -31,24 +28,25 @@ class Parser(ast.NodeVisitor):
 
     def get_result(self):
         return {
-            "classes": self._classes
+            "classes": {crc.name: crc.to_dict() for crc in self._crcs}
         }
 
-    def _get_class_docstring(self, node):
-        self.current_class["docstring"] = ast.get_docstring(node) or ""
+    def _get_responsibility(self, string):
+        responsibility_match = self.responsibility_pattern.match(string)
+        if responsibility_match is not None:
+            responsibility = responsibility_match.group(1).strip()
+            self.current_crc.responsibilities.append(responsibility)
 
-    def _get_class_methods(self, node):
-        self.current_class['methods'].append(node.name)
-
-    def visit_FunctionDef(self, node):
-        name = node.name
-        if not name.startswith('__') and not name.endswith('__'):
-            self._get_class_methods(node)
+    def _get_collaborator(self, string):
+        collaborator_match = self.collaborator_pattern.match(string)
+        if collaborator_match is not None:
+            collaborator = collaborator_match.group(1).strip()
+            self.current_crc.collaborators.append(collaborator)
 
     def visit_ClassDef(self, node):
-        self.current_class = _build_class()
-        self._get_class_docstring(node)
-        self.generic_visit(node)
-        self._classes.update({
-            node.name: self.current_class
-        })
+        self.current_crc = self.CRC(name=node.name)
+        docstring = ast.get_docstring(node) or ""
+        for line in docstring.split('\n'):
+            self._get_collaborator(line)
+            self._get_responsibility(line)
+        self._crcs.append(self.current_crc)

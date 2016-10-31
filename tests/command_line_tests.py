@@ -19,15 +19,12 @@ class CrcNameTestCase(test.CrcTestCase):
         )
         out = subprocess.check_output(command.split())
         result = json.loads(out.decode())
-        self.assertEqual(result, {
-            'classes': [
-                {'collaborators': ['image_uploader'],
-                 'name': 'HtmlParser',
-                 'responsibility': None}
-            ],
-            'module': {
-                'collaborators': [],
-                'name': 'class_collaborator',
-                'responsibility': None
-            }
-        })
+        self.assertEqual(result,
+                         {
+                             'classes': {
+                                 'HtmlParser': {
+                                     'collaborators': ['ImageUploader'],
+                                     'responsibilities': []
+                                 }
+                             }
+                         })

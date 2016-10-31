@@ -1,0 +1,10 @@
+class Student(object):
+    """
+    @collaborator: Seminar
+    @collaborator: Transcript
+    @responsibility: enroll in seminars
+    @responsibility: drop seminars
+    @responsibility: request transcripts
+    """
+
+    pass

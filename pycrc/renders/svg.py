@@ -23,16 +23,15 @@ def svg_render(x, y, height, width, crc, filename,
                                     stroke_width=1,
                                     stroke="black")
         crc_name = text.Text(crc.name, insert=(20, 20))
-        crc_responsibility = text.Text(crc.responsibility,
-                                       insert=(20, 50))
-        crc_collaborators = text.Text(crc.collaborators,
-                                      insert=(160, 50))
 
         dwg = Drawing(filename)
         dwg.add(rect)
         dwg.add(horizontal_line)
         dwg.add(vertical_line)
         dwg.add(crc_name)
-        dwg.add(crc_responsibility)
-        dwg.add(crc_collaborators)
+
+        for responsibility in crc.responsibilities:
+            dwg.add(dwg.text(responsibility, insert=(20, 50)))
+        for collaborator in crc.collaborators:
+            dwg.add(dwg.text(collaborator, insert=(160, 50)))
         dwg.save()

@@ -16,7 +16,9 @@ from pycrc.core.crc import CRC
 class SvgRenderTestCase(CrcTestCase):
 
     def test_svg_render_rect(self):
-        crc = CRC(name='parser', responsibility='parse things', collaborators=['uploader'])
+        crc = CRC(name='parser',
+                  responsibilities=['parse things'],
+                  collaborators=['uploader'])
         with tempfile.NamedTemporaryFile() as tmp:
             Render(svg.svg_render, 0, 0, 150, 300).draw(crc, tmp.name)
             root = ElementTree.parse(tmp.name).getroot()
