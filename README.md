@@ -1,6 +1,6 @@
 # PyCRC
 
-Generate Class Responsibility Collaborator (CRC) Diagrams from python code
+Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 
 [![Coverage Status](https://coveralls.io/repos/github/IuryAlves/pycrc/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/pycrc?branch=master)
 [![Build Status](https://travis-ci.org/IuryAlves/pycrc.svg?branch=master)](https://travis-ci.org/IuryAlves/pycrc)
@@ -15,9 +15,10 @@ Generate Class Responsibility Collaborator (CRC) Diagrams from python code
 6. [Notes and Documentation](#notes_and_documentation)
 7. [Contributing](#contributing)
 
+
 ## What is CRC ? <a name='what_is_crc'></a>
 
-A Class Responsibility Collaborator (CRC) is a collection of standard index cards that have been divided into three sections.
+A Class Responsibility Collaboration (CRC) is a collection of standard index cards that have been divided into three sections.
 
 ![crc_card](docs/crc_card.jpg)
 
@@ -66,6 +67,23 @@ Where "Converts html files to markdown" is the responsibility of the class
 and "image_uploader" is a collaborator
 
 
+So to make pycrc generate the diagrams, you can add `annotations` to the docstring in the class:
+
+
+```python
+
+class HtmlToMarkdown(object):
+    """
+    @responsibility: Converts html files to markdown.
+    @collaborator: image_uploader
+    """
+
+    def __init__(self, image_uploader):
+        self.image_uploader = image_uploader
+
+    # code
+```
+
 ## Installing <a name='installing'></a>
 
     pip install -r requirements/base.txt
@@ -87,4 +105,3 @@ and "image_uploader" is a collaborator
 ## Contributing <a name='contributing'></a>
 
 See [contributing](CONTRIBUTING.md) guide.
-
