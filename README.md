@@ -3,9 +3,9 @@
 ![PyCRCDiagram Logo](artwork/logo.png)
 Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 
-[![Coverage Status](https://coveralls.io/repos/github/IuryAlves/pycrc/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/pycrc?branch=master)
-[![Build Status](https://travis-ci.org/IuryAlves/pycrc.svg?branch=master)](https://travis-ci.org/IuryAlves/pycrc)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3802e396ad414648a7f7b04741c92038)](https://www.codacy.com/app/satriani-16/pycrc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IuryAlves/pycrc&amp;utm_campaign=Badge_Grade)
+[![Coverage Status](https://coveralls.io/repos/github/IuryAlves/pycrcdiagram/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/pycrc?branch=master)
+[![Build Status](https://travis-ci.org/IuryAlves/PyCRCDiagram.svg?branch=master)](https://travis-ci.org/IuryAlves/PyCRCDiagram)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b7f477687d69483e9d0f4f216e802558)](https://www.codacy.com/app/satriani-16/PyCRCDiagram?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IuryAlves/PyCRCDiagram&amp;utm_campaign=Badge_Grade)
 
 # Table of contents
 1. [What is CRC](#what_is_crc)
