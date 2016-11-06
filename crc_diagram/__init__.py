@@ -6,24 +6,26 @@ from __future__ import (
 )
 import os
 
-from pycrc.core.parser import CRCParser
-from pycrc.core.crc import CRC
-from pycrc.renders import Render
-from pycrc.renders.svg import svg_render
-from .exceptions import NotAPythonFile
+from .core.parser import CRCParser
+from .core.crc import CRC
+from .renders import Render
+from .renders.svg import svg_render
+from .exceptions import ParserException
 from .utils import ast_from_file
 
 
-def py_to_crc(module, path=None):
+def py_to_crc(file, path=None):
+    """
+    return a list of CRC objects
+    """
     if path is not None:
-        module = os.path.join(path, module)
+        file = os.path.join(path, file)
     try:
-        tree = ast_from_file(module)
+        tree = ast_from_file(file)
     except (SyntaxError, ):
-        raise NotAPythonFile('File {file} is not a python file'.format(file=module))
+        raise ParserException('File {file} is not a python file'.format(file=file))
     else:
-        parser = CRCParser(tree, CRC)
-        return parser.run().get_result()
+        return CRCParser(tree, CRC).run().result
 
 
 def project_to_crc(path):

@@ -8,7 +8,7 @@ from __future__ import (
 import argparse
 import json
 import sys
-import pycrc
+import crc_diagram
 
 
 def _create_parser():
@@ -22,5 +22,5 @@ if __name__ == '__main__':
     args = _create_parser().parse_args()
 
     if args.raw:
-        result = pycrc.py_to_crc(args.source)
+        result = [crc.to_dict() for crc in crc_diagram.py_to_crc(args.source)]
         json.dump(result, sys.stdout, indent=4)
