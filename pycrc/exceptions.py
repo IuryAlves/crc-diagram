@@ -6,5 +6,5 @@ from __future__ import (
 )
 
 
-class NotAPythonFile(Exception):
+class ParserException(Exception):
     pass
