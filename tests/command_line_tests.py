@@ -7,13 +7,13 @@ from __future__ import (
 
 import subprocess
 import json
-from pycrc import test
+from crc_diagram import test
 
 
 class CommandLineTestCase(test.CrcTestCase):
 
     def test_execute_as_raw(self):
-        command = 'python -m pycrc --raw=true {test_files}/{file}'.format(
+        command = 'python -m crc_diagram --raw=true {test_files}/{file}'.format(
             test_files=self.test_files,
             file='class_collaborator'
         )

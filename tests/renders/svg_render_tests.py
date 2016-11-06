@@ -8,9 +8,9 @@ from __future__ import (
 import tempfile
 from xml.etree import ElementTree
 
-from pycrc.test import xml, CrcTestCase
-from pycrc.renders import Render, svg
-from pycrc.core.crc import CRC
+from crc_diagram.test import xml, CrcTestCase
+from crc_diagram.renders import Render, svg
+from crc_diagram.core.crc import CRC
 
 
 class SvgRenderTestCase(CrcTestCase):

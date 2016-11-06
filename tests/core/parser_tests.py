@@ -6,7 +6,7 @@ from __future__ import (
 )
 
 from os.path import join
-from pycrc import CRCParser, CRC, test, utils
+from crc_diagram import CRCParser, CRC, test, utils
 
 
 class CRCParserTestCase(test.CrcTestCase):

@@ -5,7 +5,7 @@ from __future__ import (
     unicode_literals
 )
 
-from pycrc import py_to_crc, ParserException, test
+from crc_diagram import py_to_crc, ParserException, test
 
 
 class PyToCrcTestCase(test.CrcTestCase):

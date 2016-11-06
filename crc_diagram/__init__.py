@@ -6,10 +6,10 @@ from __future__ import (
 )
 import os
 
-from pycrc.core.parser import CRCParser
-from pycrc.core.crc import CRC
-from pycrc.renders import Render
-from pycrc.renders.svg import svg_render
+from .core.parser import CRCParser
+from .core.crc import CRC
+from .renders import Render
+from .renders.svg import svg_render
 from .exceptions import ParserException
 from .utils import ast_from_file
 
