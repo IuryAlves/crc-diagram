@@ -5,7 +5,7 @@ from __future__ import (
     unicode_literals
 )
 
-from crc_diagram import py_to_crc, ParserException, test
+from crc_diagram import py_to_crc, test, exceptions
 
 
 class PyToCrcTestCase(test.CrcTestCase):
@@ -13,7 +13,7 @@ class PyToCrcTestCase(test.CrcTestCase):
     def test_raise_exception_if_is_not_python_file(self):
         file = 'not_a_python_file'
 
-        with self.assertRaises(ParserException) as context:
+        with self.assertRaises(exceptions.ParserException) as context:
             py_to_crc(file, self.test_files)
 
         self.assertIn('not_a_python_file is not a python file',

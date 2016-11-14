@@ -10,7 +10,7 @@ from xml.etree import ElementTree
 
 from crc_diagram.test import xml, CrcTestCase
 from crc_diagram.renders import Render, svg
-from crc_diagram.core.crc import CRC
+from crc_diagram.core import CRC
 
 
 class SvgRenderTestCase(CrcTestCase):
