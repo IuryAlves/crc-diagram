@@ -8,7 +8,7 @@ import tempfile
 from xml.etree import ElementTree
 
 from crc_diagram.test import xml, CrcTestCase
-from crc_diagram.renders import Render, svg
+from crc_diagram.renders import RenderTo
 from crc_diagram.core import CRC
 
 
@@ -19,7 +19,7 @@ class SvgRenderTestCase(CrcTestCase):
                   responsibilities=['parse things'],
                   collaborators=['uploader'])
         with tempfile.NamedTemporaryFile() as tmp:
-            Render(svg.svg_render, 0, 0, 150, 300).draw(crc, tmp.name)
+            RenderTo('svg', 0, 0, 150, 300).draw([crc], tmp.name)
             root = ElementTree.parse(tmp.name).getroot()
 
         rects = root.findall('svg:rect', xml.svg_namespace)

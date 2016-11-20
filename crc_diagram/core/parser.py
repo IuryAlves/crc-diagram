@@ -28,7 +28,7 @@ class CRCParser(ast.NodeVisitor):
 
     @property
     def result(self):
-        return (crc for crc in self._crcs)
+        return [crc for crc in self._crcs]
 
     def get_responsibility(self, string):
         responsibility = self._get_annotation(

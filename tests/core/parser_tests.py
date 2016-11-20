@@ -14,25 +14,25 @@ class CRCParserTestCase(test.CrcTestCase):
 
     def test_parser_class_collaborator(self):
         tree = utils.ast_from_file(join(self.test_files, 'class_collaborator'))
-        crc_gen = CRCParser(tree, CRC).run().result
-        crc = next(crc_gen)
+        crc_cards = CRCParser(tree, CRC).run().result
+        crc_card = crc_cards[0]
         self.assertListEqual(
-            crc.collaborators,
+            crc_card.collaborators,
             ["ImageUploader"]
         )
 
     def test_parser_class_responsibility(self):
         tree = utils.ast_from_file(join(self.test_files, 'class_responsibility'))
-        crc_gen = CRCParser(tree, CRC).run().result
-        crc = next(crc_gen)
+        crc_cards = CRCParser(tree, CRC).run().result
+        crc_card = crc_cards[0]
 
         self.assertListEqual(
-            crc.responsibilities,
+            crc_card.responsibilities,
             ["A class that represents a game scene"]
         )
 
     def test_parser_class_name(self):
         tree = utils.ast_from_file(join(self.test_files, 'class_collaborator'))
-        crc_gen = CRCParser(tree, CRC).run().result
-        crc = next(crc_gen)
-        self.assertEqual(crc.name, "HtmlParser")
+        crc_cards = CRCParser(tree, CRC).run().result
+        crc_card = crc_cards[0]
+        self.assertEqual(crc_card.name, "HtmlParser")

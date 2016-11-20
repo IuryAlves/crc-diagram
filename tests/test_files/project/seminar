@@ -1,0 +1,8 @@
+class Seminar(object):
+    """
+    @collaborator: Transcript
+    @responsibility: List transcripts
+    @responsibility: Get end date
+    @responsibility: Get start date
+    """
+    pass
