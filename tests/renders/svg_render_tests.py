@@ -2,15 +2,14 @@
 
 from __future__ import (
     absolute_import,
-    unicode_literals
 )
 
 import tempfile
 from xml.etree import ElementTree
 
 from crc_diagram.test import xml, CrcTestCase
-from crc_diagram.renders import Render, svg
-from crc_diagram.core.crc import CRC
+from crc_diagram.renders import RenderTo
+from crc_diagram.core import CRC
 
 
 class SvgRenderTestCase(CrcTestCase):
@@ -20,17 +19,35 @@ class SvgRenderTestCase(CrcTestCase):
                   responsibilities=['parse things'],
                   collaborators=['uploader'])
         with tempfile.NamedTemporaryFile() as tmp:
-            Render(svg.svg_render, 0, 0, 150, 300).draw(crc, tmp.name)
+            RenderTo('svg', 0, 0, 150, 300).draw([crc], tmp.name)
             root = ElementTree.parse(tmp.name).getroot()
 
-        element = root.findall('svg:rect', xml.svg_namespace)[0]
+        rects = root.findall('svg:rect', xml.svg_namespace)
 
-        self.assertEqual(element.attrib,
-                         {'fill': 'white',
-                          'height': '150',
-                          'stroke': 'black',
-                          'stroke-width': '1',
-                          'width': '300',
-                          'x': '0',
-                          'y': '0'
-                          })
+        self.assertDictEqual(rects[0].attrib,
+                             {'fill': 'white',
+                              'height': '30',
+                              'stroke': 'black',
+                              'stroke-width': '1',
+                              'width': '300',
+                              'x': '0',
+                              'y': '0'
+                              })
+
+        self.assertDictEqual(rects[1].attrib,
+                             {'fill': 'white',
+                              'height': '120',
+                              'stroke': 'black',
+                              'stroke-width': '1',
+                              'width': '150',
+                              'x': '0',
+                              'y': '30'})
+
+        self.assertDictEqual(rects[2].attrib,
+                             {'fill': 'white',
+                              'height': '120',
+                              'stroke': 'black',
+                              'stroke-width': '1',
+                              'width': '150',
+                              'x': '150',
+                              'y': '30'})

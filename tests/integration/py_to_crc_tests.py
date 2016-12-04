@@ -5,7 +5,8 @@ from __future__ import (
     unicode_literals
 )
 
-from crc_diagram import py_to_crc, ParserException, test
+from os.path import join
+from crc_diagram import py_to_crc, test, exceptions
 
 
 class PyToCrcTestCase(test.CrcTestCase):
@@ -13,19 +14,19 @@ class PyToCrcTestCase(test.CrcTestCase):
     def test_raise_exception_if_is_not_python_file(self):
         file = 'not_a_python_file'
 
-        with self.assertRaises(ParserException) as context:
+        with self.assertRaises(exceptions.ParserException) as context:
             py_to_crc(file, self.test_files)
 
         self.assertIn('not_a_python_file is not a python file',
                       str(context.exception))
 
     def test_py_to_crc(self):
-        file = 'class_responsibilities_and_collaborators'
+        file = join('project', 'student')
 
-        crc_gen = py_to_crc(file, self.test_files)
-        crc = next(crc_gen)
+        crc_cards = py_to_crc(file, self.test_files)
+        crc_card = crc_cards[0]
 
-        self.assertDictEqual(crc.to_dict(), {
+        self.assertDictEqual(crc_card.to_dict(), {
                 'name': 'Student',
                 'collaborators': ['Seminar', 'Transcript'],
                 'responsibilities': [
