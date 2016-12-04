@@ -6,7 +6,6 @@ Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 
 [![Coverage Status](https://coveralls.io/repos/github/IuryAlves/pycrcdiagram/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/pycrcdiagram?branch=master)
 [![Build Status](https://travis-ci.org/IuryAlves/PyCRCDiagram.svg?branch=master)](https://travis-ci.org/IuryAlves/PyCRCDiagram)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b7f477687d69483e9d0f4f216e802558)](https://www.codacy.com/app/satriani-16/PyCRCDiagram?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=IuryAlves/PyCRCDiagram&amp;utm_campaign=Badge_Grade)
 
 # Table of contents
 1. [What is CRC](#what_is_crc)
