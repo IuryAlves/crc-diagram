@@ -14,7 +14,7 @@ from crc_diagram.core import CRC
 
 class SvgRenderTestCase(CrcTestCase):
 
-    def test_svg_render_rect(self):
+    def test_svg_render(self):
         crc = CRC(name='parser',
                   responsibilities=['parse things'],
                   collaborators=['uploader'])

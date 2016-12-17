@@ -18,9 +18,9 @@ def _create_parser():
     parser = argparse.ArgumentParser(description='Generate CRC diagrams from python code.')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--raw', type=bool)
-    group.add_argument('--render', default='svg')
+    group.add_argument('--render', default='svg', type=str)
     parser.add_argument('source')
-    parser.add_argument('--out', default=sys.stdout)
+    parser.add_argument('out')
     return parser
 
 
@@ -34,6 +34,7 @@ if __name__ == '__main__':
         crc_cards = crc_diagram.py_to_crc(source)
 
     if args.raw:
+        out = out or sys.stdout
         json.dump([crc.to_dict() for crc in crc_cards], out, indent=4)
     else:
-        RenderTo('svg', 0, 0, 150, 300).draw(crc_cards, out)
+        RenderTo(args.render, 0, 0, 150, 300).draw(crc_cards, out)

@@ -21,18 +21,17 @@ class PyToCrcTestCase(test.CrcTestCase):
                       str(context.exception))
 
     def test_py_to_crc(self):
-        file = join('project', 'student')
+        file = join('project', 'student.py')
 
         crc_cards = py_to_crc(file, self.test_files)
         crc_card = crc_cards[0]
 
         self.assertDictEqual(crc_card.to_dict(), {
                 'name': 'Student',
-                'collaborators': ['Seminar', 'Transcript'],
+                'collaborators': ['Enrollment'],
                 'responsibilities': [
-                    'enroll in seminars',
-                    'drop seminars',
-                    'request transcripts'
-                    ]
+                    'Validate Identifying info',
+                    'Provide list of seminars taken'
+                ]
                 }
         )

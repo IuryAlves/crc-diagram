@@ -53,7 +53,7 @@ class SvgRender(AbstractRender):
         half_width = self.width // 2
         height_minus_30 = self.height - 30
         x, y = self.start_x, self.start_y
-        for crc_card in self.crc_cards:
+        for index, crc_card in enumerate(self.crc_cards):
             title_rect = self.get_title_rect(x, y)
             responsibilities_rect = self.get_responsibilities_rect(x, y, half_width, height_minus_30)
             collaborators_rect = self.get_collaborators_rect(x, y, half_width, height_minus_30)
@@ -62,7 +62,12 @@ class SvgRender(AbstractRender):
             self.drawing.add(title_rect)
             self.drawing.add(responsibilities_rect)
             self.drawing.add(collaborators_rect)
-            self.add_texts(card_name, 20, 20)
-            self.add_texts(crc_card.responsibilities, 20, 50)
-            self.add_texts(crc_card.collaborators, 160, 50)
+            self.add_texts(card_name, x + 20, y + 20)
+            self.add_texts(crc_card.responsibilities, x + 20, y + 50)
+            self.add_texts(crc_card.collaborators, x + 160, y + 50)
+            y += 180
+            if index > 2:
+                x += 350
+                y = 0
+
         return self.drawing.saveas(filename)

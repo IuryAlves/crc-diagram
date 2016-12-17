@@ -1,4 +1,0 @@
-class GameScene(object):
-    """
-    @responsibility: A class that represents a game scene
-    """
