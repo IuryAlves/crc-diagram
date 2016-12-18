@@ -1,4 +1,9 @@
-## How to contribute to CRCDiagram
+# How to contribute to CRCDiagram
+
+1. [Contributing Guide](#contributing)
+2. [Running tests](#running_tests)
+
+## Running tests <a name='contributing'></a>
 
 ### First of all, thanks for contributing :tada: :tada: :tada:
 
@@ -24,3 +29,13 @@
 #### **Do you fix the bug, but don't know how to write tests?**
 
 * No problem. Submit a pull request and someone will help you writing the tests.
+
+
+
+## Running tests <a name='running_tests'></a>
+
+    pip install -r requirements/develop.txt
+    tox
+
+
+

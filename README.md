@@ -2,7 +2,7 @@
 
 Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 
-[![Coverage Status](https://coveralls.io/repos/github/IuryAlves/CRCDiagram/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/CRCDiagram?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/IuryAlves/pycrc/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/CRCDiagram?branch=master)
 [![Build Status](https://travis-ci.org/IuryAlves/CRCDiagram.svg?branch=master)](https://travis-ci.org/IuryAlves/CRCDiagram)
 
 # Table of contents
@@ -10,7 +10,6 @@ Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 2. [Project Goal](#project_goal)
 3. [Installing](#installing)
 4. [Usage](#usage)
-5. [Running Tests](#running_tests)
 6. [Notes and Documentation](#notes_and_documentation)
 7. [Contributing](#contributing)
 
@@ -19,7 +18,16 @@ Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 
 A Class Responsibility Collaboration (CRC) is a collection of standard index cards that have been divided into three sections.
 
-![crc_card](docs/crc_card.jpg)
+```
+----------------------------------------|
+|           HtmlToMarkdown              |
+|---------------------------------------|
+| Converts html files  | image_uploader |
+|  to markdown         |                |
+|                      |                |
+-----------------------------------------
+```
+
 
 A class represents a collection of similar objects, a responsibility is something that a class knows or does,
  and a collaborator is another class that a class interacts with to fulfill its responsibilities.
@@ -90,11 +98,6 @@ class HtmlToMarkdown(object):
 ## Usage <a name='usage'></a>
 
     TODO
-
-## Running tests <a name='running_tests'></a>
-
-    pip install -r requirements/develop.txt
-    tox
 
 ## Notes and Documentation <a name='notes_and_documentation'></a>
 
