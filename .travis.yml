@@ -7,7 +7,7 @@ before_script:
   - pip install -r requirements/develop.txt
 
 script:
-  - python tests
+  - coverage run python tests
   - flake8 .
 
 after_success:
