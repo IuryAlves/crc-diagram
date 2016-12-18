@@ -1,11 +1,9 @@
-# PyCRCDiagram  
+# CRCDiagram  
 
-![PyCRCDiagram Logo](artwork/logo.png)
-<br>
 Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 
-[![Coverage Status](https://coveralls.io/repos/github/IuryAlves/pycrcdiagram/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/pycrcdiagram?branch=master)
-[![Build Status](https://travis-ci.org/IuryAlves/PyCRCDiagram.svg?branch=master)](https://travis-ci.org/IuryAlves/PyCRCDiagram)
+[![Coverage Status](https://coveralls.io/repos/github/IuryAlves/CRCDiagram/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/CRCDiagram?branch=master)
+[![Build Status](https://travis-ci.org/IuryAlves/CRCDiagram.svg?branch=master)](https://travis-ci.org/IuryAlves/CRCDiagram)
 
 # Table of contents
 1. [What is CRC](#what_is_crc)
@@ -67,7 +65,7 @@ Where "Converts html files to markdown" is the responsibility of the class
 and "image_uploader" is a collaborator
 
 
-So to make PyCRCDiagram generate the diagram, you add `annotations` to the docstring in the class:
+So to make CRCDiagram generate the diagram, you add `annotations` to the docstring in the class:
 
 
 ```python
