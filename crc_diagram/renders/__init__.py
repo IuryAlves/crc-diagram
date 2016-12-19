@@ -27,10 +27,11 @@ class RenderTo(object):
             try:
                 strategy = available_strategies[strategy]
             except KeyError:
+                options = ','.join(available_strategies.keys())
                 raise Exception('Strategy {strategy} not available.'
-                                ' Options are {available_strategies}'.format(
+                                ' Options are: {options}.'.format(
                                     strategy=strategy,
-                                    available_strategies=available_strategies))
+                                    options=options))
         self.strategy = strategy
 
     def draw(self, crc_cards, filename):

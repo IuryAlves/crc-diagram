@@ -8,7 +8,6 @@ from __future__ import (
 import json
 import sys
 import os
-from itertools import chain
 import click
 import crc_diagram
 from crc_diagram.renders import RenderTo
@@ -22,7 +21,7 @@ from crc_diagram.renders import RenderTo
 def main(source, out, raw, render):
 
     if os.path.isdir(source):
-        crc_cards = chain.from_iterable(crc_diagram.project_to_crc(source))
+        crc_cards = crc_diagram.project_to_crc(source)
     else:
         crc_cards = crc_diagram.py_to_crc(source)
 

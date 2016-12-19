@@ -27,7 +27,8 @@ def py_to_crc(file, path=None):
 
 
 def project_to_crc(path):
-    for item in os.walk(path):
-        files = item[2]
+    crcs = []
+    for _, _, files in os.walk(path):
         for file in files:
-            yield py_to_crc(file, path=path)
+            crcs.extend(py_to_crc(file, path=path))
+    return crcs

@@ -14,10 +14,18 @@ from crc_diagram import test
 
 class CommandLineTestCase(test.CrcTestCase):
 
+    def setUp(self):
+        super(CommandLineTestCase, self).setUp()
+        self.out_file = 'test.svg'
+
+    def tearDown(self):
+        os.remove(self.out_file)
+
     def test_render_crc_cards_as_svg(self):
-        command = 'python -m crc_diagram --render=svg {test_files}/{folder} test.svg'.format(
+        command = 'python -m crc_diagram --render=svg {test_files}/{folder} {out_file}'.format(
             test_files=self.test_files,
-            folder='project'
+            folder='project',
+            out_file=self.out_file
         )
         status = subprocess.check_call(command.split())
 
