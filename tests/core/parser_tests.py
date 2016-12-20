@@ -7,10 +7,11 @@ from __future__ import (
 
 from os.path import join
 from crc_diagram.core import CRCParser, CRC
-from crc_diagram import test, utils
+from crc_diagram import utils
+from crc_diagram.test import testcase
 
 
-class CRCParserTestCase(test.CrcTestCase):
+class CRCParserTestCase(testcase.CrcTestCase):
 
     def test_parser_class_collaborator(self):
         tree = utils.ast_from_file(join(self.test_files, 'project', 'student.py'))

@@ -7,7 +7,8 @@ from __future__ import (
 import tempfile
 from xml.etree import ElementTree
 
-from crc_diagram.test import xml, CrcTestCase
+from crc_diagram.test import xml
+from crc_diagram.test.testcase import CrcTestCase
 from crc_diagram.renders import render_to
 from crc_diagram.core import CRC
 

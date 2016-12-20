@@ -9,10 +9,10 @@ import unittest
 import subprocess
 import json
 import os
-from crc_diagram import test
+from crc_diagram.test import testcase
 
 
-class CommandLineTestCase(test.CrcTestCase):
+class CommandLineTestCase(testcase.CrcTestCase):
 
     def test_render_crc_cards_as_svg(self):
         command = 'python -m crc_diagram --render=svg {test_files}/{folder} test.svg'.format(

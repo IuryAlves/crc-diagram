@@ -6,10 +6,11 @@ from __future__ import (
 )
 
 from os.path import join
-from crc_diagram import py_to_crc, test, exceptions
+from crc_diagram import py_to_crc,  exceptions
+from crc_diagram.test import testcase
 
 
-class PyToCrcTestCase(test.CrcTestCase):
+class PyToCrcTestCase(testcase.CrcTestCase):
 
     def test_raise_exception_if_is_not_python_file(self):
         file = 'not_a_python_file'

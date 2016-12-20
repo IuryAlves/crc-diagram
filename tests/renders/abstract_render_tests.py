@@ -4,7 +4,7 @@ from __future__ import (
     absolute_import,
 )
 
-from crc_diagram.test import CrcTestCase
+from crc_diagram.test.testcase import CrcTestCase
 from crc_diagram.renders import AbstractRender
 
 

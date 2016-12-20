@@ -6,10 +6,11 @@ from __future__ import (
 )
 
 from os.path import join
-from crc_diagram import project_to_crc, test
+from crc_diagram import project_to_crc
+from crc_diagram.test import testcase
 
 
-class ProjectToCrcTestCase(test.CrcTestCase):
+class ProjectToCrcTestCase(testcase.CrcTestCase):
 
     def test_project_to_crc(self):
         project_path = join(self.test_files, 'project')
