@@ -10,7 +10,7 @@ import sys
 import os
 import click
 import crc_diagram
-from crc_diagram.renders import RenderTo
+from crc_diagram.renders import render_to
 
 
 @click.command(name='pycrc')
@@ -31,7 +31,7 @@ def main(source, out, raw, render):
     else:
         if out is None:
             raise click.UsageError('Missing argument "out".')
-        RenderTo(render, 0, 0, 150, 300).draw(crc_cards, out)
+        render_to(render, 0, 0, 150, 300, crc_cards, out)
 
 if __name__ == '__main__':
     main()
