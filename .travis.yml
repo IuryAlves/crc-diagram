@@ -7,8 +7,7 @@ before_script:
   - pip install -r requirements/develop.txt
 
 script:
-  - coverage run tests/__main__.py
-  - flake8 .
+  - ci/tests.sh
 
 after_success:
   - coveralls

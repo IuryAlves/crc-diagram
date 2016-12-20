@@ -35,8 +35,7 @@
 ## Running tests <a name='running_tests'></a>
 
     pip install -r requirements/develop.txt
-    python tests
-    flake8 .
+    ci/tests.sh
 
 
 
