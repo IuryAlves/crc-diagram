@@ -7,13 +7,13 @@ from __future__ import (
 )
 
 from abc import ABCMeta, abstractmethod
+from six import with_metaclass
 
 
-class AbstractRender(object):
+class AbstractRender(with_metaclass(ABCMeta)):
     """
     A base render. Must be extended.
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self, start_x, start_y, height, width, crc_cards):
         self.start_x = start_x
@@ -24,20 +24,20 @@ class AbstractRender(object):
 
     @abstractmethod
     def add_texts(self, *args, **kwargs):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def get_title_rect(self, *args, **kwargs):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def get_responsibilities_rect(self, *args, **kwargs):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def get_collaborators_rect(self, *args, **kwargs):
-        pass
+        pass  # pragma: no cover
 
     @abstractmethod
     def render(self, *args, **kwargs):
-        pass
+        pass  # pragma: no cover

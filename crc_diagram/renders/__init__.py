@@ -7,12 +7,14 @@ from __future__ import (
 
 from six import string_types
 from .svg import SvgRender
+from .abstract import AbstractRender
 
 
 __all__ = [
     'available_renders',
     'render_to'
-    'SvgRender'
+    'SvgRender',
+    'AbstractRender'
 ]
 
 
