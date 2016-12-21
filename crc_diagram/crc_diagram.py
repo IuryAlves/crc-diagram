@@ -12,7 +12,7 @@ from .exceptions import ParserException
 from .utils import ast_from_file
 
 
-def py_to_crc(file, path=None):
+def py_to_crc(file, path=None, parser_class=CRCParser):
     """
     return a list of CRC objects
     """
@@ -23,7 +23,7 @@ def py_to_crc(file, path=None):
     except (SyntaxError, ):
         raise ParserException('File {file} is not a python file'.format(file=file))
     else:
-        return CRCParser(tree, CRC).run().result
+        return parser_class(tree, CRC).run().result
 
 
 def project_to_crc(path):
