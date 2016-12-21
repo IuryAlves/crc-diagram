@@ -26,9 +26,9 @@ def py_to_crc(file, path=None, parser_class=CRCParser):
         return parser_class(tree, CRC).run().result
 
 
-def project_to_crc(path):
+def project_to_crc(path, parser_class=CRCParser):
     crcs = []
     for _, _, files in os.walk(path):
         for file in files:
-            crcs.extend(py_to_crc(file, path=path))
+            crcs.extend(py_to_crc(file, path=path, parser_class=parser_class))
     return crcs
