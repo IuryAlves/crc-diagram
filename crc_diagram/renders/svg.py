@@ -24,20 +24,20 @@ class SvgRender(AbstractRender):
             self.drawing.add(self.drawing.text(text, insert=(x, y + position_y)))
             position_y += 15
 
-    def get_title_rect(self, x, y):
+    def get_title_box(self, x, y):
         return shapes.Rect(insert=(x, y), size=(self.width, 30),
                            fill=self.fill,
                            stroke_width=self.stroke_width,
                            stroke=self.stroke)
 
-    def get_responsibilities_rect(self, x, y, half_width, height_minus_30):
+    def get_responsibilities_box(self, x, y, half_width, height_minus_30):
         return shapes.Rect(insert=(x, y + 30),
                            size=(half_width, height_minus_30),
                            fill=self.fill,
                            stroke_width=self.stroke_width,
                            stroke=self.stroke)
 
-    def get_collaborators_rect(self, x, y, half_width, height_minus_30):
+    def get_collaborators_box(self, x, y, half_width, height_minus_30):
         return shapes.Rect(insert=(x + half_width, y + 30),
                            size=(half_width, height_minus_30),
                            fill=self.fill,
@@ -54,9 +54,9 @@ class SvgRender(AbstractRender):
         height_minus_30 = self.height - 30
         x, y = self.start_x, self.start_y
         for index, crc_card in enumerate(self.crc_cards):
-            title_rect = self.get_title_rect(x, y)
-            responsibilities_rect = self.get_responsibilities_rect(x, y, half_width, height_minus_30)
-            collaborators_rect = self.get_collaborators_rect(x, y, half_width, height_minus_30)
+            title_rect = self.get_title_box(x, y)
+            responsibilities_rect = self.get_responsibilities_box(x, y, half_width, height_minus_30)
+            collaborators_rect = self.get_collaborators_box(x, y, half_width, height_minus_30)
             card_name = self.format_card_name(crc_card.name)
 
             self.drawing.add(title_rect)

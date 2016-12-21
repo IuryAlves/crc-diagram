@@ -27,15 +27,15 @@ class AbstractRender(with_metaclass(ABCMeta)):
         pass  # pragma: no cover
 
     @abstractmethod
-    def get_title_rect(self, *args, **kwargs):
+    def get_title_box(self, *args, **kwargs):
         pass  # pragma: no cover
 
     @abstractmethod
-    def get_responsibilities_rect(self, *args, **kwargs):
+    def get_responsibilities_box(self, *args, **kwargs):
         pass  # pragma: no cover
 
     @abstractmethod
-    def get_collaborators_rect(self, *args, **kwargs):
+    def get_collaborators_box(self, *args, **kwargs):
         pass  # pragma: no cover
 
     @abstractmethod
