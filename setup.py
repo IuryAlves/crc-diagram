@@ -10,7 +10,7 @@ def parse_requirements(requirements_file):
                                                                    fp.read().splitlines())
     return list(requirements)
 
-def list_
+
 setup(name='crcdiagram',
       version='0.0.1',
       url="https://github.com/IuryAlves/crcdiagram",
