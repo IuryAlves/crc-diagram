@@ -6,8 +6,10 @@ from os import path
 
 def parse_requirements(requirements_file):
     with open(requirements_file) as fp:
-        requirements = map(lambda requirement: requirement.replace('==', '>='),
-                                                                   fp.read().splitlines())
+        requirements = map(
+          lambda requirement: requirement.replace('==', '>='),
+          fp.read().splitlines()
+        )
     return list(requirements)
 
 
@@ -22,6 +24,6 @@ setup(name='crcdiagram',
       entry_points={
           'console_scripts': [
               'crc_diagram = crc_diagram.__main__:main'
-          ]
-      }
-)
+              ]
+          }
+      )
