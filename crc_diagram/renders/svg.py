@@ -21,6 +21,7 @@ class SvgRender(AbstractRender):
             texts = [texts]
         position_y = 0
         for text in texts:
+            text = self.format(text, max_chars=17)
             self.drawing.add(self.drawing.text(text, insert=(x, y + position_y)))
             position_y += 15
 
@@ -44,10 +45,10 @@ class SvgRender(AbstractRender):
                            stroke_width=self.stroke_width,
                            stroke=self.stroke)
 
-    def format_card_name(self, card_name):
-        if len(card_name) > 35:
-            card_name = card_name[:35] + ' ...'
-        return card_name
+    def format(self, text, max_chars=35):
+        if len(text) > max_chars:
+            text = text[:max_chars] + ' ...'
+        return text
 
     def render(self, filename):
         half_width = self.width // 2
@@ -57,7 +58,7 @@ class SvgRender(AbstractRender):
             title_rect = self.get_title_box(x, y)
             responsibilities_rect = self.get_responsibilities_box(x, y, half_width, height_minus_30)
             collaborators_rect = self.get_collaborators_box(x, y, half_width, height_minus_30)
-            card_name = self.format_card_name(crc_card.name)
+            card_name = self.format(crc_card.name)
 
             self.drawing.add(title_rect)
             self.drawing.add(responsibilities_rect)

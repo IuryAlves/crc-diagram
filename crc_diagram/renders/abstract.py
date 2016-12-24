@@ -41,3 +41,6 @@ class AbstractRender(with_metaclass(ABCMeta)):
     @abstractmethod
     def render(self, *args, **kwargs):
         pass  # pragma: no cover
+
+    def format_text(self, text, max_chars=None):
+        return text
