@@ -7,16 +7,16 @@ from __future__ import (
 
 import ast
 from .patterns import COLLABORATOR_PATTERN, RESPONSIBILITY_PATTERN
+from .crc import CRC
 
 
 class CRCParser(ast.NodeVisitor):
 
-    def __init__(self, tree, CRC,
+    def __init__(self, tree,
                  collaborator_pattern=COLLABORATOR_PATTERN,
                  responsibility_pattern=RESPONSIBILITY_PATTERN):
         super(CRCParser, self).__init__()
         self.tree = tree
-        self.CRC = CRC
         self.responsibility_pattern = responsibility_pattern
         self.collaborator_pattern = collaborator_pattern
         self._crcs = []
@@ -48,7 +48,7 @@ class CRCParser(ast.NodeVisitor):
         return annotation.group(1).strip() if annotation is not None else None
 
     def visit_ClassDef(self, node):
-        self.current_crc = self.CRC(name=node.name)
+        self.current_crc = CRC(name=node.name)
         docstring = ast.get_docstring(node) or ""
         for line in docstring.split('\n'):
             self.get_collaborator(line)

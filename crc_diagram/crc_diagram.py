@@ -7,7 +7,7 @@ from __future__ import (
 
 import os
 
-from .core import CRCParser, CRC
+from .core import CRCParser
 from .exceptions import ParserException
 from .utils import ast_from_file
 
@@ -23,7 +23,7 @@ def py_to_crc(file, path=None, parser_class=CRCParser):
     except (SyntaxError, ):
         raise ParserException('File {file} is not a python file'.format(file=file))
     else:
-        return parser_class(tree, CRC).run().result
+        return parser_class(tree).run().result
 
 
 def project_to_crc(path, parser_class=CRCParser):
