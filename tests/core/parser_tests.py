@@ -7,15 +7,13 @@ from __future__ import (
 
 from os.path import join
 from crc_diagram.core import CRCParser
-from crc_diagram import utils
 from crc_diagram.test import testcase
 
 
 class CRCParserTestCase(testcase.CrcTestCase):
 
     def test_parser_class_collaborator(self):
-        tree = utils.ast_from_file(join(self.test_files, 'project', 'student.py'))
-        crc_cards = CRCParser(tree).run().result
+        crc_cards = CRCParser(join(self.test_files, 'project', 'student.py')).run().result
         crc_card = crc_cards[0]
         self.assertListEqual(
             crc_card.collaborators,
@@ -23,8 +21,9 @@ class CRCParserTestCase(testcase.CrcTestCase):
         )
 
     def test_parser_class_responsibility(self):
-        tree = utils.ast_from_file(join(self.test_files, 'project', 'enrollment.py'))
-        crc_cards = CRCParser(tree).run().result
+
+        with open(join(self.test_files, 'project', 'enrollment.py')) as fp:
+            crc_cards = CRCParser(fp).run().result
         crc_card = crc_cards[0]
 
         self.assertListEqual(
@@ -33,7 +32,6 @@ class CRCParserTestCase(testcase.CrcTestCase):
         )
 
     def test_parser_class_name(self):
-        tree = utils.ast_from_file(join(self.test_files, 'project', 'seminar.py'))
-        crc_cards = CRCParser(tree).run().result
+        crc_cards = CRCParser(join(self.test_files, 'project', 'seminar.py')).run().result
         crc_card = crc_cards[0]
         self.assertEqual(crc_card.name, "Seminar")

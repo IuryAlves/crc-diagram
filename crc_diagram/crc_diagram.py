@@ -8,22 +8,15 @@ from __future__ import (
 import os
 
 from .core import CRCParser
-from .exceptions import ParserException
-from .utils import ast_from_file
 
 
-def py_to_crc(file, path=None, parser_class=CRCParser):
+def py_to_crc(fp, path=None, parser_class=CRCParser):
     """
     return a list of CRC objects
     """
     if path is not None:
-        file = os.path.join(path, file)
-    try:
-        tree = ast_from_file(file)
-    except (SyntaxError, ):
-        raise ParserException('File {file} is not a python file'.format(file=file))
-    else:
-        return parser_class(tree).run().result
+        fp = os.path.join(path, fp)
+    return parser_class(fp).run().result
 
 
 def project_to_crc(path, parser_class=CRCParser):

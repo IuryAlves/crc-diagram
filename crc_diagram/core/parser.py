@@ -6,24 +6,37 @@ from __future__ import (
 )
 
 import ast
+from six import string_types
+
+from crc_diagram.utils import ast_from_file
+from crc_diagram.exceptions import ParserException
 from .patterns import COLLABORATOR_PATTERN, RESPONSIBILITY_PATTERN
 from .crc import CRC
 
 
 class CRCParser(ast.NodeVisitor):
 
-    def __init__(self, tree,
+    def __init__(self, path_or_stream,
                  collaborator_pattern=COLLABORATOR_PATTERN,
                  responsibility_pattern=RESPONSIBILITY_PATTERN):
         super(CRCParser, self).__init__()
-        self.tree = tree
+        self.path_or_stream = path_or_stream
         self.responsibility_pattern = responsibility_pattern
         self.collaborator_pattern = collaborator_pattern
         self._crcs = []
         self.current_crc = None
 
     def run(self):
-        self.visit(self.tree)
+        if isinstance(self.path_or_stream, string_types):
+            self.path_or_stream = open(self.path_or_stream)
+        try:
+            tree = ast_from_file(self.path_or_stream)
+        except (SyntaxError, ):
+            raise ParserException('File {file} is not a python file'.format(
+                file=self.path_or_stream.name
+                ))
+        else:
+            self.visit(tree)
         return self
 
     @property
