@@ -5,13 +5,10 @@ from __future__ import (
     unicode_literals
 )
 
-import ast
+from six import string_types
 
 
-def ast_from_file(fp):
-    try:
-        tree = ast.parse(fp.read())
-    finally:
-        if not fp.closed:
-            fp.close()
-    return tree
+def path_to_stream(path_or_stream):
+    if isinstance(path_or_stream, string_types):
+        return open(path_or_stream)
+    return path_or_stream

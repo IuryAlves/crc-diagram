@@ -17,7 +17,7 @@ class CommandLineTestCase(testcase.CrcTestCase):
     def test_render_crc_cards_as_svg(self):
         command = 'python -m crc_diagram --render=svg {test_files}/{folder} test.svg'.format(
             test_files=self.test_files,
-            folder='project',
+            folder='python_project',
         )
         status = subprocess.check_call(command.split())
 
@@ -25,7 +25,7 @@ class CommandLineTestCase(testcase.CrcTestCase):
 
     def test_execute_as_raw(self):
         command = 'python -m crc_diagram --raw=true {folder}/{file}'.format(
-            folder=os.path.join(self.test_files, 'project'),
+            folder=os.path.join(self.test_files, 'python_project'),
             file='professor.py',
         )
         out = subprocess.check_output(command.split())

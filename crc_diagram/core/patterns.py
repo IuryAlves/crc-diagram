@@ -8,5 +8,5 @@ from __future__ import (
 import re
 
 
-RESPONSIBILITY_PATTERN = re.compile(r'@responsibility:(.*)$')
-COLLABORATOR_PATTERN = re.compile(r'@collaborator:(.*)$')
+RESPONSIBILITY_PATTERN = re.compile(r'\s*?@responsibility:(.*)$')
+COLLABORATOR_PATTERN = re.compile(r'\s*?@collaborator:(.*)$')

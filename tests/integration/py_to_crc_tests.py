@@ -22,7 +22,7 @@ class PyToCrcTestCase(testcase.CrcTestCase):
                       str(context.exception))
 
     def test_py_to_crc(self):
-        file = join('project', 'student.py')
+        file = join('python_project', 'student.py')
 
         crc_cards = py_to_crc(file, self.test_files)
         crc_card = crc_cards[0]
