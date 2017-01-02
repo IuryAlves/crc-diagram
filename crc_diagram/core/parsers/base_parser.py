@@ -25,7 +25,7 @@ class BaseParser(with_metaclass(ABCMeta)):
 
     @abstractmethod
     def parse(self):
-        pass
+        pass  # pragma: no cover
 
     @property
     def result(self):
