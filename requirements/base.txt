@@ -1,3 +1,4 @@
-svgwrite==1.1.8
 six==1.10.0
 click==6.6
+coloredlogs==5.2
+graphviz==0.5.2
