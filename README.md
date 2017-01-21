@@ -1,6 +1,6 @@
 # CRCDiagram  
 
-Generate Class Responsibility Collaboration (CRC) Diagrams from python code
+Generate Class Responsibility Collaboration (CRC) Diagrams from python code using [Dot language](http://www.graphviz.org/doc/info/lang.html)
 
 [![Coverage Status](https://coveralls.io/repos/github/IuryAlves/CRCDiagram/badge.svg?branch=master)](https://coveralls.io/github/IuryAlves/CRCDiagram?branch=master)
 [![Build Status](https://travis-ci.org/IuryAlves/CRCDiagram.svg?branch=master)](https://travis-ci.org/IuryAlves/CRCDiagram)
@@ -19,15 +19,7 @@ Generate Class Responsibility Collaboration (CRC) Diagrams from python code
 
 A Class Responsibility Collaboration (CRC) is a collection of standard index cards that have been divided into three sections.
 
-```
-----------------------------------------|
-|           HtmlToMarkdown              |
-|---------------------------------------|
-| Converts html files  | image_uploader |
-|  to markdown         |                |
-|                      |                |
------------------------------------------
-```
+![CRC Card](docs/crc_card.png)
 
 
 A class represents a collection of similar objects, a responsibility is something that a class knows or does,
@@ -57,19 +49,6 @@ class HtmlToMarkdown(object):
 The responsibility of the class is to convert html files to markdown, if the html has images, the class uses a collaborator called `image_uploader`
 to upload the images to somewhere.
 
-The CRC of this class could be represented as follows:
-
-
-```
-----------------------------------------|
-|           HtmlToMarkdown              |
-|---------------------------------------|
-| Converts html files  | image_uploader |
-|  to markdown         |                |
-|                      |                |
------------------------------------------
-```
-
 Where "Converts html files to markdown" is the responsibility of the class
 and "image_uploader" is a collaborator
 
@@ -91,7 +70,16 @@ class HtmlToMarkdown(object):
     # code
 ```
 
+The output of the CRC generated will be the following:
+
+![CRC Card](docs/crc_card.png)
+
+
 ## Installing <a name='installing'></a>
+
+  * Install [Dot](http://www.graphviz.org/Download..php)
+  * Install the requirements
+
 
     pip install -r requirements/base.txt
 

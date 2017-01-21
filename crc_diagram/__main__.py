@@ -10,15 +10,15 @@ import sys
 import os
 import click
 import crc_diagram
-from crc_diagram.renders import render_to
+from crc_diagram.renders import DotRender
 
 
 @click.command(name='pycrc')
 @click.argument('source')
 @click.argument('out', required=False)
 @click.option('--raw', type=bool)
-@click.option('--render', default='svg', type=str)
-def main(source, out, raw, render):
+@click.option('--format', default='png', type=str)
+def main(source, out, raw, format):
 
     if os.path.isdir(source):
         crc_cards = crc_diagram.project_to_crc(source)
@@ -31,7 +31,7 @@ def main(source, out, raw, render):
     else:
         if out is None:
             raise click.UsageError('Missing argument "out".')
-        render_to(render, 0, 0, 150, 300, crc_cards, out)
+        DotRender(crc_cards, format=format).render(out)
 
 if __name__ == '__main__':
     main()
