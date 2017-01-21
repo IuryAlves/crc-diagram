@@ -3,7 +3,7 @@
 
 from graphviz import Digraph
 from crc_diagram.utils import split_by_extension
-from crc_diagram.logging import logger
+from crc_diagram.log import logger
 
 
 class DotRender(object):
