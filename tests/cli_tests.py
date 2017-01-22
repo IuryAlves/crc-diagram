@@ -32,7 +32,7 @@ class CliTestCase(testcase.CrcTestCase):
     def test_generate_raw_crc_diagram(self):
         source = os.path.join(self.test_files, 'python_project', 'professor.py')
         result = self.runner.invoke(main, [source, '--raw=true'])
-        output = json.loads(result.output)
+        output = json.loads(result.output.encode('utf-8'))
         self.assertEqual(output,
                          [
                              {

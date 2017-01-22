@@ -12,6 +12,8 @@ import click
 import crc_diagram
 from crc_diagram.renders import DotRender
 
+click.disable_unicode_literals_warning = True
+
 
 @click.command(name='pycrc')
 @click.argument('source')

@@ -7,6 +7,8 @@ if six.PY3:
     from io import IOBase
 
     file = IOBase
+else:
+    file = file
 
 
 __all__ = [
