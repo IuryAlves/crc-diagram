@@ -20,7 +20,8 @@ click.disable_unicode_literals_warning = True
 @click.argument('out', required=False)
 @click.option('--raw', type=bool)
 @click.option('--format', default='png', type=str)
-def main(source, out, raw, format):
+@click.option('--view', default=False, type=bool)
+def main(source, out, raw, format, view):
 
     if os.path.isdir(source):
         crc_cards = crc_diagram.project_to_crc(source)
@@ -33,7 +34,7 @@ def main(source, out, raw, format):
     else:
         if out is None:
             raise click.UsageError('Missing argument "out".')
-        DotRender(crc_cards, format=format).render(out)
+        DotRender(crc_cards, format=format).render(out, view=view)
 
 if __name__ == '__main__':
     main()  # pragma: no cover
