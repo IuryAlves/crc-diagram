@@ -34,4 +34,4 @@ def main(source, out, raw, format):
         DotRender(crc_cards, format=format).render(out)
 
 if __name__ == '__main__':
-    main()
+    main()  # pragma: no cover

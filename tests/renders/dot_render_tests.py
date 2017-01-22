@@ -4,6 +4,8 @@ from __future__ import (
     absolute_import,
 )
 
+from os.path import exists, join, abspath, curdir
+from os import remove
 from crc_diagram.test.testcase import CrcTestCase
 from crc_diagram.renders import DotRender
 from crc_diagram.core import CRC
@@ -11,7 +13,23 @@ from crc_diagram.core import CRC
 
 class DotRenderTestCase(CrcTestCase):
 
-    def test_svg_render_multiple_crc_cards(self):
+    def test_use_extension_from_format(self):
+        crcs = [
+            CRC(
+                name='Enrollment',
+                responsibilities=['Get students', 'Get seminar', 'Get Final Grade'],
+                collaborators=['Seminar']
+            ),
+        ]
+
+        DotRender(crcs, format='svg').render('crc')
+
+        self.assertTrue(exists(join(abspath(curdir), 'crc.svg')))
+
+        remove('crc.svg')
+        remove('crc')
+
+    def test_render_multiple_crc_cards(self):
         crcs = [
             CRC(
                 name='Enrollment',
