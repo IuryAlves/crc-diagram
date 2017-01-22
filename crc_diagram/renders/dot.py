@@ -11,7 +11,14 @@ class DotRender(object):
     def __init__(self, crc_cards, format='svg'):
         self.format = format
         self.crc_cards = crc_cards
-        self.graph = Digraph(comment='CRC Diagram', node_attr={'shape': 'record'}, format=self.format)
+        self.edges = []  # keep track of the edges
+
+        self.graph = Digraph(
+            comment='CRC Diagram',
+            node_attr={'shape': 'record'},
+            format=self.format
+        )
+
         self._init()
 
     def get_collaborators_rect(self, collaborators):
@@ -23,9 +30,25 @@ class DotRender(object):
     def get_crc_name_rect(self, crc_name):
         return crc_name
 
+    def get_edge_direction(self, collaborator, crc_name):
+        direction = 'single'
+        for crc_card in self.crc_cards:
+            if collaborator == crc_card.name and crc_name in crc_card.collaborators:
+                direction = 'both'
+        return direction
+
+    def edge_already_added(self, current_crc_name, current_collaborator):
+        return (
+            (current_crc_name, current_collaborator) in self.edges or
+            (current_collaborator, current_crc_name) in self.edges
+        )
+
     def create_edges(self, crc):
         for collaborator in crc.collaborators:
-            self.graph.edge(crc.name, collaborator)
+            direction = self.get_edge_direction(collaborator, crc.name)
+            if not self.edge_already_added(crc.name, collaborator):
+                self.graph.edge(crc.name, collaborator, dir=direction)
+            self.edges.append((crc.name, collaborator))
 
     def _init(self):
         for index, crc in enumerate(self.crc_cards):

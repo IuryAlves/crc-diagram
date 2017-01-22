@@ -32,7 +32,7 @@ class DotRenderTestCase(CrcTestCase):
                 name='Transcript',
                 collaborators=['Student', 'Seminar', 'Professor', 'Enrollment'],
                 responsibilities=['Determine average mark']
-            )
+            ),
         ]
 
         dot = DotRender(crcs, format='svg')
