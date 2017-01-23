@@ -8,7 +8,6 @@ from __future__ import (
 import os
 import imghdr
 import json
-from six import b
 from click.testing import CliRunner
 from crc_diagram.test import testcase
 from crc_diagram.__main__ import main
@@ -33,7 +32,7 @@ class CliTestCase(testcase.CrcTestCase):
     def test_generate_raw_crc_diagram(self):
         source = os.path.join(self.test_files, 'python_project', 'professor.py')
         result = self.runner.invoke(main, [source, '--raw=true'])
-        output = json.loads(b(result.output))
+        output = json.loads(result.output)
         self.assertEqual(output,
                          [
                              {
