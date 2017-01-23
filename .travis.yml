@@ -1,14 +1,22 @@
 language: python
+
 python:
   - "2.7"
   - "3.4"
 
+matrix:
+  include:
+  - python: "2.7"
+    env: VERSION=27
+  - python: "3.4"
+    env: VERSION=34
+
 before_script:
   - sudo apt-get install graphviz
-  - pip install -r requirements/develop.txt
+  - pip install tox==1.9.0
 
 script:
-  - ci/tests.sh
+  - tox -e py$VERSION
 
 after_success:
   - coveralls

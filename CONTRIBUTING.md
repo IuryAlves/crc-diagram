@@ -35,7 +35,7 @@
 ## Running tests <a name='running_tests'></a>
 
     pip install -r requirements/develop.txt
-    ci/tests.sh
+    tox
 
 
 
