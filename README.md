@@ -21,9 +21,11 @@ To render the diagrams you need to install DOT:
 
 * Ubuntu/Debian:
 
+
       apt-get update && apt-get install graphviz
 
 * Fedora/CentOS:
+
 
       yum install graphviz
 
