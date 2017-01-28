@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
+import ast
+import re
 from setuptools import setup
-from os import path
+from os.path import join
+
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
 
 
 def parse_requirements(requirements_file):
@@ -13,14 +17,21 @@ def parse_requirements(requirements_file):
     return list(requirements)
 
 
+def get_version(file_path):
+    with open(file_path) as fp:
+        return str(ast.literal_eval(_version_re.search(
+            fp.read()).group(1)))
+
+
 setup(name='crcdiagram',
-      version='0.0.1',
+      version=get_version(join('crc_diagram', '__init__.py')),
       url="https://github.com/IuryAlves/crcdiagram",
       description='Generate Class Responsibility Collaboration (CRC) Diagrams from python code',
       author='Iury Alves',
       author_email='iuryalves20@gmail.com',
-      packages=['crc_diagram', 'crc_diagram.core', 'crc_diagram.renders', 'crc_diagram.test'],
-      install_requires=parse_requirements(path.join('requirements', 'base.txt')),
+      packages=['crc_diagram', 'crc_diagram.core',
+                'crc_diagram.renders', 'crc_diagram.testing'],
+      install_requires=parse_requirements(join('requirements', 'base.txt')),
       entry_points={
           'console_scripts': [
               'crc_diagram = crc_diagram.__main__:main'

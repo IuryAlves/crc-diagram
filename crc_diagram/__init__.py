@@ -7,6 +7,8 @@ from __future__ import (
 
 from .crc_diagram import py_to_crc, project_to_crc
 
+__version__ = '0.0.1'
+
 __all__ = [
     'py_to_crc',
     'project_to_crc',
