@@ -24,8 +24,7 @@ To render the diagrams you need to install DOT:
 
 * Fedora/CentOS:
 
-`yum install graphviz
-
+`yum install graphviz`
 
 ## Documentation <a name="documentation"></a>
 
