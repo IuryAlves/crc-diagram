@@ -14,18 +14,18 @@ Generate Class Responsibility Collaboration (CRC) Diagrams from python code usin
 
 ## Installing <a name="installing""></a>
 
-   pip install crcdiagram
+      pip install crcdiagram
 
 
 To render the diagrams you need to install DOT:
 
 * Ubuntu/Debian:
 
-   apt-get update && apt-get install graphviz
+      apt-get update && apt-get install graphviz
 
 * Fedora/CentOS:
 
-   yum install graphviz
+      yum install graphviz
 
 
 ## Documentation <a name="documentation"></a>
