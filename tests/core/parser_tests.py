@@ -6,7 +6,7 @@ from __future__ import (
 )
 
 from os.path import join
-from crc_diagram.test import testcase
+from crc_diagram.testing import testcase
 from crc_diagram.core.parsers import SmallTalkParser, PythonParser
 
 

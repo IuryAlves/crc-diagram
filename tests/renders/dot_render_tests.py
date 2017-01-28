@@ -6,7 +6,7 @@ from __future__ import (
 
 from os.path import exists, join, abspath, curdir
 from os import remove
-from crc_diagram.test.testcase import CrcTestCase
+from crc_diagram.testing.testcase import CrcTestCase
 from crc_diagram.renders import DotRender
 from crc_diagram.core import CRC
 

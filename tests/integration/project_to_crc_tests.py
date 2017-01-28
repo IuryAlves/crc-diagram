@@ -7,7 +7,7 @@ from __future__ import (
 
 from os.path import join
 from crc_diagram import project_to_crc
-from crc_diagram.test import testcase
+from crc_diagram.testing import testcase
 
 
 class ProjectToCrcTestCase(testcase.CrcTestCase):

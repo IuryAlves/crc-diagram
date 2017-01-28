@@ -7,7 +7,7 @@ from __future__ import (
 
 from os.path import join
 from crc_diagram import py_to_crc,  exceptions
-from crc_diagram.test import testcase
+from crc_diagram.testing import testcase
 
 
 class PyToCrcTestCase(testcase.CrcTestCase):

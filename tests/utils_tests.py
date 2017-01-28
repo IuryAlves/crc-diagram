@@ -6,7 +6,7 @@ from __future__ import (
 )
 
 import tempfile
-from crc_diagram.test import testcase
+from crc_diagram.testing import testcase
 from crc_diagram import utils
 from crc_diagram._compat import file
 

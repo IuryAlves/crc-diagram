@@ -9,7 +9,7 @@ import os
 import imghdr
 import json
 from click.testing import CliRunner
-from crc_diagram.test import testcase
+from crc_diagram.testing import testcase
 from crc_diagram.__main__ import main
 
 
