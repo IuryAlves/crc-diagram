@@ -9,7 +9,7 @@ import ast
 
 from crc_diagram.exceptions import ParserException
 from crc_diagram.core.crc import CRC
-from .base_parser import BaseParser
+from crc_diagram.core.parsers.base_parser import BaseParser
 
 
 class PythonParser(BaseParser, ast.NodeVisitor):

@@ -7,7 +7,7 @@ from __future__ import (
 
 import os
 
-from .core.parsers import PythonParser
+from crc_diagram.core.parsers import PythonParser
 
 
 def py_to_crc(fp, path=None, parser_class=PythonParser):

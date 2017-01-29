@@ -6,7 +6,7 @@ from __future__ import (
 )
 
 from crc_diagram.core.crc import CRC
-from .base_parser import BaseParser
+from crc_diagram.core.parsers.base_parser import BaseParser
 
 
 class SmallTalkParser(BaseParser):
