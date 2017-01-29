@@ -23,18 +23,22 @@ def get_version(file_path):
             fp.read()).group(1)))
 
 
-setup(name='crcdiagram',
+setup(name='crc-diagram',
       version=get_version(join('crc_diagram', '__init__.py')),
       url="https://github.com/IuryAlves/crcdiagram",
       description='Generate Class Responsibility Collaboration (CRC) Diagrams from python code',
       author='Iury Alves',
       author_email='iuryalves20@gmail.com',
-      packages=['crc_diagram', 'crc_diagram.core',
-                'crc_diagram.renders', 'crc_diagram.testing'],
+      packages=['crc_diagram',
+                'crc_diagram.core',
+                'crc_diagram.renders',
+                'crc_diagram.testing',
+                'crc_diagram.testing.files',
+                'crc_diagram.core.parsers'],
       install_requires=parse_requirements(join('requirements', 'base.txt')),
       entry_points={
           'console_scripts': [
-              'crc_diagram = crc_diagram.__main__:main'
+              'crc-diagram = crc_diagram.__main__:main'
               ]
           }
       )
