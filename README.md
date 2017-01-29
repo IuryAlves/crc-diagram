@@ -14,7 +14,7 @@ Generate Class Responsibility Collaboration (CRC) Diagrams from python code usin
 
 ## Installing <a name="installing""></a>
 
-      pip install crcdiagram
+      pip install crc-diagram
 
 
 To render the diagrams you need to install DOT:

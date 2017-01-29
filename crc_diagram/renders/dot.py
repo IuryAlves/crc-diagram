@@ -6,9 +6,66 @@ from crc_diagram.utils import split_by_extension
 from crc_diagram.log import logger
 
 
+render_formats = [
+    'bmp',
+    'canon',
+    'cgimage',
+    'cmap',
+    'cmapx',
+    'cmapx_np',
+    'dot',
+    'dot_json',
+    'eps',
+    'exr',
+    'fig',
+    'gd',
+    'gd2',
+    'gif',
+    'gv',
+    'icns',
+    'ico',
+    'imap',
+    'imap_np',
+    'ismap',
+    'jp2',
+    'jpe',
+    'jpeg',
+    'jpg',
+    'json',
+    'json0',
+    'mp',
+    'pct',
+    'pdf',
+    'pic',
+    'pict',
+    'plain',
+    'plain-ext',
+    'png',
+    'pov',
+    'ps',
+    'ps2',
+    'psd',
+    'sgi',
+    'svg',
+    'svgz',
+    'tga',
+    'tif',
+    'tiff',
+    'tk',
+    'vml',
+    'vmlz',
+    'vrml',
+    'wbmp',
+    'xdot',
+    'xdot1.2',
+    'xdot1.4',
+    'xdot_json'
+]
+
+
 class DotRender(object):
 
-    def __init__(self, crc_cards, format='svg'):
+    def __init__(self, crc_cards, format='png'):
         self.format = format
         self.crc_cards = crc_cards
         self.edges = []  # keep track of the edges
@@ -61,6 +118,14 @@ class DotRender(object):
 
     def render(self, filename, view=False):
         filename, extension = split_by_extension(filename)
-        if extension is None:
-            logger.warn('File extension not informed. Getting extension from output format.')
+        if extension is not None and extension != self.format:
+            logger.warn(
+                'File extension is different from --format. '
+                'The file name is {filename}.{extension} '
+                'but it will be saved as {format}'.format(
+                    filename=filename,
+                    extension=extension,
+                    format=self.format
+                )
+            )
         self.graph.render(filename, view=view)

@@ -51,7 +51,7 @@ These classes could be write as follows::
       pass
 
 
-To make crcdiagram generate the CRC cards just add docstrings to the classes with these notations::
+To make crc-diagram generate the CRC cards just add docstrings to the classes with these notations::
 
 
    class HtmlToMarkdown(object):
@@ -65,7 +65,6 @@ To make crcdiagram generate the CRC cards just add docstrings to the classes wit
 
    class ImageUploader(object):
       """
-      @collaborator: <no-collaborators>
       @responsibility: Store images in the cloud
       """
       pass
@@ -76,7 +75,7 @@ To make crcdiagram generate the CRC cards just add docstrings to the classes wit
 
 Save this code as markdown_converter.py and run the following command::
 
-   crcdiagram markdown_converter.py markdown_converter.png --view=true
+   crc-diagram markdown_converter.py markdown_converter.png --view=true
 
 
 This command will extract the CRC Cards and render as png. The :code:`--view` option is to open the rendered diagram.
@@ -92,7 +91,7 @@ Installing
 
 You can get the library directly from PyPI::
 
-   pip install crcdiagram
+   pip install crc-diagram
 
 
 
@@ -117,7 +116,6 @@ Documentation Contents
    :caption: Contents:
 
    command_line_usage
-   output_formats
    api
    extending
 

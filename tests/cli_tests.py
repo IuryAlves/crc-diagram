@@ -46,4 +46,10 @@ class CliTestCase(testcase.CrcTestCase):
         source = os.path.join(self.test_files, 'python_project', 'professor.py')
         result = self.runner.invoke(main, [source])
 
-        self.assertEqual(result.output, 'Usage: pycrc [OPTIONS] SOURCE [OUT]\n\nError: Missing argument "out".\n')
+        self.assertEqual(result.output, 'Usage: crc-diagram [OPTIONS] SOURCE [OUT]\n\nError: Missing argument "out".\n')
+
+    def test_invalid_format_option(self):
+        source = os.path.join(self.test_files, 'python_project', 'professor.py')
+        result = self.runner.invoke(main, [source, '--format=epub', 'out.png'])
+
+        self.assertIn('Error: Invalid value for "--format": invalid choice: epub.', result.output)

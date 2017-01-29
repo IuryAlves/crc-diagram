@@ -8,9 +8,9 @@ from __future__ import (
 from six import string_types
 
 
-def path_to_stream(path_or_stream):
+def path_to_stream(path_or_stream, mode='r'):
     if isinstance(path_or_stream, string_types):
-        return open(path_or_stream)
+        return open(path_or_stream, mode=mode)
     return path_or_stream
 
 
