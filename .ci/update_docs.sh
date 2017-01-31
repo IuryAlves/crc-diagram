@@ -50,6 +50,7 @@ find . -not -name "*.html" \
        -not -path "*/_static*" \
        -not -path "*/_images*" \
        -not -path "*/\.git*" \
+       -not -name ".nojekyll" \
        -not -name "key.enc" -exec rm -rf "{}" \;
 
 set -e
