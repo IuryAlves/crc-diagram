@@ -7,9 +7,14 @@ matrix:
   - python: "3.4"
     env: VERSION=34
 
+env:
+  global:
+    - ENCRYPTION_LABEL: "57984b21888c"
+    - COMMIT_AUTHOR_EMAIL: "iuryalves20@gmail.com"
+
 before_script:
   - sudo apt-get install graphviz
-  - pip install tox==1.9.0
+  - pip install -r requirements/develop.txt
 
 script:
   - tox -e py$VERSION
