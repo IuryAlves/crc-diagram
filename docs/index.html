@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to CRCDiagram’s documentation! &#8212; CRCDiagram  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Command Line Usage" href="command_line_usage.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-crcdiagram-s-documentation">
+<h1>Welcome to CRCDiagram&#8217;s documentation!<a class="headerlink" href="#welcome-to-crcdiagram-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>CRCDiagram is a generator of Class Responsibility Collaboration diagrams in python (more languages will be available soon)
+using <a class="reference external" href="http://www.graphviz.org/doc/info/lang.html">DOT language</a>.</p>
+<div class="section" id="what-is-crc">
+<h2>What is CRC?<a class="headerlink" href="#what-is-crc" title="Permalink to this headline">¶</a></h2>
+<p>A Class Responsibility Collaboration (CRC) is a collection of standard index cards that have been divided into three sections.</p>
+<img alt="_images/crc_card.jpg" src="_images/crc_card.jpg" />
+<div class="line-block">
+<div class="line">A class represents a collection of similar objects, a responsibility is something that a class knows or does,
+and a collaborator is another class that a class interacts with to fulfill its responsibilities.</div>
+</div>
+<p><a class="reference external" href="http://agilemodeling.com/artifacts/crcModel.htm">More information</a>.</p>
+</div>
+<div class="section" id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<p>Suppose that you have a project with two classes: HtmlToMarkdown and ImageUploader.</p>
+<p>HtmlToMarkdown converts html files to markdown files, but HtmlToMarkdown does not know what to do with images.
+So it uses a collaborator called ImageUploader. ImageUploader knows how to store images in the cloud.</p>
+<p>These classes could be write as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HtmlToMarkdown</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_uploader</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">image_uploader</span> <span class="o">=</span> <span class="n">image_uploader</span>
+
+
+<span class="k">class</span> <span class="nc">ImageUploader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+   <span class="k">pass</span>
+</pre></div>
+</div>
+<p>To make crc-diagram generate the CRC cards just add docstrings to the classes with these notations:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HtmlToMarkdown</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   @collaborator: ImageUploader</span>
+<span class="sd">   @responsibility: Convert html files to markdown</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_uploader</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">image_uploader</span> <span class="o">=</span> <span class="n">image_uploader</span>
+
+
+<span class="k">class</span> <span class="nc">ImageUploader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">   @responsibility: Store images in the cloud</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="k">pass</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Any of the notations can be ignored, as you can see in ImageUploader.</li>
+<li>You can add more than one collaborator or responsibility.</li>
+</ul>
+<p>Save this code as markdown_converter.py and run the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">markdown_converter</span><span class="o">.</span><span class="n">py</span> <span class="n">markdown_converter</span><span class="o">.</span><span class="n">png</span> <span class="o">--</span><span class="n">view</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>This command will extract the CRC Cards and render as png. The <code class="code docutils literal"><span class="pre">--view</span></code> option is to open the rendered diagram.</p>
+<p>And the result is:</p>
+<img alt="_images/markdown_converter.png" src="_images/markdown_converter.png" />
+</div>
+<div class="section" id="installing">
+<h2>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h2>
+<p>You can get the library directly from PyPI:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">crc</span><span class="o">-</span><span class="n">diagram</span>
+</pre></div>
+</div>
+<p>To render the diagrams you need to install dot:</p>
+<ul>
+<li><p class="first">Ubuntu/Debian:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">graphviz</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Fedora/CentOS:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">graphviz</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="documentation-contents">
+<h2>Documentation Contents<a class="headerlink" href="#documentation-contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="command_line_usage.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="command_line_usage.html#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line_usage.html#changing-the-output-format">Changing the output format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line_usage.html#viewing-the-rendered-diagram">Viewing the rendered diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line_usage.html#raw-crcs">Raw CRCs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">Extending</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to CRCDiagram&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#what-is-crc">What is CRC?</a></li>
+<li><a class="reference internal" href="#how-it-works">How it works</a></li>
+<li><a class="reference internal" href="#installing">Installing</a></li>
+<li><a class="reference internal" href="#documentation-contents">Documentation Contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="command_line_usage.html" title="next chapter">Command Line Usage</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Iury Alves.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
