@@ -21,4 +21,5 @@ script:
 
 after_success:
   - coveralls
-  - .ci/update_docs.sh
+  - travis-sphinx build
+  - travis-sphinx deploy
