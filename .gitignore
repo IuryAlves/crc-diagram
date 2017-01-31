@@ -1,5 +1,6 @@
 *.py[co]
 .tox/
+key
 venv/
 .coverage
 .idea
