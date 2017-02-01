@@ -20,7 +20,8 @@ What is CRC?
 
 A Class Responsibility Collaboration (CRC) is a collection of standard index cards that have been divided into three sections.
 
-.. image:: _static/crc_card.jpg
+.. image:: http://agilemodeling.com/images/models/crcCardLayout.jpg
+   :target: http://agilemodeling.com/images/models/crcCardLayout.jpg
 
 
 | A class represents a collection of similar objects, a responsibility is something that a class knows or does,
@@ -85,7 +86,8 @@ This command will extract the CRC Cards and render as png. The :code:`--view` op
 
 And the result is:
 
-.. image:: _static/markdown_converter.png
+.. image:: https://s27.postimg.org/6l3wauu4j/markdown_converter.png
+   :target: https://s27.postimg.org/6l3wauu4j/markdown_converter.png
 
 
 ----------
