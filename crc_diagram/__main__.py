@@ -19,14 +19,18 @@ click.disable_unicode_literals_warning = True
 @click.command(name='crc-diagram')
 @click.argument('source')
 @click.argument('out', required=False)
-@click.option('--raw', type=bool)
-@click.option('--format', default='png', type=click.Choice(render_formats))
-@click.option('--view', default=False, type=bool)
+@click.option('--raw', type=bool, help='Return the CRC cards as json.')
+@click.option('--view', default=False, type=bool, help='Open the output.')
+@click.option('--format', default='png', type=click.Choice(render_formats),
+              help='format that output will be saved. Default is png.')
 def main(source, out, raw, format, view):
     """
     Generate CRCDiagrams from SOURCE saving they as OUT.
     \n
-    The default output format is png
+    The default output format is png.
+    \n
+    Example:\n
+    crc-diagram source_file.py output.png
     """
     if os.path.isdir(source):
         crc_cards = crc_diagram.project_to_crc(source)
