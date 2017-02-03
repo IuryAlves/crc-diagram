@@ -19,8 +19,10 @@ click.disable_unicode_literals_warning = True
 @click.command(name='crc-diagram')
 @click.argument('source')
 @click.argument('out', required=False)
-@click.option('--raw', type=bool, help='Return the CRC cards as json.')
-@click.option('--view', default=False, type=bool, help='Open the output.')
+@click.option('--raw', '-r', type=bool,
+              is_flag=True, help='Return the CRC cards as json.')
+@click.option('--view', '-v', default=False, type=bool,
+              help='Open the output.', is_flag=True)
 @click.option('--format', default='png', type=click.Choice(render_formats),
               help='format that output will be saved. Default is png.')
 def main(source, out, raw, format, view):
