@@ -7,19 +7,7 @@ from __future__ import (
 
 from os.path import join
 from crc_diagram.testing import testcase
-from crc_diagram.core.parsers import SmallTalkParser, PythonParser
-
-
-class SmallTalkParserTestCase(testcase.CrcTestCase):
-
-    def test_parser_smalltalk_file(self):
-        parser = SmallTalkParser(
-            join(self.test_files, 'smalltalk_project', 'enrollment.st')
-        )
-        crc_cards = parser.parse().result
-        crc_card = crc_cards[0]
-
-        self.assertEqual(crc_card.collaborators, ['Seminar'])
+from crc_diagram.core.parsers import PythonParser
 
 
 class PythonParserTestCase(testcase.CrcTestCase):
