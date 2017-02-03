@@ -29,10 +29,16 @@ class PythonParser(BaseParser, ast.NodeVisitor):
                 self.stream.close()
         return self
 
-    def visit_ClassDef(self, node):
-        self.current_crc = CRC(name=node.name)
+    def _add_crc(self, node, kind):
+        self.current_crc = CRC(kind, name=node.name)
         docstring = ast.get_docstring(node) or ""
         for line in docstring.split('\n'):
             self.get_collaborator(line)
             self.get_responsibility(line)
         self._crcs.append(self.current_crc)
+
+    def visit_Module(self, node):
+        self._add_crc(node, 'module')
+
+    def visit_ClassDef(self, node):
+        self._add_crc(node, 'class')

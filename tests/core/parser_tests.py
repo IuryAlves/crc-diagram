@@ -11,6 +11,13 @@ from crc_diagram.core.parsers import PythonParser
 
 
 class PythonParserTestCase(testcase.CrcTestCase):
+
+    def test_parser_module_collaborator(self):
+        crc_cards = PythonParser(join(self.test_files, 'module.py')).parse().result
+
+        self.assertListEqual(crc_cards,
+                             [])
+
     def test_parser_class_collaborator(self):
         crc_cards = PythonParser(join(self.test_files, 'python_project', 'student.py')).parse().result
         crc_card = crc_cards[0]
