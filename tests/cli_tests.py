@@ -18,20 +18,19 @@ class CliTestCase(testcase.CrcTestCase):
     def setUp(self):
         super(CliTestCase, self).setUp()
         self.runner = CliRunner()
+        self.source_project = os.path.join(self.test_files, 'python_project')
+        self.source_file = os.path.join(self.test_files, 'python_project', 'professor.py')
 
     def test_generate_crc_diagram_from_python_project(self):
-        source = os.path.join(self.test_files, 'python_project')
-
         with self.runner.isolated_filesystem():
-            result = self.runner.invoke(main, [source, 'out.png'])
+            result = self.runner.invoke(main, [self.source_project, 'out.png'])
 
             self.assertEqual(result.exit_code, 0)
             with open('out.png', 'rb') as out:
                 self.assertEqual(imghdr.test_png(out.read(), None), 'png')
 
     def test_generate_raw_crc_diagram(self):
-        source = os.path.join(self.test_files, 'python_project', 'professor.py')
-        result = self.runner.invoke(main, [source, '--raw=true'])
+        result = self.runner.invoke(main, [self.source_file, '--raw'])
         output = json.loads(result.output)
         self.assertEqual(output,
                          [
@@ -43,13 +42,11 @@ class CliTestCase(testcase.CrcTestCase):
                          ])
 
     def test_generate_crc_diagram_without_output_argument(self):
-        source = os.path.join(self.test_files, 'python_project', 'professor.py')
-        result = self.runner.invoke(main, [source])
+        result = self.runner.invoke(main, [self.source_file])
 
         self.assertEqual(result.output, 'Usage: crc-diagram [OPTIONS] SOURCE [OUT]\n\nError: Missing argument "out".\n')
 
     def test_invalid_format_option(self):
-        source = os.path.join(self.test_files, 'python_project', 'professor.py')
-        result = self.runner.invoke(main, [source, '--format=epub', 'out.png'])
+        result = self.runner.invoke(main, [self.source_file, '--format=epub', 'out.png'])
 
         self.assertIn('Error: Invalid value for "--format": invalid choice: epub.', result.output)
