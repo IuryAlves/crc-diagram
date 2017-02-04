@@ -5,7 +5,14 @@ from __future__ import (
     unicode_literals
 )
 
+import re
 from six import string_types
+
+
+def regex_compile(pattern, flags=0):
+    if not isinstance(pattern, re._pattern_type):
+        return re.compile(pattern, flags=flags)
+    return pattern
 
 
 def path_to_stream(path_or_stream, mode='r'):
