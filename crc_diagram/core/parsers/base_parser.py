@@ -18,8 +18,12 @@ class BaseParser(with_metaclass(ABCMeta)):
                  responsibility_pattern=RESPONSIBILITY_PATTERN):
         super(BaseParser, self).__init__()
         self.stream = utils.path_to_stream(path_or_stream)
-        self.responsibility_pattern = responsibility_pattern
-        self.collaborator_pattern = collaborator_pattern
+        self.responsibility_pattern = utils.regex_compile(
+            responsibility_pattern
+        )
+        self.collaborator_pattern = utils.regex_compile(
+            collaborator_pattern
+        )
         self._crcs = []
         self.current_crc = None
 
