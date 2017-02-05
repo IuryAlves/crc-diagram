@@ -10,7 +10,7 @@ import sys
 import os
 import click
 import crc_diagram
-from crc_diagram.renders import DotRender, render_formats
+from crc_diagram.renders import DotRender, FORMATS
 from crc_diagram.utils import path_to_stream
 
 click.disable_unicode_literals_warning = True
@@ -23,7 +23,7 @@ click.disable_unicode_literals_warning = True
               is_flag=True, help='Return the CRC cards as json.')
 @click.option('--view', '-v', default=False, type=bool,
               help='Open the output.', is_flag=True)
-@click.option('--format', default='png', type=click.Choice(render_formats),
+@click.option('--format', default='png', type=click.Choice(FORMATS),
               help='format that output will be saved. Default is png.')
 def main(source, out, raw, format, view):
     """

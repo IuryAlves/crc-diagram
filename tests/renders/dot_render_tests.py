@@ -58,9 +58,9 @@ class DotRenderTestCase(CrcTestCase):
             ),
         ]
 
-        dot = DotRender(crcs, format='svg')
+        render = DotRender(crcs, format='svg')
         self.assertMultiLineEscapeCharsEqual(
-            dot.graph.source,
+            render.source,
             '''
             // CRC Diagram
             digraph {

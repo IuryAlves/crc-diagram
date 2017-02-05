@@ -5,11 +5,11 @@ from __future__ import (
     unicode_literals
 )
 
-from .dot import DotRender, render_formats
+from graphviz import FORMATS
+from .dot import DotRender
 
 
 __all__ = [
-    'AbstractRender',
     'DotRender',
-    'render_formats'
+    'FORMATS'
 ]
