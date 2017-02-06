@@ -36,6 +36,7 @@ class CliTestCase(testcase.CrcTestCase):
                          [
                              {
                                  'name': 'Professor',
+                                 'kind': 'class',
                                  'collaborators': ['Seminar'],
                                  'responsibilities': ['Provide information', 'Get Seminars instructing']
                              }

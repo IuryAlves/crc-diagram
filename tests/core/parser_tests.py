@@ -14,12 +14,29 @@ class PythonParserTestCase(testcase.CrcTestCase):
 
     def test_parser_module_collaborator(self):
         crc_cards = PythonParser(join(self.test_files, 'module.py')).parse().result
+        card = crc_cards[0]
 
-        self.assertListEqual(crc_cards,
-                             [])
+        self.assertEqual(card.kind, 'module')
+        self.assertEqual(card.name, 'module')
+
+    def test_parser_class_collaborator_with_raw_string_pattern(self):
+        parser = PythonParser(
+            join(self.test_files, 'python_project', 'student.py'),
+            r'\s*?@collaborator:(.*)$'
+        )
+        parser.parse()
+        crc_cards = parser.result
+        crc_card = crc_cards[0]
+        self.assertListEqual(
+            crc_card.collaborators,
+            ["Enrollment"]
+        )
 
     def test_parser_class_collaborator(self):
-        crc_cards = PythonParser(join(self.test_files, 'python_project', 'student.py')).parse().result
+        parser = PythonParser(join(self.test_files,
+                                   'python_project',
+                                   'student.py'))
+        crc_cards = parser.parse().result
         crc_card = crc_cards[0]
         self.assertListEqual(
             crc_card.collaborators,
@@ -38,6 +55,10 @@ class PythonParserTestCase(testcase.CrcTestCase):
         )
 
     def test_parser_class_name(self):
-        crc_cards = PythonParser(join(self.test_files, 'python_project', 'seminar.py')).parse().result
+        parser = PythonParser(join(self.test_files,
+                                   'python_project',
+                                   'seminar.py'))
+
+        crc_cards = parser.parse().result
         crc_card = crc_cards[0]
         self.assertEqual(crc_card.name, "Seminar")

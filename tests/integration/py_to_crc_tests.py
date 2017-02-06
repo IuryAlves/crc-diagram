@@ -29,6 +29,7 @@ class PyToCrcTestCase(testcase.CrcTestCase):
 
         self.assertDictEqual(crc_card.to_dict(), {
                 'name': 'Student',
+                'kind': 'class',
                 'collaborators': ['Enrollment'],
                 'responsibilities': [
                     'Validate Identifying info',
