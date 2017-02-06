@@ -12,3 +12,5 @@ Documentation Contents
    command_line_usage
    api
    extending
+   contributing
+   license
