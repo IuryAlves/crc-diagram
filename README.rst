@@ -1,6 +1,14 @@
 Welcome to CRCDiagram's documentation!
 ======================================
 
+.. image:: https://coveralls.io/repos/github/IuryAlves/CRCDiagram/badge.svg?branch=master
+   :target: https://coveralls.io/github/IuryAlves/CRCDiagram?branch=master
+.. image:: https://travis-ci.org/IuryAlves/CRCDiagram.svg?branch=master
+   :target:  https://travis-ci.org/IuryAlves/CRCDiagram
+.. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
+   :target: http://www.gnu.org/licenses/gpl-3.0
+
+
 1. `What is CRC <what_is_crc_>`__
 2. `How it works <how_it_works_>`__
 
@@ -21,7 +29,8 @@ What is CRC?
 
 A Class Responsibility Collaboration (CRC) is a collection of standard index cards that have been divided into three sections.
 
-.. image:: _static/crc_card.jpg
+.. image:: http://agilemodeling.com/images/models/crcCardLayout.jpg
+   :target: http://agilemodeling.com/images/models/crcCardLayout.jpg
 
 
 | A class represents a collection of similar objects, a responsibility is something that a class knows or does,
@@ -88,8 +97,8 @@ This command will extract the CRC Cards and render as png. The :code:`--view` op
 
 And the result is:
 
-.. image:: _static/markdown_converter.png
-
+.. image:: https://s27.postimg.org/6l3wauu4j/markdown_converter.png
+   :target: https://s27.postimg.org/6l3wauu4j/markdown_converter.png
 
 .. _crc_from_modules:
 
@@ -130,16 +139,6 @@ To render the diagrams you need to install dot:
 
 
 
-----------------------
-Documentation Contents
-----------------------
+`Full documentation`_
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   command_line_usage
-   api
-   extending
-   contributing
-   license
+.. _Full documentation: https://iuryalves.github.io/CRCDiagram
