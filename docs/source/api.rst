@@ -1,6 +1,12 @@
 API
 ===
 
+High Level API
+--------------
+.. module:: crc_diagram
+.. autofunction:: to_crc(fp, parser_class=PythonParser, **parser_class_kwargs)
+.. autofunction:: folder_to_crc(path, parser_class=PythonParser, **parser_class_kwargs)
+
 Core
 ----
 .. module:: crc_diagram.core

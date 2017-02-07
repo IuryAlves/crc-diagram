@@ -6,7 +6,7 @@ from __future__ import (
 )
 
 from os.path import join
-from crc_diagram import project_to_crc
+from crc_diagram import folder_to_crc
 from crc_diagram.testing import testcase
 
 
@@ -14,5 +14,5 @@ class ProjectToCrcTestCase(testcase.CrcTestCase):
 
     def test_project_to_crc(self):
         project_path = join(self.test_files, 'python_project')
-        crcs = project_to_crc(project_path)
+        crcs = folder_to_crc(project_path)
         self.assertEqual(len(crcs), 5)
