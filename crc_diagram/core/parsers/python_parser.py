@@ -94,8 +94,8 @@ class PythonParser(BaseParser, ast.NodeVisitor):
             with closing(self.stream) as stream:
                 tree = ast.parse(stream.read())
         except (SyntaxError,):
-            raise ParserException('File {file} is not a python file'.format(
-                file=self.stream.name
+            raise ParserException('File {file_} is not a python file'.format(
+                file_=self.stream.name
             ))
         else:
             self.visit(tree)

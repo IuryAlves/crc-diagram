@@ -5,11 +5,11 @@ from __future__ import (
     unicode_literals
 )
 
-from crc_diagram.crc_diagram import py_to_crc, project_to_crc
+from crc_diagram.crc_diagram import to_crc, folder_to_crc
 
 __version__ = '0.0.1'
 
 __all__ = [
-    'py_to_crc',
-    'project_to_crc',
+    'to_crc',
+    'folder_to_crc',
 ]

@@ -35,9 +35,9 @@ def main(source, out, raw, format, view):
     crc-diagram source_file.py output.png
     """
     if os.path.isdir(source):
-        crc_cards = crc_diagram.project_to_crc(source)
+        crc_cards = crc_diagram.folder_to_crc(source)
     else:
-        crc_cards = crc_diagram.py_to_crc(source)
+        crc_cards = crc_diagram.to_crc(source)
 
     if raw:
         out = path_to_stream(out or sys.stdout, 'w')
