@@ -1,7 +1,11 @@
 # coding: utf-8
 
+"""
+Simple log configuration using coloredlogs.
+"""
 
 import logging
+
 import coloredlogs
 
 __all__ = [
