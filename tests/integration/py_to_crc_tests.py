@@ -6,20 +6,18 @@ from __future__ import (
 )
 
 from os.path import join
-from crc_diagram import to_crc,  exceptions
+from crc_diagram import to_crc
 from crc_diagram.testing import testcase
 
 
 class PyToCrcTestCase(testcase.CrcTestCase):
 
     def test_raise_exception_if_is_not_python_file(self):
-        file_ = 'not_a_python_file'
+        file_ = 'file.txt'
         file_path = join(self.test_files, file_)
-        with self.assertRaises(exceptions.ParserException) as context:
-            to_crc(file_path)
+        result = to_crc(file_path)
 
-        self.assertIn('not_a_python_file is not a python file',
-                      str(context.exception))
+        self.assertEqual(result, [])
 
     def test_py_to_crc(self):
         file_path = join(self.test_files, 'python_project', 'student.py')

@@ -23,6 +23,8 @@ class PythonParser(BaseParser, ast.NodeVisitor):
     :param regular_expression responsibility_pattern: A regex pattern do extract the
      responsibilities from docstrings.
      The default is :py:data:`RESPONSIBILITY_PATTERN`.
+    :param tuple allowed_file_extensions: A list of file extensions do accept.
+      The parser will ignore any file which extension isn`t in this list.
 
     Example::
 
@@ -77,6 +79,13 @@ class PythonParser(BaseParser, ast.NodeVisitor):
                 )
         collaborator
     """
+
+    def __init__(self, *args, **kwargs):
+        super(PythonParser, self).__init__(*args, **kwargs)
+
+        if not self.allowed_file_extensions:
+            self.allowed_file_extensions = ('.py', )
+
     def parse(self):
         """
         The main functionality. It parses a tree from :py:data:`self.path_or_stream`

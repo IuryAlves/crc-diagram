@@ -6,17 +6,23 @@ from __future__ import (
 )
 
 import os
+from itertools import chain
 
-from crc_diagram.core.parsers import PythonParser
+from .core.parsers import PythonParser
+from .utils import split_by_extension
 
 
-def to_crc(fp, parser_class=PythonParser, **parser_class_kwargs):
+def to_crc(fp, parser_class=PythonParser,
+           allowed_file_extensions=('py', ),
+           **parser_class_kwargs):
     """
     Shortcut to :py:data:`PythonParser(fp).parse().result`.
 
     :param: file|str fp: The file to extract the CRCs.
      Can be either a file path as string or a file like object.
     :param: BaseParser parser_class: The parser class.
+    :param: tuple allowed_file_extensions: Any file extension which is not in this list
+     will be ignored.
     :param: parser_class_kwargs: additional keyword arguments to :py:data:`parser_class`
     :return: A list of CRCs
 
@@ -39,16 +45,23 @@ def to_crc(fp, parser_class=PythonParser, **parser_class_kwargs):
         ]
 
     """
-    return parser_class(fp, **parser_class_kwargs).parse().result
+    _, extension = split_by_extension(fp)
+    if extension in allowed_file_extensions:
+        return parser_class(fp, **parser_class_kwargs).parse().result
+    return []
 
 
-def folder_to_crc(path, parser_class=PythonParser, **parser_class_kwargs):
+def folder_to_crc(path, parser_class=PythonParser,
+                  allowed_file_extensions=('py', ),
+                  **parser_class_kwargs):
     """
     Iterate in all files in :py:data:`path` and call :py:data:`to_crc`
     to each one.
 
     :param str path: The folder path.
     :param BaseParser parser_class: The parser class.
+    :param: tuple allowed_file_extensions: Any file extension which is not in this list
+     will be ignored.
     :param: parser_class_kwargs: additional keyword arguments to :py:data:`parser_class`
     :return: A list of CRCs of all files in :py:data:`path`.
 
@@ -76,11 +89,13 @@ def folder_to_crc(path, parser_class=PythonParser, **parser_class_kwargs):
                               'Get enrolled students']
         ),
         # ...
-
     """
     crcs = []
-    for _, _, files in os.walk(path):
-        for file_ in files:
-            file_path = os.path.join(path, file_)
-            crcs.extend(to_crc(file_path, parser_class=parser_class))
+    files_iter = chain.from_iterable(files for _, _, files in os.walk(path))
+
+    for file_ in list(files_iter):
+        file_path = os.path.join(path, file_)
+        crcs.extend(
+            to_crc(file_path, parser_class=parser_class, allowed_file_extensions=allowed_file_extensions)
+        )
     return crcs
