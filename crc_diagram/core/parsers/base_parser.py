@@ -18,7 +18,8 @@ class BaseParser(with_metaclass(ABCMeta)):
 
     def __init__(self, path_or_stream,
                  collaborator_pattern=COLLABORATOR_PATTERN,
-                 responsibility_pattern=RESPONSIBILITY_PATTERN):
+                 responsibility_pattern=RESPONSIBILITY_PATTERN,
+                 allowed_file_extensions=None):
         super(BaseParser, self).__init__()
         self.stream = utils.path_to_stream(path_or_stream)
         self.responsibility_pattern = utils.regex_compile(
@@ -29,6 +30,8 @@ class BaseParser(with_metaclass(ABCMeta)):
         )
         self._crcs = []
         self.current_crc = None
+        if allowed_file_extensions is None:
+            self.allowed_file_extensions = ()
 
     @abstractmethod
     def parse(self):
