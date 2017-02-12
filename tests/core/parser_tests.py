@@ -20,8 +20,8 @@ class PythonParserTestCase(testcase.CrcTestCase):
         with self.assertRaises(ParserException) as ctx:
             parser.parse()
 
-        self.assertEqual(str(ctx.exception), 'File /Users/iuryalvesdesouza/projects/crc-diagram/'
-                                             'crc_diagram/testing/files/file.txt is not a python file')
+        self.assertIn('file.txt is not a python file',
+                      str(ctx.exception))
 
     def test_parser_module_collaborator(self):
         crc_cards = PythonParser(join(self.test_files, 'module.py')).parse().result
