@@ -134,8 +134,16 @@ class DotRender(object):
         """
         for index, crc in enumerate(self.crc_cards):
             crc_name = crc.name
-            collaborators = DotRender.format(crc.collaborators)
-            responsibilities = DotRender.format(crc.responsibilities)
+
+            if crc.collaborators:
+                collaborators = DotRender.format(crc.collaborators)
+            else:
+                collaborators = "NO-COLLABORATORS"
+
+            if crc.responsibilities:
+                responsibilities = DotRender.format(crc.responsibilities)
+            else:
+                responsibilities = "NO-RESPONSIBILITIES"
 
             self.graph.node(crc_name, "{%s|{%s|%s}}" % (
                 crc_name,
