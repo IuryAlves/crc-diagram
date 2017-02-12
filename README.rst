@@ -1,10 +1,10 @@
 Welcome to CRCDiagram's documentation!
 ======================================
 
-.. image:: https://coveralls.io/repos/github/IuryAlves/CRCDiagram/badge.svg?branch=master
-   :target: https://coveralls.io/github/IuryAlves/CRCDiagram?branch=master
-.. image:: https://travis-ci.org/IuryAlves/CRCDiagram.svg?branch=master
-   :target:  https://travis-ci.org/IuryAlves/CRCDiagram
+.. image:: https://coveralls.io/repos/github/IuryAlves/crc-diagram/badge.svg?branch=master
+   :target: https://coveralls.io/github/IuryAlves/crc-diagram?branch=master
+.. image:: https://travis-ci.org/IuryAlves/crc-diagram.svg?branch=master
+   :target:  https://travis-ci.org/IuryAlves/crc-diagram
 .. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
    :target: http://www.gnu.org/licenses/gpl-3.0
 
@@ -16,7 +16,7 @@ Welcome to CRCDiagram's documentation!
 3. `Installing <installing_>`__
 
 
-CRCDiagram is a generator of Class Responsibility Collaboration diagrams in python (more languages will be available soon)
+crc-diagram is a generator of Class Responsibility Collaboration diagrams in python (more languages will be available soon)
 using `DOT language`_.
 
 .. _DOT language: http://www.graphviz.org/doc/info/lang.html
