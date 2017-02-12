@@ -8,7 +8,7 @@ if six.PY3:
 
     file = IOBase
 else:
-    file = file
+    file = __builtins__['file']
 
 
 __all__ = [

@@ -50,6 +50,7 @@ class DotRender(object):
 
     .. image:: _images/blue_card.png
 
+    |
     """
     def __init__(self, crc_cards, format='png', graph_data=None):
         self.format = format
@@ -70,31 +71,55 @@ class DotRender(object):
 
     @property
     def source(self):
+        """
+        Returns the DOT source of the :py:data:`self.graph`
+        """
         return self.graph.source
 
-    def get_collaborators_box(self, collaborators):
-        return '\l'.join(collaborators)
+    @staticmethod
+    def format(texts, format_spec='\l'):
 
-    def get_responsibilities_box(self, responsibilities):
-        return '\l'.join(responsibilities)
-
-    def get_crc_name_box(self, crc_name):
-        return crc_name
+        return format_spec.join(texts)
 
     def get_edge_direction(self, collaborator, crc_name):
+        """
+        Check if a collaborator has bidirectional reference::
+
+            A -> B
+            B -> A
+
+        :param str collaborator: The collaborator to check against.
+        :param str crc_name: The name of the CRC to check against.
+
+        :return direction: both if the collaborator has bidirectional reference
+         or single otherwise.
+        """
         direction = 'single'
         for crc_card in self.crc_cards:
             if collaborator == crc_card.name and crc_name in crc_card.collaborators:
                 direction = 'both'
         return direction
 
-    def edge_already_added(self, current_crc_name, current_collaborator):
+    def edge_already_added(self, crc_name, collaborator):
+        """
+        Return True if a edge have already been added for that collaborator
+        return False otherwise.
+
+        :param str crc_name: The CRC name.
+        :param str collaborator: The CRC collaborator.
+        """
         return (
-            (current_crc_name, current_collaborator) in self._edges or
-            (current_collaborator, current_crc_name) in self._edges
+            (crc_name, collaborator) in self._edges or
+            (collaborator, crc_name) in self._edges
         )
 
     def create_edges(self, crc):
+        """
+        Iterate over :py:data:`crc.collaborators` and create a edge
+        for each one if the edge hasn't already been created.
+
+        :param CRC crc: A CRC instance.
+        """
         for collaborator in crc.collaborators:
             direction = self.get_edge_direction(collaborator, crc.name)
             if not self.edge_already_added(crc.name, collaborator):
@@ -102,10 +127,15 @@ class DotRender(object):
             self._edges.append((crc.name, collaborator))
 
     def _init(self):
+        """
+        Iterate over :py:data:`self.crc_cards` and create a graph node
+        for each one,then calls :py:data:`create_edges` to create the edges
+        for each node.
+        """
         for index, crc in enumerate(self.crc_cards):
-            crc_name = self.get_crc_name_box(crc.name)
-            collaborators = self.get_collaborators_box(crc.collaborators)
-            responsibilities = self.get_responsibilities_box(crc.responsibilities)
+            crc_name = crc.name
+            collaborators = DotRender.format(crc.collaborators)
+            responsibilities = DotRender.format(crc.responsibilities)
 
             self.graph.node(crc_name, "{%s|{%s|%s}}" % (
                 crc_name,
@@ -115,6 +145,12 @@ class DotRender(object):
             self.create_edges(crc)
 
     def render(self, filename, view=False):
+        """
+        Render :py:data:`self.graph`.
+
+        :param str filename: The filename where the diagram will be saved.
+        :param bool view: Set to True to open the rendered diagram.
+        """
         filename, extension = split_by_extension(filename)
         if extension is not None and extension != self.format:
             logger.warn(

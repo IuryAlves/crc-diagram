@@ -7,4 +7,7 @@ from __future__ import (
 
 
 class ParserException(Exception):
+    """
+    Raised when something goes wrong while parsing source files to CRCs.
+    """
     pass

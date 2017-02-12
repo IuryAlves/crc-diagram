@@ -26,3 +26,10 @@ Renders
 
 .. module:: crc_diagram.renders
 .. autoclass:: DotRender
+   :members:
+
+Exceptions
+----------
+
+.. module:: crc_diagram.exceptions
+.. autoclass:: ParserException

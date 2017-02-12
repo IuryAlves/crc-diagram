@@ -44,16 +44,20 @@ class CRC(object):
         self.responsibilities = responsibilities or []
 
     def __repr__(self):
-        return '{class_}(name={name},' \
-               ' kind={kind},' \
-               ' collaborators={collaborators},' \
-               'responsibilities={responsibilities})'\
-            .format(class_=self.__class__.__name__,
-                    name=self.name,
-                    kind=self.kind,
-                    collaborators=self.collaborators,
-                    responsibilities=self.responsibilities
-                    )
+        template = (
+            '{class_}(name={name},',
+            ' kind={kind},',
+            ' collaborators={collaborators},',
+            'responsibilities={responsibilities})'
+        )
+
+        return ''.join(template).format(
+            class_=self.__class__.__name__,
+            name=self.name,
+            kind=self.kind,
+            collaborators=self.collaborators,
+            responsibilities=self.responsibilities
+        )
 
     def to_dict(self):
         """
