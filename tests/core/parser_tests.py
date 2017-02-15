@@ -6,9 +6,10 @@ from __future__ import (
 )
 
 from os.path import join
-from crc_diagram.testing import testcase
+
 from crc_diagram.core.parsers import PythonParser
 from crc_diagram.exceptions import ParserException
+from crc_diagram.testing import testcase
 
 
 class PythonParserTestCase(testcase.CrcTestCase):
