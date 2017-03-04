@@ -15,4 +15,4 @@ class ProjectToCrcTestCase(testcase.CrcTestCase):
     def test_project_to_crc(self):
         project_path = join(self.test_files, 'python_project')
         crcs = folder_to_crc(project_path)
-        self.assertEqual(len(crcs), 5)
+        self.assertEqual(len(crcs), 10)

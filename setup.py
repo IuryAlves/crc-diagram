@@ -11,8 +11,8 @@ _version_re = re.compile(r'__version__\s+=\s+(.*)')
 def parse_requirements(requirements_file):
     with open(requirements_file) as fp:
         requirements = map(
-          lambda requirement: requirement.replace('==', '>='),
-          fp.read().splitlines()
+            lambda requirement: requirement.replace('==', '>='),
+            fp.read().splitlines()
         )
     return list(requirements)
 
@@ -39,6 +39,6 @@ setup(name='crc-diagram',
       entry_points={
           'console_scripts': [
               'crc-diagram = crc_diagram.__main__:main'
-              ]
-          }
+          ]
+      }
       )

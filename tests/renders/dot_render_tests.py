@@ -18,7 +18,8 @@ class DotRenderTestCase(CrcTestCase):
             CRC(
                 kind='class',
                 name='Enrollment',
-                responsibilities=['Get students', 'Get seminar', 'Get Final Grade'],
+                responsibilities=['Get students',
+                                  'Get seminar', 'Get Final Grade'],
                 collaborators=['Seminar']
             ),
         ]
@@ -35,25 +36,29 @@ class DotRenderTestCase(CrcTestCase):
             CRC(
                 kind='class',
                 name='Enrollment',
-                responsibilities=['Get students', 'Get seminar', 'Get Final Grade'],
+                responsibilities=['Get students',
+                                  'Get seminar', 'Get Final Grade'],
                 collaborators=['Seminar']
             ),
             CRC(
                 kind='class',
                 name='Professor',
                 collaborators=['Seminar'],
-                responsibilities=['Provide information', 'Get Seminars instructing']
+                responsibilities=['Provide information',
+                                  'Get Seminars instructing']
             ),
             CRC(
                 kind='class',
                 name='Seminar',
                 collaborators=['Student', 'Professor'],
-                responsibilities=['List transcripts', 'Drop student', 'Add student', 'Get enrolled students']
+                responsibilities=[
+                    'List transcripts', 'Drop student', 'Add student', 'Get enrolled students']
             ),
             CRC(
                 kind='class',
                 name='Transcript',
-                collaborators=['Student', 'Seminar', 'Professor', 'Enrollment'],
+                collaborators=['Student', 'Seminar',
+                               'Professor', 'Enrollment'],
                 responsibilities=['Determine average mark']
             ),
         ]

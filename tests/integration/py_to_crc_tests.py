@@ -2,7 +2,6 @@
 
 from __future__ import (
     absolute_import,
-    unicode_literals
 )
 
 from os.path import join
@@ -23,14 +22,9 @@ class PyToCrcTestCase(testcase.CrcTestCase):
         file_path = join(self.test_files, 'python_project', 'student.py')
 
         crc_cards = to_crc(file_path)
-        crc_card = crc_cards[0]
-
-        self.assertDictEqual(crc_card.to_dict(), {
-                'name': 'Student',
-                'collaborators': ['Enrollment'],
-                'responsibilities': [
-                    'Validate Identifying info',
-                    'Provide list of seminars taken'
-                ]
-                }
-        )
+        crc_card = crc_cards[1]
+        self.assertEqual(crc_card.name, 'Student')
+        self.assertEqual(crc_card.collaborators, ['Enrollment'])
+        self.assertEqual(crc_card.responsibilities,
+                         ['Validate Identifying info',
+                          'Provide list of seminars taken'])

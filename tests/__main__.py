@@ -9,12 +9,22 @@ from __future__ import (
 import sys
 import os
 import unittest
+import click
 
 
-def main():
+@click.command('test-runner')
+@click.option('--test-pattern', default='*tests.py')
+@click.option('--test-case', default=None)
+def main(test_pattern, test_case):
+
     project_path = os.path.split(os.path.dirname(__file__))
     sys.path.append(project_path[0])
-    tests = unittest.TestLoader().discover("tests", "*tests.py")
+    test_loader = unittest.TestLoader()
+    if test_case is not None:
+        tests = unittest.TestSuite()
+        tests.addTest()
+    else:
+        tests = test_loader.discover("tests", test_pattern)
     result = unittest.TextTestRunner().run(tests)
 
     if not result.wasSuccessful():

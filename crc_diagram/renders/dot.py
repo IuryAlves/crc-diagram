@@ -52,6 +52,7 @@ class DotRender(object):
 
     |
     """
+
     def __init__(self, crc_cards, format='png', graph_data=None):
         self.format = format
         self.crc_cards = crc_cards

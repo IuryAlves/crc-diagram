@@ -6,9 +6,11 @@ from __future__ import (
 )
 
 import ast
+from os import path
 from contextlib import closing
 from crc_diagram.exceptions import ParserException
-from crc_diagram.core.crc import CRC
+from crc_diagram import utils
+from crc_diagram.core import CRC
 from crc_diagram.core.parsers.base_parser import BaseParser
 
 
@@ -105,8 +107,8 @@ class PythonParser(BaseParser, ast.NodeVisitor):
             self.visit(tree)
         return self
 
-    def _add_crc(self, node, kind):
-        self.current_crc = CRC(kind, name=node.name)
+    def _add_crc(self, node, kind, name):
+        self.current_crc = CRC(name, kind)
         docstring = ast.get_docstring(node) or ""
         for line in docstring.split('\n'):
             self.get_collaborator(line)
@@ -114,7 +116,10 @@ class PythonParser(BaseParser, ast.NodeVisitor):
         self._crcs.append(self.current_crc)
 
     def visit_Module(self, node):
-        self._add_crc(node, 'module')
+        filename = path.split(self.stream.name)[-1]
+        name, _ = utils.split_by_extension(filename)
+        self._add_crc(node, 'module', name)
+        return self.generic_visit(node)
 
     def visit_ClassDef(self, node):
-        self._add_crc(node, 'class')
+        self._add_crc(node, 'class', node.name)

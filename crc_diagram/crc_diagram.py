@@ -96,6 +96,7 @@ def folder_to_crc(path, parser_class=PythonParser,
     for file_ in list(files_iter):
         file_path = os.path.join(path, file_)
         crcs.extend(
-            to_crc(file_path, parser_class=parser_class, allowed_file_extensions=allowed_file_extensions)
+            to_crc(file_path, parser_class=parser_class,
+                   allowed_file_extensions=allowed_file_extensions)
         )
     return crcs

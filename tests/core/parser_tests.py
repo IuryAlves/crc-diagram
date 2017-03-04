@@ -25,14 +25,22 @@ class PythonParserTestCase(testcase.CrcTestCase):
                       str(ctx.exception))
 
     def test_parser_module_collaborator(self):
-        crc_cards = PythonParser(join(self.test_files, 'module.py')).parse().result
+        crc_cards = PythonParser(
+            join(self.test_files, 'module.py')).parse().result
 
-        self.assertListEqual(crc_cards,
-                             [])
+        self.assertListEqual(
+            [crc.to_dict() for crc in crc_cards],
+            [
+                {'collaborators': ['A module collaborator'],
+                 'kind': 'module',
+                 'name': 'module',
+                 'responsibilities': ['A module responsibility']}]
+        )
 
     def test_parser_class_collaborator(self):
-        crc_cards = PythonParser(join(self.test_files, 'python_project', 'student.py')).parse().result
-        crc_card = crc_cards[0]
+        crc_cards = PythonParser(
+            join(self.test_files, 'python_project', 'student.py')).parse().result
+        crc_card = crc_cards[1]
         self.assertListEqual(
             crc_card.collaborators,
             ["Enrollment"]
@@ -42,7 +50,7 @@ class PythonParserTestCase(testcase.CrcTestCase):
 
         with open(join(self.test_files, 'python_project', 'enrollment.py')) as fp:
             crc_cards = PythonParser(fp).parse().result
-        crc_card = crc_cards[0]
+        crc_card = crc_cards[1]
 
         self.assertListEqual(
             crc_card.responsibilities,
@@ -50,6 +58,7 @@ class PythonParserTestCase(testcase.CrcTestCase):
         )
 
     def test_parser_class_name(self):
-        crc_cards = PythonParser(join(self.test_files, 'python_project', 'seminar.py')).parse().result
-        crc_card = crc_cards[0]
+        crc_cards = PythonParser(
+            join(self.test_files, 'python_project', 'seminar.py')).parse().result
+        crc_card = crc_cards[1]
         self.assertEqual(crc_card.name, "Seminar")
