@@ -35,7 +35,6 @@ class CRC(object):
         }
 
     """
-
     def __init__(self, name, kind='class',
                  collaborators=None,
                  responsibilities=None):

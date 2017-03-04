@@ -7,7 +7,10 @@ from __future__ import (
 
 from abc import ABCMeta, abstractmethod
 from six import with_metaclass
-from crc_diagram.core.patterns import COLLABORATOR_PATTERN, RESPONSIBILITY_PATTERN
+from crc_diagram.core.patterns import (
+    COLLABORATOR_PATTERN,
+    RESPONSIBILITY_PATTERN
+)
 from crc_diagram import utils
 
 

@@ -8,9 +8,10 @@ from __future__ import (
 import ast
 from os import path
 from contextlib import closing
+
 from crc_diagram.exceptions import ParserException
-from crc_diagram import utils
 from crc_diagram.core import CRC
+from crc_diagram import utils
 from crc_diagram.core.parsers.base_parser import BaseParser
 
 
@@ -37,10 +38,12 @@ class PythonParser(BaseParser, ast.NodeVisitor):
 
             [
                 CRC(name='HtmlToMarkdown',
+                    kind='class',
                     collaborators=['ImageUploader'],
                     responsibilities=['Convert html files to markdown']
                     ),
                 CRC(name='ImageUploader',
+                    kind='class',
                     collaborators=[],
                     responsibilities=['Store images in the cloud']
                     )
@@ -95,8 +98,8 @@ class PythonParser(BaseParser, ast.NodeVisitor):
 
         :returns: self
         """
+        self.stream.seek(0)
         try:
-            self.stream.seek(0)
             with closing(self.stream) as stream:
                 tree = ast.parse(stream.read())
         except (SyntaxError,):

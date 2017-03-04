@@ -48,9 +48,9 @@ You can see `here`_ the list of accepted formats.
 Viewing the rendered diagram
 ----------------------------
 
-To view the output file you can add :code:`--view=true` to the cli, for example::
+To view the output file you can add :code:`--view` or the shortcut :code:`-v` to the cli, for example::
 
-    crc-diagram source_file.py output.png --view=true
+    crc-diagram source_file.py output.png --view
 
 
 --------
@@ -59,7 +59,12 @@ Raw CRCs
 
 You can use crc-diagram to output just the CRC structure as json::
 
-    crc-diagram source_file.py --raw=true
+    crc-diagram source_file.py --raw
+
+
+Or you can use the shortcut :code:`-r`::
+
+    crc-diagram source_file.py --raw
 
 
 And the output is::
@@ -81,4 +86,4 @@ And the output is::
 You can specify a output to the json::
 
 
-    crc-diagram source_file.py output.json --raw=true
+    crc-diagram source_file.py output.json --raw

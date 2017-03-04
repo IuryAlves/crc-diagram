@@ -85,6 +85,22 @@ And the result is:
 .. image:: _static/markdown_converter.png
 
 
+<<<<<<< HEAD
+=======
+Extracting CRCs from modules
+----------------------------
+
+It's also posible to extract CRCs from modules.
+The only thing you must do is to add docstrings to a module::
+
+    """
+    file: module.py
+
+    @collaborator: A module collaborator
+    @responsibility: A module responsibility
+    """
+
+>>>>>>> 8933672a509de53f1bb82e3048677b35c1210507
 ----------
 Installing
 ----------
