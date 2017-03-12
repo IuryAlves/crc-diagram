@@ -42,3 +42,5 @@ setup(name='crc-diagram',
           ]
       }
       )
+
+print("\n Don't forget to install DOT: http://www.graphviz.org/Download..php")
