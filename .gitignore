@@ -8,4 +8,4 @@ docs/build
 htmlcov/
 build/
 dist/
-
+crc_diagram.egg-info/
