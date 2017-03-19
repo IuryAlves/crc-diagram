@@ -1,0 +1,497 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API &#8212; CRCDiagram  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Command Line Usage" href="command_line_usage.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-crc_diagram">
+<span id="high-level-api"></span><h2>High Level API<a class="headerlink" href="#module-crc_diagram" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="crc_diagram.to_crc">
+<code class="descclassname">crc_diagram.</code><code class="descname">to_crc</code><span class="sig-paren">(</span><em>fp</em>, <em>parser_class=PythonParser</em>, <em>**parser_class_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/crc_diagram.html#to_crc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.to_crc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut to <code class="xref py py-data docutils literal"><span class="pre">PythonParser(fp).parse().result</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">file|str fp: The file to extract the CRCs.
+Can be either a file path as string or a file like object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Param:</th><td class="field-body">BaseParser parser_class: The parser class.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">tuple allowed_file_extensions: Any file extension which is not in this list
+will be ignored.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Param:</th><td class="field-body">parser_class_kwargs: additional keyword arguments to <code class="xref py py-data docutils literal"><span class="pre">parser_class</span></code></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of CRCs</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">to_crc</span><span class="p">(</span><span class="s1">&#39;html_to_markdown.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Will return:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="n">CRC</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">HtmlToMarkdown</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="n">class</span><span class="p">,</span>
+    <span class="n">collaborators</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ImageUploader&#39;</span><span class="p">],</span>
+    <span class="n">responsibilities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Convert html files to markdown&#39;</span><span class="p">]</span>
+<span class="p">),</span>
+<span class="n">CRC</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">ImageUploader</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="n">class</span><span class="p">,</span>
+    <span class="n">collaborators</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">responsibilities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Store images in the cloud&#39;</span><span class="p">])</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="crc_diagram.folder_to_crc">
+<code class="descclassname">crc_diagram.</code><code class="descname">folder_to_crc</code><span class="sig-paren">(</span><em>path</em>, <em>parser_class=PythonParser</em>, <em>**parser_class_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/crc_diagram.html#folder_to_crc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.folder_to_crc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate in all files in <code class="xref py py-data docutils literal"><span class="pre">path</span></code> and call <a class="reference internal" href="#crc_diagram.to_crc" title="crc_diagram.to_crc"><code class="xref py py-data docutils literal"><span class="pre">to_crc</span></code></a>
+to each one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) &#8211; The folder path.</li>
+<li><strong>parser_class</strong> (<em>BaseParser</em>) &#8211; The parser class.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Param:</th><td class="field-body"><p class="first">tuple allowed_file_extensions: Any file extension which is not in this list
+will be ignored.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><p class="first">parser_class_kwargs: additional keyword arguments to <code class="xref py py-data docutils literal"><span class="pre">parser_class</span></code></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of CRCs of all files in <code class="xref py py-data docutils literal"><span class="pre">path</span></code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
+
+<span class="n">folder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="s1">&#39;crc_diagram&#39;</span><span class="p">,</span> <span class="s1">&#39;testing&#39;</span><span class="p">,</span> <span class="s1">&#39;files&#39;</span><span class="p">,</span> <span class="s1">&#39;python_project&#39;</span><span class="p">)</span>
+<span class="n">folder_to_crc</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And the result:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="n">CRC</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">Student</span><span class="p">,</span>
+   <span class="n">kind</span><span class="o">=</span><span class="n">class</span><span class="p">,</span>
+   <span class="n">collaborators</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Enrollment&#39;</span><span class="p">],</span>
+   <span class="n">responsibilities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Validate Identifying info&#39;</span><span class="p">,</span> <span class="s1">&#39;Provide list of seminars taken&#39;</span><span class="p">]</span>
+<span class="p">),</span>
+<span class="n">CRC</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">Seminar</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="n">class</span><span class="p">,</span>
+    <span class="n">collaborators</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Student&#39;</span><span class="p">,</span> <span class="s1">&#39;Professor&#39;</span><span class="p">],</span>
+    <span class="n">responsibilities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;List transcripts&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;Drop student&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;Add student&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;Get enrolled students&#39;</span><span class="p">]</span>
+<span class="p">),</span>
+<span class="c1"># ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-crc_diagram.core">
+<span id="core"></span><h2>Core<a class="headerlink" href="#module-crc_diagram.core" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="crc_diagram.core.CRC">
+<em class="property">class </em><code class="descclassname">crc_diagram.core.</code><code class="descname">CRC</code><span class="sig-paren">(</span><em>name</em>, <em>kind='class'</em>, <em>collaborators=None</em>, <em>responsibilities=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/core/crc.html#CRC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.core.CRC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that represents a CRC Card.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; The name of the class.</li>
+<li><strong>kind</strong> (<em>str</em>) &#8211; The kind of the CRC. Default is &#8216;class&#8217;</li>
+<li><strong>collaborators</strong> (<em>list</em>) &#8211; A list of strings containing the collaborators.</li>
+<li><strong>responsibilities</strong> (<em>list</em>) &#8211; A list of strings containing the responsibilities.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span> <span class="o">=</span> <span class="n">CRC</span><span class="p">(</span><span class="s1">&#39;HtmlToMarkdown&#39;</span><span class="p">,</span>
+          <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+          <span class="n">collaborators</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ImageUploader&#39;</span><span class="p">],</span>
+          <span class="n">responsibilities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Convert html to markdown&#39;</span><span class="p">]</span>
+      <span class="p">)</span>
+
+<span class="n">crc</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And the result:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;collaborators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;ImageUploader&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;HtmlToMarkdown&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;kind&#39;</span><span class="p">:</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;responsibilities&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Convert html to markdown&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="crc_diagram.core.CRC.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/core/crc.html#CRC.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.core.CRC.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a dict representation of the instance attributes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-crc_diagram.core.parsers">
+<span id="parsers"></span><h2>Parsers<a class="headerlink" href="#module-crc_diagram.core.parsers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="crc_diagram.core.parsers.PythonParser">
+<em class="property">class </em><code class="descclassname">crc_diagram.core.parsers.</code><code class="descname">PythonParser</code><span class="sig-paren">(</span><em>stream</em>, <em>responsibility_pattern</em>, <em>collaborator_pattern</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/core/parsers/python_parser.html#PythonParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.core.parsers.PythonParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parser class which extracts CRC data from docstrings using <code class="xref py py-data docutils literal"><span class="pre">ast</span></code> module.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path_or_stream</strong> &#8211; A file path or a file like object from where the CRCs will be extracted.</li>
+<li><strong>collaborator_pattern</strong> (<em>regular_expression</em>) &#8211; A regex pattern do extract the collaborators
+from docstrings.
+The default is <code class="xref py py-data docutils literal"><span class="pre">COLLABORATOR_PATTERN</span></code>.</li>
+<li><strong>responsibility_pattern</strong> (<em>regular_expression</em>) &#8211; A regex pattern do extract the
+responsibilities from docstrings.
+The default is <code class="xref py py-data docutils literal"><span class="pre">RESPONSIBILITY_PATTERN</span></code>.</li>
+<li><strong>allowed_file_extensions</strong> (<em>tuple</em>) &#8211; A list of file extensions do accept.
+The parser will ignore any files which extension isn`t in this list.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">PythonParser</span><span class="p">(</span><span class="s1">&#39;file.py&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">result</span>
+</pre></div>
+</div>
+<p>The result is a list of <code class="xref py py-data docutils literal"><span class="pre">CRC</span></code> instances:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="n">CRC</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;HtmlToMarkdown&#39;</span><span class="p">,</span>
+        <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+        <span class="n">collaborators</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ImageUploader&#39;</span><span class="p">],</span>
+        <span class="n">responsibilities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Convert html files to markdown&#39;</span><span class="p">]</span>
+        <span class="p">),</span>
+    <span class="n">CRC</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;ImageUploader&#39;</span><span class="p">,</span>
+        <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;class&#39;</span><span class="p">,</span>
+        <span class="n">collaborators</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">responsibilities</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Store images in the cloud&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>You can change the patterns used to extract responsibilities and collaborators
+passing a regular expression to PythonParser:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">responsibility_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\s*?:responsibility:(.*)$&#39;</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">PythonParser</span><span class="p">(</span>
+            <span class="s1">&#39;file.py&#39;</span><span class="p">,</span>
+            <span class="n">responsibility_pattern</span><span class="o">=</span><span class="n">responsibility_pattern</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>This will extract any data in docstring which has the following format:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">responsibility</span><span class="p">:</span> <span class="n">Save</span> <span class="n">the</span> <span class="n">world</span>
+</pre></div>
+</div>
+<p>The same is valid to collaborators:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">collaborator_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\s*?:collaborator:(.*)$&#39;</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">PythonParser</span><span class="p">(</span>
+            <span class="s1">&#39;file.py&#39;</span><span class="p">,</span>
+            <span class="n">collaborator_pattern</span><span class="o">=</span><span class="n">collaborator_pattern</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<p>And you also can pass <code class="xref py py-data docutils literal"><span class="pre">re.compile</span></code> objects:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">collaborator_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s*?:collaborator:(.*)$&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">PythonParser</span><span class="p">(</span>
+            <span class="s1">&#39;file.py&#39;</span><span class="p">,</span>
+            <span class="n">collaborator_pattern</span><span class="o">=</span><span class="n">collaborator_pattern</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="crc_diagram.core.parsers.PythonParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/core/parsers/python_parser.html#PythonParser.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.core.parsers.PythonParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main functionality. It parses a tree from <code class="xref py py-data docutils literal"><span class="pre">self.path_or_stream</span></code>
+and uses <code class="xref py py-data docutils literal"><span class="pre">ast.NodeVisitor</span></code> to iterate over the tree.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-crc_diagram.renders">
+<span id="renders"></span><h2>Renders<a class="headerlink" href="#module-crc_diagram.renders" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="crc_diagram.renders.DotRender">
+<em class="property">class </em><code class="descclassname">crc_diagram.renders.</code><code class="descname">DotRender</code><span class="sig-paren">(</span><em>crc_cards</em>, <em>format='png'</em>, <em>graph_data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/renders/dot.html#DotRender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.renders.DotRender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render CRC cards using DOT language.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crc_cards</strong> (<em>list</em>) &#8211; A list of <code class="xref py py-data docutils literal"><span class="pre">CRC</span></code> objects.</li>
+<li><strong>format</strong> (<em>str</em>) &#8211; The format used to save the diagram. Default is png.</li>
+<li><strong>graph_data</strong> (<em>dict</em>) &#8211; graph attributes, see documentation <a class="reference external" href="http://www.graphviz.org/doc/info/attrs.html">here</a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">crc_diagram</span> <span class="k">import</span> <span class="n">py_to_crc</span>
+
+<span class="c1"># getting crcs from a file</span>
+<span class="n">crcs</span> <span class="o">=</span> <span class="n">py_to_crc</span><span class="p">(</span><span class="s1">&#39;html_to_markdown.py&#39;</span><span class="p">)</span>
+
+<span class="n">DotRender</span><span class="p">(</span><span class="n">crcs</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;html_to_markdown.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will save to html_to_markdown.png the diagram</p>
+<p>You can open it passing <code class="xref py py-data docutils literal"><span class="pre">view=True</span></code> to <a class="reference internal" href="#crc_diagram.renders.DotRender.render" title="crc_diagram.renders.DotRender.render"><code class="xref py py-data docutils literal"><span class="pre">render</span></code></a> method:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DotRender</span><span class="p">(</span><span class="n">crcs</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">&#39;html_to_markdown.png&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default <a class="reference internal" href="#crc_diagram.renders.DotRender" title="crc_diagram.renders.DotRender"><code class="xref py py-class docutils literal"><span class="pre">DotRender</span></code></a> uses a directed graph.</p>
+<p>You can customize the graph passing a dictionary to <code class="xref py py-data docutils literal"><span class="pre">graph_data=graph_data</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># create a blue graph</span>
+<span class="n">graph_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;fillcolor&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;style&#39;</span><span class="p">:</span> <span class="s1">&#39;filled&#39;</span>
+<span class="p">}</span>
+
+<span class="n">DotRender</span><span class="p">(</span><span class="n">crcs</span><span class="p">,</span> <span class="n">graph_data</span><span class="o">=</span><span class="n">graph_data</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+    <span class="s1">&#39;html_to_markdown.png&#39;</span><span class="p">,</span>
+    <span class="n">view</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Rendered diagram:</p>
+<img alt="_images/blue_card.png" src="_images/blue_card.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="method">
+<dt id="crc_diagram.renders.DotRender.create_edges">
+<code class="descname">create_edges</code><span class="sig-paren">(</span><em>crc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/renders/dot.html#DotRender.create_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.renders.DotRender.create_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate over <code class="xref py py-data docutils literal"><span class="pre">crc.collaborators</span></code> and create a edge
+for each one if the edge hasn&#8217;t already been created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>crc</strong> (<a class="reference internal" href="#crc_diagram.core.CRC" title="crc_diagram.core.CRC"><em>CRC</em></a>) &#8211; A CRC instance.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="crc_diagram.renders.DotRender.edge_already_added">
+<code class="descname">edge_already_added</code><span class="sig-paren">(</span><em>crc_name</em>, <em>collaborator</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/renders/dot.html#DotRender.edge_already_added"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.renders.DotRender.edge_already_added" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if a edge have already been added for that collaborator
+return False otherwise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crc_name</strong> (<em>str</em>) &#8211; The CRC name.</li>
+<li><strong>collaborator</strong> (<em>str</em>) &#8211; The CRC collaborator.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="crc_diagram.renders.DotRender.get_edge_direction">
+<code class="descname">get_edge_direction</code><span class="sig-paren">(</span><em>collaborator</em>, <em>crc_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/renders/dot.html#DotRender.get_edge_direction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.renders.DotRender.get_edge_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a collaborator has bidirectional reference:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">-&gt;</span> <span class="n">B</span>
+<span class="n">B</span> <span class="o">-&gt;</span> <span class="n">A</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>collaborator</strong> (<em>str</em>) &#8211; The collaborator to check against.</li>
+<li><strong>crc_name</strong> (<em>str</em>) &#8211; The name of the CRC to check against.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Return direction:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">both if the collaborator has bidirectional reference
+or single otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="crc_diagram.renders.DotRender.render">
+<code class="descname">render</code><span class="sig-paren">(</span><em>filename</em>, <em>view=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/crc_diagram/renders/dot.html#DotRender.render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.renders.DotRender.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render <code class="xref py py-data docutils literal"><span class="pre">self.graph</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) &#8211; The filename where the diagram will be saved.</li>
+<li><strong>view</strong> (<em>bool</em>) &#8211; Set to True to open the rendered diagram.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="crc_diagram.renders.DotRender.source">
+<code class="descname">source</code><a class="headerlink" href="#crc_diagram.renders.DotRender.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the DOT source of the <code class="xref py py-data docutils literal"><span class="pre">self.graph</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-crc_diagram.exceptions">
+<span id="exceptions"></span><h2>Exceptions<a class="headerlink" href="#module-crc_diagram.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="crc_diagram.exceptions.ParserException">
+<em class="property">class </em><code class="descclassname">crc_diagram.exceptions.</code><code class="descname">ParserException</code><a class="reference internal" href="_modules/crc_diagram/exceptions.html#ParserException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#crc_diagram.exceptions.ParserException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when something goes wrong while parsing source files to CRCs.</p>
+</dd></dl>
+
+<p><a class="reference external" href="contributing.html">Next &gt;&gt;</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API</a><ul>
+<li><a class="reference internal" href="#module-crc_diagram">High Level API</a></li>
+<li><a class="reference internal" href="#module-crc_diagram.core">Core</a></li>
+<li><a class="reference internal" href="#module-crc_diagram.core.parsers">Parsers</a></li>
+<li><a class="reference internal" href="#module-crc_diagram.renders">Renders</a></li>
+<li><a class="reference internal" href="#module-crc_diagram.exceptions">Exceptions</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="command_line_usage.html" title="previous chapter">Command Line Usage</a></li>
+      <li>Next: <a href="contributing.html" title="next chapter">Contributing</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Iury Alves.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

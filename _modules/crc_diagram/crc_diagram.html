@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>crc_diagram.crc_diagram &#8212; CRCDiagram  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for crc_diagram.crc_diagram</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">unicode_literals</span><span class="p">,</span>
+    <span class="n">absolute_import</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
+
+<span class="kn">from</span> <span class="nn">.core.parsers</span> <span class="k">import</span> <span class="n">PythonParser</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">split_by_extension</span>
+
+
+<div class="viewcode-block" id="to_crc"><a class="viewcode-back" href="../../api.html#crc_diagram.to_crc">[docs]</a><span class="k">def</span> <span class="nf">to_crc</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">parser_class</span><span class="o">=</span><span class="n">PythonParser</span><span class="p">,</span>
+           <span class="n">allowed_file_extensions</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;py&#39;</span><span class="p">,</span> <span class="p">),</span>
+           <span class="o">**</span><span class="n">parser_class_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Shortcut to :py:data:`PythonParser(fp).parse().result`.</span>
+
+<span class="sd">    :param: file|str fp: The file to extract the CRCs.</span>
+<span class="sd">     Can be either a file path as string or a file like object.</span>
+<span class="sd">    :param: BaseParser parser_class: The parser class.</span>
+<span class="sd">    :param: tuple allowed_file_extensions: Any file extension which is not in this list</span>
+<span class="sd">     will be ignored.</span>
+<span class="sd">    :param: parser_class_kwargs: additional keyword arguments to :py:data:`parser_class`</span>
+<span class="sd">    :return: A list of CRCs</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        to_crc(&#39;html_to_markdown.py&#39;)</span>
+
+<span class="sd">    Will return::</span>
+
+<span class="sd">        [</span>
+<span class="sd">        CRC(name=HtmlToMarkdown,</span>
+<span class="sd">            kind=class,</span>
+<span class="sd">            collaborators=[&#39;ImageUploader&#39;],</span>
+<span class="sd">            responsibilities=[&#39;Convert html files to markdown&#39;]</span>
+<span class="sd">        ),</span>
+<span class="sd">        CRC(name=ImageUploader,</span>
+<span class="sd">            kind=class,</span>
+<span class="sd">            collaborators=[],</span>
+<span class="sd">            responsibilities=[&#39;Store images in the cloud&#39;])</span>
+<span class="sd">        ]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">split_by_extension</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">allowed_file_extensions</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">parser_class</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="o">**</span><span class="n">parser_class_kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span><span class="o">.</span><span class="n">result</span>
+    <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="folder_to_crc"><a class="viewcode-back" href="../../api.html#crc_diagram.folder_to_crc">[docs]</a><span class="k">def</span> <span class="nf">folder_to_crc</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">parser_class</span><span class="o">=</span><span class="n">PythonParser</span><span class="p">,</span>
+                  <span class="n">allowed_file_extensions</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;py&#39;</span><span class="p">,</span> <span class="p">),</span>
+                  <span class="o">**</span><span class="n">parser_class_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iterate in all files in :py:data:`path` and call :py:data:`to_crc`</span>
+<span class="sd">    to each one.</span>
+
+<span class="sd">    :param str path: The folder path.</span>
+<span class="sd">    :param BaseParser parser_class: The parser class.</span>
+<span class="sd">    :param: tuple allowed_file_extensions: Any file extension which is not in this list</span>
+<span class="sd">     will be ignored.</span>
+<span class="sd">    :param: parser_class_kwargs: additional keyword arguments to :py:data:`parser_class`</span>
+<span class="sd">    :return: A list of CRCs of all files in :py:data:`path`.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        from os.path import join</span>
+
+<span class="sd">        folder = join(&#39;crc_diagram&#39;, &#39;testing&#39;, &#39;files&#39;, &#39;python_project&#39;)</span>
+<span class="sd">        folder_to_crc(folder)</span>
+
+<span class="sd">    And the result::</span>
+
+<span class="sd">        [</span>
+<span class="sd">        CRC(name=Student,</span>
+<span class="sd">           kind=class,</span>
+<span class="sd">           collaborators=[&#39;Enrollment&#39;],</span>
+<span class="sd">           responsibilities=[&#39;Validate Identifying info&#39;, &#39;Provide list of seminars taken&#39;]</span>
+<span class="sd">        ),</span>
+<span class="sd">        CRC(name=Seminar,</span>
+<span class="sd">            kind=class,</span>
+<span class="sd">            collaborators=[&#39;Student&#39;, &#39;Professor&#39;],</span>
+<span class="sd">            responsibilities=[&#39;List transcripts&#39;,</span>
+<span class="sd">                              &#39;Drop student&#39;,</span>
+<span class="sd">                              &#39;Add student&#39;,</span>
+<span class="sd">                              &#39;Get enrolled students&#39;]</span>
+<span class="sd">        ),</span>
+<span class="sd">        # ...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">crcs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">files_iter</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">files</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">files_iter</span><span class="p">):</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file_</span><span class="p">)</span>
+        <span class="n">crcs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="n">to_crc</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">parser_class</span><span class="o">=</span><span class="n">parser_class</span><span class="p">,</span>
+                   <span class="n">allowed_file_extensions</span><span class="o">=</span><span class="n">allowed_file_extensions</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">crcs</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Iury Alves.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

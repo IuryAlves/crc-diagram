@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command Line Usage &#8212; CRCDiagram  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="Welcome to crc-diagram’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="command-line-usage">
+<h1>Command Line Usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to use the command line is specifying a <em>source</em> and an <em>output</em>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_file</span><span class="o">.</span><span class="n">py</span> <span class="n">output</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+<p><em>source</em> can be a folder:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_folder</span><span class="o">/</span> <span class="n">output</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="changing-the-output-format">
+<h2>Changing the output format<a class="headerlink" href="#changing-the-output-format" title="Permalink to this headline">¶</a></h2>
+<p>The default output format is png. You can use any format that is accepted by DOT:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_file</span><span class="o">.</span><span class="n">py</span> <span class="n">output</span><span class="o">.</span><span class="n">svg</span> <span class="o">--</span><span class="nb">format</span><span class="o">=</span><span class="n">svg</span>
+</pre></div>
+</div>
+<p>Or:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_file</span><span class="o">.</span><span class="n">py</span> <span class="n">output</span><span class="o">.</span><span class="n">pdf</span> <span class="o">--</span><span class="nb">format</span><span class="o">=</span><span class="n">pdf</span>
+</pre></div>
+</div>
+<p>You can see <a class="reference external" href="http://www.graphviz.org/doc/info/output.html">here</a> the list of accepted formats.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">crc-diagram does not care about file extensions. If you are saving a file with <code class="code docutils literal"><span class="pre">--format=pdf</span></code> and the
+filename is output.png the file format still will be pdf.</p>
+</div>
+</div>
+<div class="section" id="viewing-the-rendered-diagram">
+<h2>Viewing the rendered diagram<a class="headerlink" href="#viewing-the-rendered-diagram" title="Permalink to this headline">¶</a></h2>
+<p>To view the output file you can add <code class="code docutils literal"><span class="pre">--view</span></code> or the shortcut <code class="code docutils literal"><span class="pre">-v</span></code> to the cli, for example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_file</span><span class="o">.</span><span class="n">py</span> <span class="n">output</span><span class="o">.</span><span class="n">png</span> <span class="o">--</span><span class="n">view</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="raw-crcs">
+<h2>Raw CRCs<a class="headerlink" href="#raw-crcs" title="Permalink to this headline">¶</a></h2>
+<p>You can use crc-diagram to output just the CRC structure as json:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_file</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">raw</span>
+</pre></div>
+</div>
+<p>Or you can use the shortcut <code class="code docutils literal"><span class="pre">-r</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_file</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">r</span>
+</pre></div>
+</div>
+<p>And the output is:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CRC Card Name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;collaborators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+        <span class="s2">&quot;responsibilities&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Another CRC Card Name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;collaborators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+        <span class="s2">&quot;responsibilities&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>You can specify a output to the json:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">crc</span><span class="o">-</span><span class="n">diagram</span> <span class="n">source_file</span><span class="o">.</span><span class="n">py</span> <span class="n">output</span><span class="o">.</span><span class="n">json</span> <span class="o">--</span><span class="n">raw</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="api.html">Next &gt;&gt;</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Command Line Usage</a><ul>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#changing-the-output-format">Changing the output format</a></li>
+<li><a class="reference internal" href="#viewing-the-rendered-diagram">Viewing the rendered diagram</a></li>
+<li><a class="reference internal" href="#raw-crcs">Raw CRCs</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to crc-diagram&#8217;s documentation!</a></li>
+      <li>Next: <a href="api.html" title="next chapter">API</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Iury Alves.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

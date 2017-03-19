@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>crc_diagram.renders.dot &#8212; CRCDiagram  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for crc_diagram.renders.dot</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+
+
+<span class="kn">from</span> <span class="nn">graphviz</span> <span class="k">import</span> <span class="n">Digraph</span>
+<span class="kn">from</span> <span class="nn">crc_diagram.utils</span> <span class="k">import</span> <span class="n">split_by_extension</span>
+<span class="kn">from</span> <span class="nn">crc_diagram.log</span> <span class="k">import</span> <span class="n">logger</span>
+
+
+<div class="viewcode-block" id="DotRender"><a class="viewcode-back" href="../../../api.html#crc_diagram.renders.DotRender">[docs]</a><span class="k">class</span> <span class="nc">DotRender</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Render CRC cards using DOT language.</span>
+
+<span class="sd">    :param list crc_cards: A list of :py:data:`CRC` objects.</span>
+<span class="sd">    :param str format: The format used to save the diagram. Default is png.</span>
+<span class="sd">    :param dict graph_data: graph attributes, see documentation `here`_.</span>
+
+<span class="sd">    .. _here: http://www.graphviz.org/doc/info/attrs.html</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        from crc_diagram import py_to_crc</span>
+
+<span class="sd">        # getting crcs from a file</span>
+<span class="sd">        crcs = py_to_crc(&#39;html_to_markdown.py&#39;)</span>
+
+<span class="sd">        DotRender(crcs).render(&#39;html_to_markdown.png&#39;)</span>
+
+<span class="sd">    This will save to html_to_markdown.png the diagram</span>
+
+<span class="sd">    You can open it passing :py:data:`view=True` to :py:data:`render` method::</span>
+
+<span class="sd">        DotRender(crcs).render(&#39;html_to_markdown.png&#39;, view=True)</span>
+
+<span class="sd">    By default :py:class:`DotRender` uses a directed graph.</span>
+
+<span class="sd">    You can customize the graph passing a dictionary to :py:data:`graph_data=graph_data`::</span>
+
+<span class="sd">        # create a blue graph</span>
+<span class="sd">        graph_data = {</span>
+<span class="sd">            &#39;fillcolor&#39;: &#39;blue&#39;,</span>
+<span class="sd">            &#39;style&#39;: &#39;filled&#39;</span>
+<span class="sd">        }</span>
+
+<span class="sd">        DotRender(crcs, graph_data=graph_data).render(</span>
+<span class="sd">            &#39;html_to_markdown.png&#39;,</span>
+<span class="sd">            view=True</span>
+<span class="sd">            )</span>
+
+<span class="sd">    Rendered diagram:</span>
+
+<span class="sd">    .. image:: _images/blue_card.png</span>
+
+<span class="sd">    |</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crc_cards</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">graph_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="nb">format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crc_cards</span> <span class="o">=</span> <span class="n">crc_cards</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;shape&#39;</span><span class="p">:</span> <span class="s1">&#39;record&#39;</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># keep track of the edges</span>
+
+        <span class="k">if</span> <span class="n">graph_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">graph_data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">(</span>
+            <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;CRC Diagram&#39;</span><span class="p">,</span>
+            <span class="n">node_attr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">graph_data</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the DOT source of the :py:data:`self.graph`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">source</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">format_spec</span><span class="o">=</span><span class="s1">&#39;\l&#39;</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="n">format_spec</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DotRender.get_edge_direction"><a class="viewcode-back" href="../../../api.html#crc_diagram.renders.DotRender.get_edge_direction">[docs]</a>    <span class="k">def</span> <span class="nf">get_edge_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collaborator</span><span class="p">,</span> <span class="n">crc_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a collaborator has bidirectional reference::</span>
+
+<span class="sd">            A -&gt; B</span>
+<span class="sd">            B -&gt; A</span>
+
+<span class="sd">        :param str collaborator: The collaborator to check against.</span>
+<span class="sd">        :param str crc_name: The name of the CRC to check against.</span>
+
+<span class="sd">        :return direction: both if the collaborator has bidirectional reference</span>
+<span class="sd">         or single otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;single&#39;</span>
+        <span class="k">for</span> <span class="n">crc_card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">crc_cards</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">collaborator</span> <span class="o">==</span> <span class="n">crc_card</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="n">crc_name</span> <span class="ow">in</span> <span class="n">crc_card</span><span class="o">.</span><span class="n">collaborators</span><span class="p">:</span>
+                <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;both&#39;</span>
+        <span class="k">return</span> <span class="n">direction</span></div>
+
+<div class="viewcode-block" id="DotRender.edge_already_added"><a class="viewcode-back" href="../../../api.html#crc_diagram.renders.DotRender.edge_already_added">[docs]</a>    <span class="k">def</span> <span class="nf">edge_already_added</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crc_name</span><span class="p">,</span> <span class="n">collaborator</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return True if a edge have already been added for that collaborator</span>
+<span class="sd">        return False otherwise.</span>
+
+<span class="sd">        :param str crc_name: The CRC name.</span>
+<span class="sd">        :param str collaborator: The CRC collaborator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">crc_name</span><span class="p">,</span> <span class="n">collaborator</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span> <span class="ow">or</span>
+            <span class="p">(</span><span class="n">collaborator</span><span class="p">,</span> <span class="n">crc_name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="DotRender.create_edges"><a class="viewcode-back" href="../../../api.html#crc_diagram.renders.DotRender.create_edges">[docs]</a>    <span class="k">def</span> <span class="nf">create_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over :py:data:`crc.collaborators` and create a edge</span>
+<span class="sd">        for each one if the edge hasn&#39;t already been created.</span>
+
+<span class="sd">        :param CRC crc: A CRC instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">collaborator</span> <span class="ow">in</span> <span class="n">crc</span><span class="o">.</span><span class="n">collaborators</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_edge_direction</span><span class="p">(</span><span class="n">collaborator</span><span class="p">,</span> <span class="n">crc</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">edge_already_added</span><span class="p">(</span><span class="n">crc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collaborator</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="n">crc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collaborator</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="n">direction</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">crc</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">collaborator</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over :py:data:`self.crc_cards` and create a graph node</span>
+<span class="sd">        for each one,then calls :py:data:`create_edges` to create the edges</span>
+<span class="sd">        for each node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">crc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">crc_cards</span><span class="p">):</span>
+            <span class="n">crc_name</span> <span class="o">=</span> <span class="n">crc</span><span class="o">.</span><span class="n">name</span>
+
+            <span class="k">if</span> <span class="n">crc</span><span class="o">.</span><span class="n">collaborators</span><span class="p">:</span>
+                <span class="n">collaborators</span> <span class="o">=</span> <span class="n">DotRender</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">crc</span><span class="o">.</span><span class="n">collaborators</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">collaborators</span> <span class="o">=</span> <span class="s2">&quot;NO-COLLABORATORS&quot;</span>
+
+            <span class="k">if</span> <span class="n">crc</span><span class="o">.</span><span class="n">responsibilities</span><span class="p">:</span>
+                <span class="n">responsibilities</span> <span class="o">=</span> <span class="n">DotRender</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">crc</span><span class="o">.</span><span class="n">responsibilities</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">responsibilities</span> <span class="o">=</span> <span class="s2">&quot;NO-RESPONSIBILITIES&quot;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">crc_name</span><span class="p">,</span> <span class="s2">&quot;{</span><span class="si">%s</span><span class="s2">|{</span><span class="si">%s</span><span class="s2">|</span><span class="si">%s</span><span class="s2">}}&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">crc_name</span><span class="p">,</span>
+                <span class="n">collaborators</span><span class="p">,</span>
+                <span class="n">responsibilities</span>
+            <span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_edges</span><span class="p">(</span><span class="n">crc</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DotRender.render"><a class="viewcode-back" href="../../../api.html#crc_diagram.renders.DotRender.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Render :py:data:`self.graph`.</span>
+
+<span class="sd">        :param str filename: The filename where the diagram will be saved.</span>
+<span class="sd">        :param bool view: Set to True to open the rendered diagram.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">split_by_extension</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">extension</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">extension</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s1">&#39;File extension is different from --format. &#39;</span>
+                <span class="s1">&#39;The file name is </span><span class="si">{filename}</span><span class="s1">.</span><span class="si">{extension}</span><span class="s1"> &#39;</span>
+                <span class="s1">&#39;but it will be saved as </span><span class="si">{format}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">extension</span><span class="o">=</span><span class="n">extension</span><span class="p">,</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Iury Alves.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

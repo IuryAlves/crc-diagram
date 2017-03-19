@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>crc_diagram.core.parsers.python_parser &#8212; CRCDiagram  documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for crc_diagram.core.parsers.python_parser</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">absolute_import</span><span class="p">,</span>
+    <span class="n">unicode_literals</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">closing</span>
+
+<span class="kn">from</span> <span class="nn">crc_diagram.exceptions</span> <span class="k">import</span> <span class="n">ParserException</span>
+<span class="kn">from</span> <span class="nn">crc_diagram.core</span> <span class="k">import</span> <span class="n">CRC</span>
+<span class="kn">from</span> <span class="nn">crc_diagram</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">crc_diagram.core.parsers.base_parser</span> <span class="k">import</span> <span class="n">BaseParser</span>
+
+
+<div class="viewcode-block" id="PythonParser"><a class="viewcode-back" href="../../../../api.html#crc_diagram.core.parsers.PythonParser">[docs]</a><span class="k">class</span> <span class="nc">PythonParser</span><span class="p">(</span><span class="n">BaseParser</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">NodeVisitor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A parser class which extracts CRC data from docstrings using :py:data:`ast` module.</span>
+
+<span class="sd">    :param path_or_stream: A file path or a file like object from where the CRCs will be extracted.</span>
+<span class="sd">    :param regular_expression collaborator_pattern: A regex pattern do extract the collaborators</span>
+<span class="sd">     from docstrings.</span>
+<span class="sd">     The default is :py:data:`COLLABORATOR_PATTERN`.</span>
+<span class="sd">    :param regular_expression responsibility_pattern: A regex pattern do extract the</span>
+<span class="sd">     responsibilities from docstrings.</span>
+<span class="sd">     The default is :py:data:`RESPONSIBILITY_PATTERN`.</span>
+<span class="sd">    :param tuple allowed_file_extensions: A list of file extensions do accept.</span>
+<span class="sd">      The parser will ignore any files which extension isn`t in this list.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">            parser = PythonParser(&#39;file.py&#39;).parse()</span>
+<span class="sd">            parser.result</span>
+
+<span class="sd">    The result is a list of :py:data:`CRC` instances::</span>
+
+<span class="sd">            [</span>
+<span class="sd">                CRC(name=&#39;HtmlToMarkdown&#39;,</span>
+<span class="sd">                    kind=&#39;class&#39;,</span>
+<span class="sd">                    collaborators=[&#39;ImageUploader&#39;],</span>
+<span class="sd">                    responsibilities=[&#39;Convert html files to markdown&#39;]</span>
+<span class="sd">                    ),</span>
+<span class="sd">                CRC(name=&#39;ImageUploader&#39;,</span>
+<span class="sd">                    kind=&#39;class&#39;,</span>
+<span class="sd">                    collaborators=[],</span>
+<span class="sd">                    responsibilities=[&#39;Store images in the cloud&#39;]</span>
+<span class="sd">                    )</span>
+<span class="sd">            ]</span>
+
+<span class="sd">    You can change the patterns used to extract responsibilities and collaborators</span>
+<span class="sd">    passing a regular expression to PythonParser::</span>
+
+<span class="sd">        responsibility_pattern = r&#39;\s*?:responsibility:(.*)$&#39;</span>
+
+<span class="sd">        parser = PythonParser(</span>
+<span class="sd">                    &#39;file.py&#39;,</span>
+<span class="sd">                    responsibility_pattern=responsibility_pattern</span>
+<span class="sd">                )</span>
+
+<span class="sd">    This will extract any data in docstring which has the following format::</span>
+
+<span class="sd">        :responsibility: Save the world</span>
+
+<span class="sd">    The same is valid to collaborators::</span>
+
+<span class="sd">        collaborator_pattern = r&#39;\s*?:collaborator:(.*)$&#39;</span>
+
+<span class="sd">        parser = PythonParser(</span>
+<span class="sd">                    &#39;file.py&#39;,</span>
+<span class="sd">                    collaborator_pattern=collaborator_pattern</span>
+<span class="sd">                )</span>
+
+<span class="sd">    And you also can pass :py:data:`re.compile` objects::</span>
+
+<span class="sd">        import re</span>
+
+<span class="sd">        collaborator_pattern = re.compile(r&#39;\s*?:collaborator:(.*)$&#39;)</span>
+
+<span class="sd">        parser = PythonParser(</span>
+<span class="sd">                    &#39;file.py&#39;,</span>
+<span class="sd">                    collaborator_pattern=collaborator_pattern</span>
+<span class="sd">                )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PythonParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowed_file_extensions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">allowed_file_extensions</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;.py&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+<div class="viewcode-block" id="PythonParser.parse"><a class="viewcode-back" href="../../../../api.html#crc_diagram.core.parsers.PythonParser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The main functionality. It parses a tree from :py:data:`self.path_or_stream`</span>
+<span class="sd">        and uses :py:data:`ast.NodeVisitor` to iterate over the tree.</span>
+
+<span class="sd">        :returns: self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">closing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+                <span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">SyntaxError</span><span class="p">,):</span>
+            <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span><span class="s1">&#39;File </span><span class="si">{file_}</span><span class="s1"> is not a python file&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">file_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">name</span>
+            <span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_crc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">kind</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_crc</span> <span class="o">=</span> <span class="n">CRC</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span>
+        <span class="n">docstring</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">get_docstring</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_collaborator</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_responsibility</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_crc</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">visit_Module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">split_by_extension</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_crc</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;module&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">visit_ClassDef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_crc</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Iury Alves.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
