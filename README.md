@@ -8,7 +8,7 @@ crc-diagram
 1.  [What is CRC](#what_is_crc)
 2.  [How it works](#how_it_works)
 3.  [Installing](#installing)
-4.  [Full Documentation](#full_documentation)
+4.  [Full documentation](https://iuryalves.github.io/crc-diagram)
 
 crc-diagram is a generator of Class Responsibility Collaboration diagrams in python (more languages will be available soon) using [DOT language](http://www.graphviz.org/doc/info/lang.html).
 
@@ -63,7 +63,7 @@ class ImageUploader(object):
    pass
 ```
 
-Any of the notations can be ignored, as you can see in ImageUploader and you can add more than one collaborator or responsibility.
+> Any of the notations can be ignored, as you can see in ImageUploader and you can add more than one collaborator or responsibility.
 
 Save this code as markdown\_converter.py and run the following command:
 
@@ -94,3 +94,4 @@ To render the diagrams you need to install dot:
 * Fedora/CentOS::
 
    yum install graphviz
+

@@ -50,8 +50,8 @@ How it works
 
 Suppose that you have a project with two classes: `HtmlToMarkdown` and `ImageUploader`.
 
-`HtmlToMarkdown` converts html files to markdown files, but `HtmlToMarkdown` does not know what to do with images.
-So it uses a collaborator called `ImageUploader`. `ImageUploader` knows how to store images in the cloud.
+`HtmlToMarkdown` converts html files to markdown files, but `HtmlToMarkdown` does not know how to handle images.
+So it uses a collaborator called `ImageUploader`. `ImageUploader` knows how to handle images.
 
 
 These classes could be write as follows::
@@ -88,12 +88,12 @@ To make :code:`crc-diagram` generate the CRC cards just add docstrings to the cl
 .. note:: Any of the notations can be ignored, as you can see in `ImageUploader`
    and you can add more than one collaborator or responsibility.
 
-Save this code as markdown_converter.py and run the following command::
+Save this code as `markdown_converter.py` and run the following command::
 
    crc-diagram markdown_converter.py markdown_converter.png --view
 
 
-This command will extract the CRC Cards and render as png. The :code:`--view` option is to open the rendered diagram.
+This command will extract the CRC Cards and render as png. The :code:`--view` option is used to open the rendered diagram.
 
 And the result is:
 
@@ -149,6 +149,5 @@ Documentation Contents
 
    command_line_usage
    api
-   extending
    contributing
    license

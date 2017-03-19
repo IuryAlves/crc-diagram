@@ -33,3 +33,7 @@ Exceptions
 
 .. module:: crc_diagram.exceptions
 .. autoclass:: ParserException
+
+`Next >>`_
+
+.. _Next >>: contributing.html

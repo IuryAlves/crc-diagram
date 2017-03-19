@@ -27,7 +27,7 @@ class PythonParser(BaseParser, ast.NodeVisitor):
      responsibilities from docstrings.
      The default is :py:data:`RESPONSIBILITY_PATTERN`.
     :param tuple allowed_file_extensions: A list of file extensions do accept.
-      The parser will ignore any file which extension isn`t in this list.
+      The parser will ignore any files which extension isn`t in this list.
 
     Example::
 
@@ -82,7 +82,6 @@ class PythonParser(BaseParser, ast.NodeVisitor):
                     'file.py',
                     collaborator_pattern=collaborator_pattern
                 )
-        collaborator
     """
 
     def __init__(self, *args, **kwargs):

@@ -64,7 +64,7 @@ You can use crc-diagram to output just the CRC structure as json::
 
 Or you can use the shortcut :code:`-r`::
 
-    crc-diagram source_file.py --raw
+    crc-diagram source_file.py -r
 
 
 And the output is::
@@ -87,3 +87,8 @@ You can specify a output to the json::
 
 
     crc-diagram source_file.py output.json --raw
+
+
+`Next >>`_
+
+.. _Next >>: api.html 

@@ -31,7 +31,7 @@ class DotRender(object):
 
         DotRender(crcs).render('html_to_markdown.png', view=True)
 
-    By default :py:class: DotRender uses a directed graph.
+    By default :py:class:`DotRender` uses a directed graph.
 
     You can customize the graph passing a dictionary to :py:data:`graph_data=graph_data`::
 
