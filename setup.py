@@ -2,6 +2,10 @@
 
 import ast
 import re
+import subprocess
+import platform
+import sys
+import traceback
 from setuptools import setup
 from os.path import join
 
@@ -23,6 +27,31 @@ def get_version(file_path):
             fp.read()).group(1)))
 
 
+def install_system_package(package_name):
+    package_manager_map = {
+        'fedora': 'yum',
+        'ubuntu': 'apt-get',
+        'debian': 'apt',
+        'mac': 'brew'
+    }
+    package_manager = package_manager_map[platform.dist()[0]]
+
+    subprocess.check_call(['sudo', package_manager, 'install', package_name])
+
+
+print('In order to render the diagrams dot must be installed.'
+      'crc-diagram will try to install dot using your system`s package'
+      ' manager.')
+
+try:
+    install_system_package('dot')
+except Exception:
+    print('Could not install dot. You must install dot  by your own'
+          'using your system`s package manager or downloading here:'
+          ' http://www.graphviz.org/Download..php')
+
+    sys.stderr.write(traceback.format_exc())
+
 setup(name='crc-diagram',
       version=get_version(join('crc_diagram', '__init__.py')),
       url="https://github.com/IuryAlves/crcdiagram",
@@ -42,5 +71,3 @@ setup(name='crc-diagram',
           ]
       }
       )
-
-print("\n Don't forget to install DOT: http://www.graphviz.org/Download..php")

@@ -82,16 +82,3 @@ And the result is:
 You can get the library directly from PyPI::
 
    pip install crc-diagram
-
-
-
-To render the diagrams you need to install dot:
-
-* Ubuntu/Debian::
-
-   apt-get update && apt-get install graphviz
-
-* Fedora/CentOS::
-
-   yum install graphviz
-
