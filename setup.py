@@ -10,6 +10,7 @@ from setuptools import setup
 from os.path import join
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
+error_installing_graphviz = False
 
 
 def parse_requirements(requirements_file):
@@ -28,29 +29,30 @@ def get_version(file_path):
 
 
 def install_system_package(package_name):
-    package_manager_map = {
-        'fedora': 'yum',
-        'ubuntu': 'apt-get',
-        'debian': 'apt',
-        'mac': 'brew'
-    }
-    package_manager = package_manager_map[platform.dist()[0]]
+    system = platform.system().lower()
 
-    subprocess.check_call(['sudo', package_manager, 'install', package_name])
+    command_map = {
+        'fedora': 'yum install dot',
+        'ubuntu': 'apt-get install dot',
+        'debian': 'apt install dot',
+        'darwin': 'brew install graphviz'
+    }
+    if system == 'linux':
+        command = command_map[platform.dist()[0]]
+    else:
+        command = command_map[system]
+
+    subprocess.check_call(command.split())
 
 
 print('In order to render the diagrams dot must be installed.'
-      'crc-diagram will try to install dot using your system`s package'
+      ' crc-diagram will try to install dot using your system`s package'
       ' manager.')
 
 try:
     install_system_package('dot')
 except Exception:
-    print('Could not install dot. You must install dot  by your own'
-          'using your system`s package manager or downloading here:'
-          ' http://www.graphviz.org/Download..php')
-
-    sys.stderr.write(traceback.format_exc())
+    error_installing_graphviz = True
 
 setup(name='crc-diagram',
       version=get_version(join('crc_diagram', '__init__.py')),
@@ -69,5 +71,13 @@ setup(name='crc-diagram',
           'console_scripts': [
               'crc-diagram = crc_diagram.__main__:main'
           ]
-      }
-      )
+      })
+
+if error_installing_graphviz:
+    print('Could not install dot. You must install dot  by your own'
+          'using your system`s package manager or downloading here:'
+          ' http://www.graphviz.org/Download..php')
+
+    sys.stderr.write(traceback.format_exc())
+else:
+    print('Graphviz was installed successfully.')
