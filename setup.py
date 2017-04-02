@@ -10,6 +10,7 @@ from setuptools import setup
 from os.path import join
 
 _version_re = re.compile(r'__version__\s+=\s+(.*)')
+error_installing_graphviz = False
 
 
 def parse_requirements(requirements_file):
@@ -27,30 +28,31 @@ def get_version(file_path):
             fp.read()).group(1)))
 
 
-def install_system_package(package_name):
+def install_graphviz_package():
+    system = platform.system().lower()
+
     command_map = {
         'fedora': 'yum install dot',
         'ubuntu': 'apt-get install graphviz',
         'debian': 'apt install dot',
-        'mac': 'brew install dot'
+        'darwin': 'brew install graphviz'
     }
-    command = command_map[platform.dist()[0]]
+    if system == 'linux':
+        command = command_map[platform.dist()[0]]
+    else:
+        command = command_map[system]
 
-    subprocess.check_call(['sudo', command])
+    subprocess.check_call(command.split())
 
 
 print('In order to render the diagrams dot must be installed.'
-      'crc-diagram will try to install dot using your system`s package'
+      ' crc-diagram will try to install dot using your system`s package'
       ' manager.')
 
 try:
-    install_system_package('dot')
+    install_graphviz_package()
 except Exception:
-    print('Could not install dot. You must install dot  by your own'
-          'using your system`s package manager or downloading here:'
-          ' http://www.graphviz.org/Download..php')
-
-    sys.stderr.write(traceback.format_exc())
+    error_installing_graphviz = True
 
 setup(name='crc-diagram',
       version=get_version(join('crc_diagram', '__init__.py')),
@@ -69,5 +71,13 @@ setup(name='crc-diagram',
           'console_scripts': [
               'crc-diagram = crc_diagram.__main__:main'
           ]
-      }
-      )
+      })
+
+if error_installing_graphviz:
+    print('Could not install dot. You must install dot  by your own'
+          'using your system`s package manager or downloading here:'
+          ' http://www.graphviz.org/Download..php')
+
+    sys.stderr.write(traceback.format_exc())
+else:
+    print('Graphviz was installed successfully.')
