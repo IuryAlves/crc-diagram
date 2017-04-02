@@ -28,15 +28,15 @@ def get_version(file_path):
 
 
 def install_system_package(package_name):
-    package_manager_map = {
-        'fedora': 'yum',
-        'ubuntu': 'apt-get',
-        'debian': 'apt',
-        'mac': 'brew'
+    command_map = {
+        'fedora': 'yum install dot',
+        'ubuntu': 'apt-get install graphviz',
+        'debian': 'apt install dot',
+        'mac': 'brew install dot'
     }
-    package_manager = package_manager_map[platform.dist()[0]]
+    command = command_map[platform.dist()[0]]
 
-    subprocess.check_call(['sudo', package_manager, 'install', package_name])
+    subprocess.check_call(['sudo', command])
 
 
 print('In order to render the diagrams dot must be installed.'
